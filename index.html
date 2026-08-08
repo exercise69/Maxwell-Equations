@@ -281,6 +281,7 @@
   .fx-wrap{ position: relative; padding: 10px; }
   canvas#fieldcanvas{ display:block; width:100%; height:auto; cursor:crosshair; border-radius:2px; touch-action: none; }
   canvas#donutcanvas{ display:block; width:100%; height:auto; }
+  canvas#packetcanvas{ display:block; width:100%; height:auto; }
   .fx-tooltip{
     position:absolute; pointer-events:none; font-family: var(--font-mono); font-size:0.78rem;
     background: var(--eqn-bg); border:1px solid var(--rule-strong); border-radius:4px;
@@ -1076,6 +1077,65 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
   </section>
 
   <section class="rule-top">
+    <div class="eyebrow">Kausalität</div>
+    <h2>Retardierte Zeit</h2>
+    <p class="intro">
+      Das Feld an einem Punkt kennt nur die Vergangenheit der Quelle — nie ihre Gegenwart
+      oder Zukunft. Genau das verhindert, dass sich Information schneller als c ausbreitet,
+      und beantwortet, wie schnell ein abgeschalteter Sender wirklich "verschwindet".
+    </p>
+
+    <div class="calc-block">
+      <h4>Die retardierte Zeit</h4>
+      <div class="readout electric" style="margin-bottom:14px;">t_r = t − r/c</div>
+      <p class="muted" style="font-size:0.95rem; margin:0;">
+        Das Feld im Abstand r hängt nicht davon ab, was die Quelle <em>jetzt</em> tut,
+        sondern davon, was sie zur retardierten Zeit t_r getan hat — also vor genau der
+        Laufzeit r/c. Das folgt direkt aus den Lösungen der Wellengleichung von oben
+        (retardierte Potentiale), keine Zusatzannahme. Schalten Sie den Sender ab: ein
+        Beobachter 300.000&nbsp;km entfernt merkt es exakt eine Sekunde später — nicht
+        früher, nicht später. Bis dahin empfängt er ganz normal weiter, als wäre nichts
+        passiert.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Ein Wellenpaket mit fester Länge</h4>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Die schon ausgesendete Welle hält sich über Faraday und Ampère-Maxwell selbst am
+        Leben — sie braucht die Antenne nicht mehr. Eine Übertragung (an → aus) ist im Raum
+        deshalb ein Wellenpaket mit einer Vorderkante (erste Wellenfront) und einer
+        Hinterkante (Abschaltmoment) — <strong>beide bewegen sich mit exakt derselben
+        Geschwindigkeit c</strong>. Die Paketlänge bleibt für immer gleich, weil das Vakuum
+        nicht-dispersiv ist: alle Frequenzen laufen exakt gleich schnell, das Paket zieht
+        sich nicht auseinander.
+      </p>
+      <div class="scope">
+        <div class="scope-head">
+          <span>Wellenpaket · Sender an/aus</span>
+          <span>Vorder- und Hinterkante bei c</span>
+        </div>
+        <canvas id="packetcanvas" width="900" height="380" role="img"
+          aria-label="Animation eines Wellenpakets: Der Sender links sendet für eine feste Dauer, danach läuft ein Wellenpaket fester Länge nach rechts, dessen Vorderkante und Hinterkante sich beide mit Lichtgeschwindigkeit bewegen. Ein Beobachter-Marker weiter rechts zeigt an, wann das Signal bei ihm ankommt und wann es endet."></canvas>
+        <div class="scope-legend">
+          <span><i class="swatch" style="background:var(--electric)"></i> Trägerwelle, nur im Paket sichtbar</span>
+          <span>Sender-Marker: farbig = an, grau = aus</span>
+          <span>Beobachter-Marker leuchtet, solange das Signal ihn erreicht</span>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Und noch ein Detail: Abschalten heißt, den Strom in der Antenne abzubremsen — das
+        ist selbst eine Beschleunigung. Ein reales Abschalten ist deshalb kein scharfer
+        Schnitt, sondern strahlt am Ende noch einen kurzen, breitbandigen "Klick" ab
+        (dieselbe Bremsstrahlungs-Logik wie oben), der die letzte Schwingung abschließt und
+        ebenfalls mit c davonläuft.
+      </p>
+    </div>
+  </section>
+
+  <section class="rule-top">
     <div class="eyebrow">Nachschlagen</div>
     <h2>Größen &amp; Einheiten</h2>
     <div class="ref-wrap">
@@ -1621,6 +1681,121 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
       var t = (ts - start) / 1000;
       var pulse = 0.72 + 0.28*Math.sin(t * 1.3);
       draw(pulse);
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+})();
+</script>
+
+<script>
+(function(){
+  var canvas = document.getElementById('packetcanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var midY = H/2;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function colors(){
+    var cs = getComputedStyle(document.documentElement);
+    return {
+      electric: cs.getPropertyValue('--electric').trim(),
+      ink: cs.getPropertyValue('--ink').trim(),
+      inkFaint: cs.getPropertyValue('--ink-faint').trim(),
+      rule: cs.getPropertyValue('--rule').trim()
+    };
+  }
+  var C = colors();
+  new MutationObserver(function(){ C = colors(); if (reduced) render(staticFrame); }).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  if (window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ C = colors(); if (reduced) render(staticFrame); });
+  }
+
+  var senderX = 70;
+  var rightEdge = W - 40;
+  var xObs = 520;
+  var v = 2.4;          // px per frame — the wave's speed (stands in for c)
+  var TonFrames = 110;  // how long the sender stays on
+  var packetLen = v * TonFrames;
+  var lambda = packetLen / 7;
+  var k = 2*Math.PI/lambda;
+  var amp = H*0.24;
+  var staticFrame = TonFrames + 40;
+
+  function smoothstep(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3-2*t); }
+
+  function windowFactor(x, trailingX, leadingX){
+    var m = Math.min(18, (leadingX - trailingX)/2);
+    if (m <= 0) return 0;
+    if (x < trailingX + m) return smoothstep((x-trailingX)/m);
+    if (x > leadingX - m) return smoothstep((leadingX-x)/m);
+    return 1;
+  }
+
+  function drawAxis(){
+    ctx.strokeStyle = C.rule; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(20, midY); ctx.lineTo(rightEdge+15, midY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(rightEdge+15, midY); ctx.lineTo(rightEdge+3, midY-6);
+    ctx.moveTo(rightEdge+15, midY); ctx.lineTo(rightEdge+3, midY+6);
+    ctx.stroke();
+    ctx.fillStyle = C.inkFaint;
+    ctx.font = '13px ' + getComputedStyle(document.body).fontFamily;
+    ctx.textAlign = 'right';
+    ctx.fillText('Ausbreitung, c', rightEdge+15, midY-12);
+  }
+
+  function drawMarker(x, label, sub, active){
+    var col = active ? C.electric : C.inkFaint;
+    ctx.strokeStyle = col; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x, midY-46); ctx.lineTo(x, midY+46); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x, midY-46, 4, 0, Math.PI*2); ctx.fillStyle = col; ctx.fill();
+    ctx.fillStyle = C.ink;
+    ctx.font = '13px ' + getComputedStyle(document.body).fontFamily;
+    ctx.textAlign = 'center';
+    ctx.fillText(label, x, midY-56);
+    ctx.fillStyle = col;
+    ctx.font = 'bold 12px ' + getComputedStyle(document.body).fontFamily;
+    ctx.fillText(sub, x, midY+62);
+  }
+
+  function render(frame){
+    var leadingX = senderX + v*frame;
+    var trailingX = frame <= TonFrames ? senderX : senderX + v*(frame - TonFrames);
+    var senderOn = frame <= TonFrames;
+    var signalPresent = xObs >= trailingX && xObs <= leadingX;
+
+    ctx.clearRect(0,0,W,H);
+    drawAxis();
+
+    if (leadingX > trailingX){
+      ctx.beginPath();
+      var started = false;
+      for (var x = Math.max(20, trailingX); x <= Math.min(leadingX, rightEdge+15); x += 2){
+        var wf = windowFactor(x, trailingX, leadingX);
+        var y = midY - amp * wf * Math.sin(k*x - k*v*frame);
+        if (!started){ ctx.moveTo(x,y); started = true; } else { ctx.lineTo(x,y); }
+      }
+      ctx.strokeStyle = C.electric;
+      ctx.lineWidth = 2.4;
+      ctx.stroke();
+    }
+
+    drawMarker(senderX, 'Sender', senderOn ? 'EIN' : 'AUS', senderOn);
+    drawMarker(xObs, 'Beobachter', signalPresent ? 'Signal da' : 'Stille', signalPresent);
+  }
+
+  if (reduced){
+    render(staticFrame);
+  } else {
+    var frame = 0;
+    function tick(){
+      render(frame);
+      frame++;
+      if (senderX + v*frame > rightEdge + 15) frame = 0;
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
