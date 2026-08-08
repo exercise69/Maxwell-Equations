@@ -280,6 +280,7 @@
   .fx-btn.active.magnetic{ background: var(--magnetic); border-color: var(--magnetic); }
   .fx-wrap{ position: relative; padding: 10px; }
   canvas#fieldcanvas{ display:block; width:100%; height:auto; cursor:crosshair; border-radius:2px; touch-action: none; }
+  canvas#donutcanvas{ display:block; width:100%; height:auto; }
   .fx-tooltip{
     position:absolute; pointer-events:none; font-family: var(--font-mono); font-size:0.78rem;
     background: var(--eqn-bg); border:1px solid var(--rule-strong); border-radius:4px;
@@ -917,6 +918,43 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
     <hr class="calc-divider">
 
     <div class="calc-block">
+      <h4>Die Form im Raum: kein Zylinder, kein Rotor</h4>
+      <p class="tagline" style="margin-bottom:16px;">Rotiert man die Erdnusskurve einmal um die Antennenachse, entsteht die echte 3D-Form.</p>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Die Wellenfronten selbst sind kugelförmig — sie expandieren gleichmäßig in alle
+        Richtungen, wie eine aufblasende Seifenblase. Was <em>nicht</em> gleichmäßig ist:
+        die Stärke der Welle auf dieser Kugel. Die folgt dem sinθ-Muster von oben — stark
+        am "Äquator" (senkrecht zur Antenne), null an den "Polen" (entlang der Antenne
+        selbst). Rotiert man die Erdnusskurve einmal um die Achse, ergibt das einen
+        <strong>Torus</strong> (Donut), zentriert auf die Antenne — kein Zylinder.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Und diese Form <strong>dreht sich nicht</strong> mit dem Wechselstrom mit. Sie ist
+        rotationssymmetrisch um die Antennenachse — sieht aus jeder Blickrichtung um die
+        Antenne herum exakt gleich aus, es gibt kein "rechts rum" oder "links rum". Was der
+        Wechselstrom tatsächlich tut: er kehrt periodisch die <strong>Polung</strong> um —
+        E zeigt abwechselnd in die eine, dann die andere Richtung entlang der Antenne. Das
+        ist eine lineare Hin-und-her-Schwingung (<em>lineare Polarisation</em>), keine
+        Drehung. Eine echte Drehung des Feldvektors (zirkulare Polarisation) bräuchte zwei
+        um 90° versetzte Antennenelemente, nicht nur einen Stab.
+      </p>
+      <div class="scope">
+        <div class="scope-head">
+          <span>Donut-Strahlungskeule · 3D</span>
+          <span>fixe Ansicht — keine Rotation</span>
+        </div>
+        <canvas id="donutcanvas" width="900" height="620" role="img"
+          aria-label="Feste dreidimensionale Ansicht der Dipol-Abstrahlung als Torus (Donut) um die vertikale Antenne. Die Form ist rotationssymmetrisch um die Antennenachse und dreht sich nicht; nur die Helligkeit pulsiert leicht mit der Schwingung."></canvas>
+        <div class="scope-legend">
+          <span><i class="swatch" style="background:var(--electric)"></i> Torus-Hülle, Draht-Gitter zur Tiefenwirkung</span>
+          <span>Antenne (dunkel) steht senkrecht durch den Kern des Torus</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
       <h4>Der oszillierende Dipol</h4>
       <p class="tagline" style="margin-bottom:16px;">Jeder Ring ist eine Wellenfront, ausgesendet bei einem Nulldurchgang des Stroms.</p>
       <div class="scope">
@@ -1457,6 +1495,132 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
       pulses = pulses.filter(function(p){ return (frame-p.born)*speed < maxR+10; });
       renderFrame();
       frame++;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+})();
+</script>
+
+<script>
+(function(){
+  var canvas = document.getElementById('donutcanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var cx = W/2, cy = H/2 + 30;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function colors(){
+    var cs = getComputedStyle(document.documentElement);
+    return {
+      electric: cs.getPropertyValue('--electric').trim(),
+      ink: cs.getPropertyValue('--ink').trim(),
+      inkFaint: cs.getPropertyValue('--ink-faint').trim()
+    };
+  }
+  var C = colors();
+  new MutationObserver(function(){ C = colors(); draw(1); }).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  if (window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ C = colors(); draw(1); });
+  }
+
+  // fixed viewing angles — the shape never rotates, only brightness pulses
+  var beta = 35 * Math.PI/180;   // azimuth (fixed)
+  var alpha = 20 * Math.PI/180;  // elevation tilt (fixed)
+  var cosB = Math.cos(beta), sinB = Math.sin(beta);
+  var cosA = Math.cos(alpha), sinA = Math.sin(alpha);
+  var R0 = 210;
+  var Lrod = R0 * 0.34;
+
+  function project(x, y, z){
+    var x1 = x*cosB - y*sinB;
+    var y1 = x*sinB + y*cosB;
+    var z1 = z;
+    var y2 = y1*cosA - z1*sinA;
+    var z2 = y1*sinA + z1*cosA;
+    return { sx: cx + x1, sy: cy - z2, depth: y2 };
+  }
+
+  // precompute latitude rings and meridians once — static geometry
+  var rings = [];
+  var ringCount = 13;
+  for (var i=1; i<ringCount+1; i++){
+    var theta = i * Math.PI / (ringCount+1);
+    var r = R0 * Math.sin(theta)*Math.sin(theta);
+    var h = R0 * 0.5 * Math.sin(2*theta);
+    var pts = [];
+    var segs = 48;
+    for (var s=0; s<=segs; s++){
+      var phi = (s/segs) * Math.PI*2;
+      pts.push(project(r*Math.cos(phi), r*Math.sin(phi), h));
+    }
+    rings.push(pts);
+  }
+
+  var meridians = [];
+  var meridianCount = 8;
+  for (var m=0; m<meridianCount; m++){
+    var phi0 = (m/meridianCount) * Math.PI*2;
+    var pts2 = [];
+    var tsegs = 44;
+    for (var t=0; t<=tsegs; t++){
+      var th = 0.02 + (t/tsegs) * (Math.PI - 0.04);
+      var rr = R0 * Math.sin(th)*Math.sin(th);
+      var hh = R0 * 0.5 * Math.sin(2*th);
+      pts2.push(project(rr*Math.cos(phi0), rr*Math.sin(phi0), hh));
+    }
+    meridians.push(pts2);
+  }
+
+  function depthAlpha(d, base, span){
+    var t = (d + R0) / (2*R0);
+    t = Math.max(0, Math.min(1, t));
+    return base + span*t;
+  }
+
+  function drawPolyline(pts, closed, baseAlpha, span, lineWidth){
+    for (var k=0; k<pts.length-1; k++){
+      var a = pts[k], b = pts[k+1];
+      var al = depthAlpha((a.depth+b.depth)/2, baseAlpha, span);
+      ctx.globalAlpha = al;
+      ctx.strokeStyle = C.electric;
+      ctx.lineWidth = lineWidth;
+      ctx.beginPath();
+      ctx.moveTo(a.sx, a.sy);
+      ctx.lineTo(b.sx, b.sy);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function draw(pulse){
+    ctx.clearRect(0,0,W,H);
+    var baseA = 0.16*pulse, spanA = 0.42*pulse;
+    rings.forEach(function(pts){ drawPolyline(pts, true, baseA, spanA, 1.2); });
+    meridians.forEach(function(pts){ drawPolyline(pts, false, baseA*0.9, spanA*0.9, 1); });
+
+    // antenna rod, drawn on top
+    var p0 = project(0,0,-Lrod), p1 = project(0,0,Lrod);
+    ctx.strokeStyle = C.ink;
+    ctx.globalAlpha = 1;
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(p0.sx, p0.sy); ctx.lineTo(p1.sx, p1.sy);
+    ctx.stroke();
+    ctx.beginPath(); ctx.arc(p1.sx, p1.sy, 3, 0, Math.PI*2); ctx.fillStyle = C.ink; ctx.fill();
+    ctx.beginPath(); ctx.arc(p0.sx, p0.sy, 3, 0, Math.PI*2); ctx.fillStyle = C.ink; ctx.fill();
+  }
+
+  if (reduced){
+    draw(1);
+  } else {
+    var start = null;
+    function tick(ts){
+      if (start === null) start = ts;
+      var t = (ts - start) / 1000;
+      var pulse = 0.72 + 0.28*Math.sin(t * 1.3);
+      draw(pulse);
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
