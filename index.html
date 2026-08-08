@@ -836,6 +836,113 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
   </section>
 
   <section class="rule-top">
+    <div class="eyebrow">Abstrahlung</div>
+    <h2>Warum strahlt eine Antenne?</h2>
+    <p class="intro">
+      Eine Antenne ist nichts anderes als eine periodisch beschleunigte Ladung. Aus
+      dieser einen Tatsache folgt die komplette Theorie der Dipolstrahlung — Leistung,
+      Reichweite und sogar die Form, in die eine Antenne abstrahlt.
+    </p>
+
+    <div class="calc-block">
+      <h4>Die Larmor-Formel</h4>
+      <div class="tagline">Abgestrahlte Leistung einer beschleunigten Ladung</div>
+      <div class="result">
+        <div class="readout electric" style="font-size:1.1rem">
+          P = <span class="frac"><span class="num">q² a²</span><span class="den">6πε₀c³</span></span>
+        </div>
+        <div class="c-value"><div class="unit">P ∝ Beschleunigung²</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Ruhende Ladung: a = 0 → keine Strahlung. Gleichförmig bewegte Ladung: ebenfalls
+        a = 0 → ebenfalls keine Strahlung, ihr Feld ist nur ein mitgeführtes, gestauchtes
+        Coulombfeld. Erst eine <strong>beschleunigte</strong> Ladung erzeugt ein
+        Wellenfeld, das Energie bis ins Unendliche trägt.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Nahfeld und Fernfeld</h4>
+      <p class="tagline" style="margin-bottom:16px;">Nicht jede Feldänderung transportiert Energie nach außen.</p>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>Nahfeld — reaktiv</h4>
+          <div class="tagline">fällt wie 1/r² bzw. 1/r³</div>
+          <p class="muted" style="font-size:0.9rem; margin:0;">
+            Energie pendelt im Zeitmittel lokal zwischen E- und B-Feld hin und her, ohne
+            netto nach außen zu entkommen. So funktioniert ein Transformator oder
+            induktives Laden: Felder ändern sich, koppeln über Faraday — aber es wird
+            nichts abgestrahlt.
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>Fernfeld — strahlend</h4>
+          <div class="tagline">fällt wie 1/r</div>
+          <p class="muted" style="font-size:0.9rem; margin:0;">
+            Die Leistung durch eine Kugelfläche (∝ r²) bleibt konstant, egal wie weit man
+            weggeht. Das ist die tatsächlich abgestrahlte Welle — der Teil, der Energie
+            unwiderruflich forttransportiert.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Die Abstrahlcharakteristik</h4>
+      <div class="readout electric" style="margin-bottom:14px;">E_fern(θ) ∝ (q·a / r) · sinθ</div>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        θ ist der Winkel zur Dipolachse. Maximal senkrecht zur Antenne (θ=90°), null
+        entlang ihrer eigenen Achse — daraus folgt die charakteristische "Erdnuss"-Form,
+        in die ein Dipol abstrahlt.
+      </p>
+      <figure class="eq-diagram" style="padding:0;">
+        <svg viewBox="0 0 240 200" role="img" style="max-width:280px;" aria-label="Polardiagramm der Dipol-Abstrahlung: eine erdnussförmige Kurve mit zwei Lappen links und rechts der vertikalen Antennenachse, die bei den Polen oben und unten auf null zusammenläuft und seitlich maximal ist.">
+          <polyline points="120.0,100.0 120.3,95.8 121.1,91.6 122.5,87.6 124.4,83.8 126.7,80.2 129.5,77.0 132.7,74.2 136.2,71.9 140.1,70.0 144.1,68.6 148.3,67.8 152.5,67.5 156.7,67.8 160.9,68.6 164.9,70.0 168.8,71.9 172.3,74.2 175.5,77.0 178.3,80.2 180.6,83.8 182.5,87.6 183.9,91.6 184.7,95.8 185.0,100.0 184.7,104.2 183.9,108.4 182.5,112.4 180.6,116.2 178.3,119.8 175.5,123.0 172.3,125.8 168.8,128.1 164.9,130.0 160.9,131.4 156.7,132.2 152.5,132.5 148.3,132.2 144.1,131.4 140.1,130.0 136.2,128.1 132.7,125.8 129.5,123.0 126.7,119.8 124.4,116.3 122.5,112.4 121.1,108.4 120.3,104.2 120.0,100.0 119.7,104.2 118.9,108.4 117.5,112.4 115.6,116.2 113.3,119.8 110.5,123.0 107.3,125.8 103.8,128.1 99.9,130.0 95.9,131.4 91.7,132.2 87.5,132.5 83.3,132.2 79.1,131.4 75.1,130.0 71.3,128.1 67.7,125.8 64.5,123.0 61.7,119.8 59.4,116.2 57.5,112.4 56.1,108.4 55.3,104.2 55.0,100.0 55.3,95.8 56.1,91.6 57.5,87.6 59.4,83.8 61.7,80.2 64.5,77.0 67.7,74.2 71.2,71.9 75.1,70.0 79.1,68.6 83.3,67.8 87.5,67.5 91.7,67.8 95.9,68.6 99.9,70.0 103.7,71.9 107.3,74.2 110.5,77.0 113.3,80.2 115.6,83.8 117.5,87.6 118.9,91.6 119.7,95.8 120.0,100.0"
+            fill="none" stroke="var(--electric)" stroke-width="2"/>
+          <line x1="120" y1="35" x2="120" y2="165" stroke="currentColor" stroke-width="3"/>
+          <circle cx="120" cy="42" r="4" fill="currentColor"/>
+          <circle cx="120" cy="158" r="4" fill="currentColor"/>
+          <text x="120" y="22" text-anchor="middle" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">θ=0°: keine Abstrahlung</text>
+          <text x="120" y="184" text-anchor="middle" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">θ=180°: keine Abstrahlung</text>
+          <text x="236" y="103" text-anchor="end" font-size="10" fill="var(--electric)" font-family="var(--font-label)">θ=90°: max</text>
+        </svg>
+        <figcaption>Abstrahlcharakteristik eines Dipols — Querschnitt durch die Antennenachse</figcaption>
+      </figure>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Der oszillierende Dipol</h4>
+      <p class="tagline" style="margin-bottom:16px;">Jeder Ring ist eine Wellenfront, ausgesendet bei einem Nulldurchgang des Stroms.</p>
+      <div class="scope">
+        <div class="scope-head">
+          <span>Hertzscher Dipol</span>
+          <span>Helligkeit ∝ sinθ</span>
+        </div>
+        <canvas id="dipolecanvas" width="900" height="560" role="img"
+          aria-label="Animation eines oszillierenden Dipols im Zentrum: konzentrische Wellenfronten laufen nach außen, hell an den Seiten senkrecht zur Antenne, dunkel oben und unten entlang der Antennenachse — die charakteristische Erdnussform der Dipolstrahlung in Bewegung."></canvas>
+        <div class="scope-legend">
+          <span><i class="swatch" style="background:var(--electric)"></i> Wellenfront, Helligkeit ∝ sinθ zur Antennenachse</span>
+          <span>Pfeil in der Antenne = momentane Stromrichtung</span>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Der Unterschied zur Röntgen-Bremsstrahlung: dort wird eine Ladung
+        <strong>einmalig</strong> abrupt abgebremst — ein kurzer Beschleunigungspuls,
+        dessen Fourierspektrum breitbandig ist. Eine Antenne beschleunigt
+        <strong>periodisch</strong> bei fester Frequenz ω — ihr Spektrum ist (näherungsweise)
+        eine einzelne scharfe Linie bei ω. Gleiche Physik, unterschiedlicher Zeitverlauf
+        der Beschleunigung, komplett unterschiedliches Ergebnis.
+      </p>
+    </div>
+  </section>
+
+  <section class="rule-top">
     <div class="eyebrow">Nachschlagen</div>
     <h2>Größen &amp; Einheiten</h2>
     <div class="ref-wrap">
@@ -1156,6 +1263,109 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
   });
 
   setActive('quelle');
+})();
+</script>
+
+<script>
+(function(){
+  var canvas = document.getElementById('dipolecanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cx = W/2, cy = H/2;
+  var maxR = Math.min(W,H)/2 - 20;
+
+  function colors(){
+    var cs = getComputedStyle(document.documentElement);
+    return {
+      electric: cs.getPropertyValue('--electric').trim(),
+      ink: cs.getPropertyValue('--ink').trim(),
+      rule: cs.getPropertyValue('--rule').trim()
+    };
+  }
+  var C = colors();
+  new MutationObserver(function(){ C = colors(); }).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  if (window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ C = colors(); });
+  }
+
+  var period = 90; // frames per oscillation (visual, not to scale)
+  var speed = maxR / (period*2.6);
+
+  function drawDipole(phase){
+    var amp = Math.sin(phase);
+    var len = 34;
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy-len); ctx.lineTo(cx, cy+len);
+    ctx.stroke();
+
+    var ah = amp*22;
+    ctx.strokeStyle = C.electric; ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx, cy-ah);
+    ctx.stroke();
+    var dir = ah >= 0 ? -1 : 1;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy-ah);
+    ctx.lineTo(cx-5, cy-ah+dir*7);
+    ctx.lineTo(cx+5, cy-ah+dir*7);
+    ctx.closePath();
+    ctx.fillStyle = C.electric; ctx.fill();
+  }
+
+  function drawRing(radius, ageFrac){
+    if (radius <= 0) return;
+    var segs = 90;
+    var fade = Math.max(0, 1 - ageFrac);
+    if (fade <= 0) return;
+    for (var i=0; i<segs; i++){
+      var t0 = (i/segs) * Math.PI*2;
+      var t1 = ((i+1)/segs) * Math.PI*2;
+      var tm = (t0+t1)/2;
+      var alpha = Math.abs(Math.sin(tm)) * fade;
+      if (alpha < 0.03) continue;
+      var x0 = cx + radius*Math.sin(t0), y0 = cy - radius*Math.cos(t0);
+      var x1 = cx + radius*Math.sin(t1), y1 = cy - radius*Math.cos(t1);
+      ctx.strokeStyle = C.electric;
+      ctx.globalAlpha = alpha;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x0,y0); ctx.lineTo(x1,y1);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  var pulses = [];
+  var frame = 0;
+
+  function renderFrame(){
+    ctx.clearRect(0,0,W,H);
+    pulses.forEach(function(p){
+      var age = frame - p.born;
+      var radius = age*speed;
+      drawRing(radius, radius/maxR);
+    });
+    drawDipole((frame/period)*Math.PI*2);
+  }
+
+  if (reduced){
+    pulses = [{born:-period*0.4},{born:-period*1.4},{born:-period*2.4}];
+    frame = 0;
+    renderFrame();
+  } else {
+    function tick(){
+      if (frame % period === 0) pulses.push({ born: frame });
+      pulses = pulses.filter(function(p){ return (frame-p.born)*speed < maxR+10; });
+      renderFrame();
+      frame++;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
 })();
 </script>
 </body>
