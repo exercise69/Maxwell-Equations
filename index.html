@@ -267,6 +267,31 @@
   .split-two{ display:grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   @media (max-width: 640px){ .split-two{ grid-template-columns: 1fr; } }
 
+  /* ---------- feld-explorer ---------- */
+  .fx-controls{ display:flex; flex-wrap:wrap; gap:8px; margin: 4px 0 16px; }
+  .fx-btn{
+    font-family: var(--font-label); font-size:0.78rem; letter-spacing:.03em;
+    padding: 7px 14px; border-radius:999px; border:1px solid var(--rule-strong);
+    background: var(--surface); color: var(--ink-muted); cursor:pointer;
+  }
+  .fx-btn:hover{ border-color: currentColor; }
+  .fx-btn.active{ color: var(--surface); font-weight:600; }
+  .fx-btn.active.electric{ background: var(--electric); border-color: var(--electric); }
+  .fx-btn.active.magnetic{ background: var(--magnetic); border-color: var(--magnetic); }
+  .fx-wrap{ position: relative; padding: 10px; }
+  canvas#fieldcanvas{ display:block; width:100%; height:auto; cursor:crosshair; border-radius:2px; touch-action: none; }
+  .fx-tooltip{
+    position:absolute; pointer-events:none; font-family: var(--font-mono); font-size:0.78rem;
+    background: var(--eqn-bg); border:1px solid var(--rule-strong); border-radius:4px;
+    padding:8px 10px; box-shadow: var(--shadow); white-space:nowrap; line-height:1.6;
+    opacity:0; transition: opacity 0.08s; z-index:2;
+  }
+  .fx-tooltip.show{ opacity:1; }
+  .fx-tooltip div{ display:flex; justify-content:space-between; gap:16px; }
+  .fx-tooltip .row-label{ color:var(--ink-faint); }
+  .fx-desc{ margin-top:16px; font-size:0.92rem; color: var(--ink-muted); }
+  .fx-desc .fx-formula{ font-family: var(--font-mono); color: var(--ink); }
+
   /* ---------- reference table ---------- */
   table.ref{
     width: 100%; border-collapse: collapse; font-size: 0.95rem;
@@ -785,6 +810,32 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
   </section>
 
   <section class="rule-top">
+    <div class="eyebrow">Interaktiv</div>
+    <h2>Der Feld-Explorer</h2>
+    <p class="intro">
+      Fünf einfache 2D-Felder zum Anfassen. Maus über das Gitter bewegen, um F(x,y),
+      Divergenz und Rotation an jedem Punkt live abzulesen — exakt berechnet, nicht
+      aus einer Tabelle.
+    </p>
+
+    <div class="fx-controls" role="group" aria-label="Feld auswählen">
+      <button type="button" class="fx-btn" data-field="quelle">Quelle</button>
+      <button type="button" class="fx-btn" data-field="wirbel">Wirbel</button>
+      <button type="button" class="fx-btn" data-field="sattel">Sattel</button>
+      <button type="button" class="fx-btn" data-field="scher">Scherung</button>
+      <button type="button" class="fx-btn" data-field="ladung">Punktladung</button>
+    </div>
+
+    <div class="scope fx-wrap">
+      <canvas id="fieldcanvas" width="900" height="600" role="img"
+        aria-label="Interaktives Vektorfeld-Diagramm. Pfeile zeigen die Richtung des gewählten Feldes auf einem Gitter; beim Bewegen der Maus über das Bild werden Feldvektor, Divergenz und Rotation am jeweiligen Punkt eingeblendet."></canvas>
+      <div class="fx-tooltip" id="fxTooltip"></div>
+    </div>
+
+    <p class="fx-desc" id="fxDesc"></p>
+  </section>
+
+  <section class="rule-top">
     <div class="eyebrow">Nachschlagen</div>
     <h2>Größen &amp; Einheiten</h2>
     <div class="ref-wrap">
@@ -912,6 +963,199 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
     if (!reduced) requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+})();
+</script>
+
+<script>
+(function(){
+  var canvas = document.getElementById('fieldcanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var scale = 75; // px per data unit, both axes
+  var tooltip = document.getElementById('fxTooltip');
+  var descEl = document.getElementById('fxDesc');
+
+  var FIELDS = {
+    quelle: {
+      name: 'Quelle', accent: 'electric',
+      formula: 'F(x,y) = (x, y)',
+      desc: 'Konstante Divergenz ∇·F = 2 überall, keine Rotation — jeder Punkt ist eine Quelle.',
+      fn: function(x,y){ return [x, y]; }
+    },
+    wirbel: {
+      name: 'Wirbel', accent: 'magnetic',
+      formula: 'F(x,y) = (−y, x)',
+      desc: 'Konstante Rotation ∇×F = 2, keine Divergenz — reine Zirkulation um jeden Punkt.',
+      fn: function(x,y){ return [-y, x]; }
+    },
+    sattel: {
+      name: 'Sattel', accent: 'electric',
+      formula: 'F(x,y) = (x, −y)',
+      desc: 'Divergenz und Rotation sind überall 0 — trotzdem kein uniformes Feld: Kompression entlang y, Expansion entlang x.',
+      fn: function(x,y){ return [x, -y]; }
+    },
+    scher: {
+      name: 'Scherung', accent: 'magnetic',
+      formula: 'F(x,y) = (y, 0)',
+      desc: 'Gerade, parallele Stromlinien — und trotzdem ∇×F = −1 überall. Rotation ist keine Frage der sichtbaren Form der Feldlinien.',
+      fn: function(x,y){ return [y, 0]; }
+    },
+    ladung: {
+      name: 'Punktladung', accent: 'electric',
+      formula: 'F(x,y) = (x, y) / (x²+y²)',
+      desc: 'Wie ein 2D-Ladungsfeld: ∇·F ≈ 0 überall außer im (geglätteten) Zentrum — genau das Bild hinter Gleichung I.',
+      fn: function(x,y){ var r2 = x*x + y*y + 0.12; return [x/r2, y/r2]; }
+    }
+  };
+  var current = 'quelle';
+
+  function colors(){
+    var cs = getComputedStyle(document.documentElement);
+    return {
+      ink: cs.getPropertyValue('--ink').trim(),
+      inkFaint: cs.getPropertyValue('--ink-faint').trim(),
+      rule: cs.getPropertyValue('--rule').trim(),
+      electric: cs.getPropertyValue('--electric').trim(),
+      magnetic: cs.getPropertyValue('--magnetic').trim()
+    };
+  }
+  var C = colors();
+  new MutationObserver(function(){ C = colors(); draw(); }).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  if (window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ C = colors(); draw(); });
+  }
+
+  function dataToPx(x,y){ return [W/2 + x*scale, H/2 - y*scale]; }
+  function pxToData(px,py){ return [(px-W/2)/scale, (H/2-py)/scale]; }
+
+  function drawArrow(x0,y0,x1,y1,color){
+    var ang = Math.atan2(y1-y0, x1-x0);
+    ctx.strokeStyle = color; ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+    var hs = 5;
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x1 - hs*Math.cos(ang-0.4), y1 - hs*Math.sin(ang-0.4));
+    ctx.lineTo(x1 - hs*Math.cos(ang+0.4), y1 - hs*Math.sin(ang+0.4));
+    ctx.closePath();
+    ctx.fillStyle = color; ctx.fill();
+  }
+
+  function draw(hover){
+    ctx.clearRect(0,0,W,H);
+    var field = FIELDS[current];
+    var accent = field.accent === 'magnetic' ? C.magnetic : C.electric;
+
+    ctx.strokeStyle = C.rule; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0,H/2); ctx.lineTo(W,H/2);
+    ctx.moveTo(W/2,0); ctx.lineTo(W/2,H);
+    ctx.stroke();
+
+    for (var gx=-6; gx<=6; gx+=1){
+      for (var gy=-4; gy<=4; gy+=1){
+        var v = field.fn(gx,gy);
+        var mag = Math.hypot(v[0], v[1]);
+        if (!isFinite(mag) || mag < 1e-6) continue;
+        var len = Math.min(8 + 9*Math.sqrt(mag), 26);
+        var ux = v[0]/mag, uy = v[1]/mag;
+        var p0 = dataToPx(gx,gy);
+        var p1 = [p0[0] + ux*len, p0[1] - uy*len];
+        ctx.globalAlpha = 0.55;
+        drawArrow(p0[0],p0[1],p1[0],p1[1], accent);
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    if (hover){
+      var p = dataToPx(hover.x, hover.y);
+      ctx.strokeStyle = C.inkFaint; ctx.setLineDash([3,3]); ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(p[0],0); ctx.lineTo(p[0],H);
+      ctx.moveTo(0,p[1]); ctx.lineTo(W,p[1]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      var hv = hover.F;
+      var hmag = Math.hypot(hv[0],hv[1]) || 1;
+      var hlen = Math.min(14 + 10*Math.sqrt(hmag), 60);
+      var hux = hv[0]/hmag, huy = hv[1]/hmag;
+      drawArrow(p[0],p[1], p[0]+hux*hlen, p[1]-huy*hlen, C.ink);
+      ctx.beginPath(); ctx.arc(p[0],p[1],3.5,0,Math.PI*2);
+      ctx.fillStyle = accent; ctx.fill();
+    }
+  }
+
+  function partials(fn,x,y){
+    var h = 0.0015;
+    var fx1 = fn(x+h,y), fx0 = fn(x-h,y);
+    var fy1 = fn(x,y+h), fy0 = fn(x,y-h);
+    var dFxdx = (fx1[0]-fx0[0])/(2*h);
+    var dFydx = (fx1[1]-fx0[1])/(2*h);
+    var dFxdy = (fy1[0]-fy0[0])/(2*h);
+    var dFydy = (fy1[1]-fy0[1])/(2*h);
+    return { div: dFxdx+dFydy, curl: dFydx-dFxdy };
+  }
+
+  function eventPos(e){
+    var rect = canvas.getBoundingClientRect();
+    var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    var cx = clientX - rect.left, cy = clientY - rect.top;
+    return { px: cx*(W/rect.width), py: cy*(H/rect.height), cx: cx, cy: cy, rectW: rect.width, rectH: rect.height };
+  }
+
+  function onMove(e){
+    var pos = eventPos(e);
+    var d = pxToData(pos.px, pos.py);
+    var field = FIELDS[current];
+    var Fv = field.fn(d[0], d[1]);
+    var pd = partials(field.fn, d[0], d[1]);
+
+    draw({ x:d[0], y:d[1], F:Fv });
+
+    tooltip.innerHTML =
+      '<div><span class="row-label">(x, y)</span><span>(' + d[0].toFixed(2) + ', ' + d[1].toFixed(2) + ')</span></div>' +
+      '<div><span class="row-label">F</span><span>(' + Fv[0].toFixed(2) + ', ' + Fv[1].toFixed(2) + ')</span></div>' +
+      '<div><span class="row-label">∇·F</span><span>' + pd.div.toFixed(2) + '</span></div>' +
+      '<div><span class="row-label">∇×F</span><span>' + pd.curl.toFixed(2) + '</span></div>';
+    tooltip.classList.add('show');
+
+    var left = pos.cx + 16, top = pos.cy + 16;
+    if (left + 150 > pos.rectW) left = pos.cx - 166;
+    if (top + 96 > pos.rectH) top = pos.cy - 106;
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+
+  function onLeave(){
+    tooltip.classList.remove('show');
+    draw();
+  }
+
+  canvas.addEventListener('mousemove', onMove);
+  canvas.addEventListener('mouseleave', onLeave);
+  canvas.addEventListener('touchmove', function(e){ onMove(e); e.preventDefault(); }, {passive:false});
+  canvas.addEventListener('touchend', onLeave);
+
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.fx-btn'));
+  function setActive(key){
+    current = key;
+    btns.forEach(function(b){
+      var isActive = b.getAttribute('data-field') === key;
+      b.classList.toggle('active', isActive);
+      b.classList.remove('electric','magnetic');
+      if (isActive) b.classList.add(FIELDS[key].accent);
+    });
+    descEl.innerHTML = '<span class="fx-formula">' + FIELDS[key].formula + '</span> — ' + FIELDS[key].desc;
+    draw();
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){ setActive(b.getAttribute('data-field')); });
+  });
+
+  setActive('quelle');
 })();
 </script>
 </body>
