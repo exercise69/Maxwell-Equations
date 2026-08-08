@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feldnotizen — Die Maxwellschen Gleichungen</title>
+<meta name="description" content="Die vier Maxwellschen Gleichungen mit Vektoranalysis, physikalischer Bedeutung und der Ableitung von Licht als elektromagnetischer Welle.">
+<style>
+  /* ---------- tokens ---------- */
+  :root{
+    --bg: #eef1f6;
+    --surface: #ffffff;
+    --surface-2: #e6eaf1;
+    --ink: #171b26;
+    --ink-muted: #565f76;
+    --ink-faint: #838da3;
+    --rule: #cfd5e2;
+    --rule-strong: #b6bdd0;
+    --electric: #006e8c;
+    --electric-soft: #006e8c;
+    --magnetic: #b05e08;
+    --magnetic-soft: #b05e08;
+    --eqn-glow: none;
+    --eqn-bg: var(--surface-2);
+    --shadow: 0 1px 2px rgba(23,27,38,0.06), 0 8px 24px rgba(23,27,38,0.06);
+
+    --font-display: "Iowan Old Style","Palatino Linotype",Palatino,"URW Palladio L","Book Antiqua",Georgia,serif;
+    --font-body: "Iowan Old Style","Palatino Linotype",Palatino,"URW Palladio L","Book Antiqua",Georgia,serif;
+    --font-label: -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-mono: "JetBrains Mono","SF Mono","Cascadia Code",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #0a0e16;
+      --surface: #10141f;
+      --surface-2: #161c2b;
+      --ink: #e8eaf0;
+      --ink-muted: #99a2ba;
+      --ink-faint: #626c85;
+      --rule: #262e42;
+      --rule-strong: #35405a;
+      --electric: #5fd9f5;
+      --electric-soft: #5fd9f5;
+      --magnetic: #ffb454;
+      --magnetic-soft: #ffb454;
+      --eqn-glow: 0 0 14px;
+      --eqn-bg: #0d111b;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #0a0e16;
+    --surface: #10141f;
+    --surface-2: #161c2b;
+    --ink: #e8eaf0;
+    --ink-muted: #99a2ba;
+    --ink-faint: #626c85;
+    --rule: #262e42;
+    --rule-strong: #35405a;
+    --electric: #5fd9f5;
+    --electric-soft: #5fd9f5;
+    --magnetic: #ffb454;
+    --magnetic-soft: #ffb454;
+    --eqn-glow: 0 0 14px;
+    --eqn-bg: #0d111b;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+  }
+
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 34px 34px;
+    background-position: -1px -1px;
+    background-attachment: fixed;
+  }
+  @media (prefers-reduced-motion: reduce){ *{ animation: none !important; transition: none !important; } }
+
+  .wrap{ max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  h1,h2,h3{ font-family: var(--font-display); font-weight: 600; text-wrap: balance; }
+  a{ color: var(--electric); }
+
+  .eyebrow{
+    font-family: var(--font-label);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before{
+    content: ""; width: 22px; height: 1px; background: var(--rule-strong); display: inline-block;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding: 64px 0 20px;
+  }
+  .hero .eyebrow{ margin-bottom: 18px; }
+  .hero h1{
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    line-height: 1.08;
+    margin: 0 0 14px;
+  }
+  .hero .accent-electric{ color: var(--electric); }
+  .hero .accent-magnetic{ color: var(--magnetic); }
+  .hero p.lede{
+    font-size: 1.15rem;
+    color: var(--ink-muted);
+    max-width: 62ch;
+    margin: 0 0 36px;
+  }
+
+  .scope{
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    padding: 18px 18px 8px;
+  }
+  .scope-head{
+    display:flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--font-label); font-size: 0.72rem; letter-spacing: 0.08em;
+    color: var(--ink-faint); text-transform: uppercase; margin-bottom: 6px;
+  }
+  canvas#wave{ display:block; width: 100%; height: auto; }
+  .scope-legend{
+    display:flex; gap: 22px; flex-wrap: wrap;
+    font-family: var(--font-label); font-size: 0.78rem; color: var(--ink-muted);
+    padding: 10px 2px 16px;
+  }
+  .scope-legend span{ display:flex; align-items:center; gap:7px; }
+  .swatch{ width: 13px; height: 3px; border-radius: 2px; display:inline-block; }
+
+  /* ---------- generic sections ---------- */
+  section{ padding: 56px 0; }
+  section.rule-top{ border-top: 1px solid var(--rule); }
+  section > .eyebrow{ margin-bottom: 10px; }
+  section h2{ font-size: clamp(1.5rem, 3vw, 1.9rem); margin: 0 0 10px; }
+  section > p.intro{ color: var(--ink-muted); max-width: 66ch; margin: 0 0 34px; }
+
+  /* ---------- toolbox ---------- */
+  .toolbox-grid{
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+    gap: 20px;
+  }
+  .tool-card{
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 3px;
+    padding: 18px 18px 20px; box-shadow: var(--shadow);
+  }
+  .tool-card svg{ width: 100%; height: auto; display:block; margin-bottom: 10px; }
+  .tool-card h3{ font-size: 1.05rem; margin: 0 0 6px; }
+  .tool-card p{ margin:0; color: var(--ink-muted); font-size: 0.95rem; }
+  .tool-card .sym{ font-family: var(--font-mono); color: var(--ink); }
+
+  .theorem-bridge{
+    margin-top: 22px; display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 16px;
+  }
+  .bridge-card{
+    border: 1px dashed var(--rule-strong); border-radius: 3px; padding: 14px 16px;
+  }
+  .bridge-card .name{ font-family: var(--font-label); font-size:0.72rem; letter-spacing:.08em; text-transform:uppercase; color: var(--ink-faint); }
+  .bridge-card .eq{ font-family: var(--font-mono); font-size: 0.95rem; margin-top: 6px; }
+
+  /* ---------- equations ---------- */
+  .eq-card{
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 4px;
+    box-shadow: var(--shadow); margin-bottom: 26px; overflow: hidden;
+  }
+  .eq-head{
+    display:flex; align-items:center; gap:16px; padding: 18px 22px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .eq-num{
+    font-family: var(--font-display); font-size: 1.6rem; color: var(--ink-faint);
+    min-width: 2ch;
+  }
+  .eq-head h3{ margin:0; font-size: 1.2rem; }
+  .eq-head .field-tag{
+    margin-left:auto; font-family: var(--font-label); font-size: 0.68rem; letter-spacing:.08em;
+    text-transform: uppercase; padding: 3px 9px; border-radius: 999px; border:1px solid currentColor;
+  }
+  .tag-electric{ color: var(--electric); }
+  .tag-magnetic{ color: var(--magnetic); }
+  .tag-both{ color: var(--ink-muted); }
+
+  .eq-body{ display:grid; grid-template-columns: 1.1fr 1fr; gap: 0; }
+  @media (max-width: 720px){ .eq-body{ grid-template-columns: 1fr; } }
+  .eq-forms{ padding: 20px 22px; border-right: 1px solid var(--rule); }
+  @media (max-width: 720px){ .eq-forms{ border-right:none; border-bottom:1px solid var(--rule);} }
+  .eq-form-label{ font-family: var(--font-label); font-size:0.68rem; letter-spacing:.08em; text-transform:uppercase; color: var(--ink-faint); margin: 14px 0 6px; }
+  .eq-form-label:first-child{ margin-top:0; }
+  .readout{
+    font-family: var(--font-mono); font-size: 1.05rem; background: var(--eqn-bg);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 12px 14px;
+    text-shadow: var(--eqn-glow) currentColor;
+    overflow-x: auto; white-space: nowrap;
+  }
+  .readout.electric{ color: var(--electric); }
+  .readout.magnetic{ color: var(--magnetic); }
+  .eq-meaning{ padding: 20px 22px; color: var(--ink-muted); font-size: 0.98rem; }
+  .eq-meaning strong{ color: var(--ink); font-weight: 600; }
+  .eq-diagram{ padding: 6px 22px 20px; }
+  .eq-diagram svg{ width: 100%; height: auto; max-width: 320px; display:block; margin: 0 auto; }
+  .eq-diagram figcaption{ text-align:center; font-size: 0.82rem; color: var(--ink-faint); margin-top: 6px; }
+  figure{ margin: 0; }
+
+  sub{ font-size: 0.72em; }
+
+  /* ---------- light section ---------- */
+  .light-panel{
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; box-shadow: var(--shadow);
+    padding: 26px 26px 22px;
+  }
+  .derivation{
+    display: grid; gap: 10px; margin: 18px 0 26px;
+  }
+  .step{
+    display:grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: baseline;
+  }
+  .step .n{ font-family: var(--font-label); font-size: 0.78rem; color: var(--ink-faint); }
+  .step .readout{ font-size: 0.98rem; white-space: normal; }
+  .result{
+    display:flex; flex-wrap: wrap; gap: 18px; align-items:center; justify-content: space-between;
+    background: var(--eqn-bg); border:1px solid var(--rule); border-radius: 3px; padding: 18px 20px;
+    margin-top: 6px;
+  }
+  .result .readout{ background: transparent; border: none; padding: 0; font-size: 1.2rem; }
+  .result .c-value{ font-family: var(--font-mono); text-align:right; }
+  .result .c-value b{ font-size: 1.35rem; color: var(--electric); text-shadow: var(--eqn-glow) currentColor; }
+  .result .c-value .unit{ color: var(--ink-faint); font-size: 0.85rem; }
+  .frac{ display:inline-flex; flex-direction:column; vertical-align:middle; margin: 0 3px; text-align:center; line-height:1.05; }
+  .frac .num{ border-bottom: 1px solid currentColor; padding: 0 3px 1px; }
+  .frac .den{ padding: 1px 3px 0; }
+  .sqrt{ border-top: 1px solid currentColor; padding-top: 1px; }
+
+  /* ---------- reference table ---------- */
+  table.ref{
+    width: 100%; border-collapse: collapse; font-size: 0.95rem;
+  }
+  table.ref caption{ display:none; }
+  table.ref th{
+    text-align:left; font-family: var(--font-label); font-size: 0.68rem; letter-spacing:.08em;
+    text-transform: uppercase; color: var(--ink-faint); font-weight:500;
+    border-bottom: 1px solid var(--rule-strong); padding: 8px 10px;
+  }
+  table.ref td{ border-bottom: 1px solid var(--rule); padding: 9px 10px; vertical-align: baseline; }
+  table.ref td.sym{ font-family: var(--font-mono); color: var(--ink); }
+  table.ref td.unit{ font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink-muted); white-space: nowrap; }
+  .ref-wrap{ overflow-x: auto; border:1px solid var(--rule); border-radius:4px; background: var(--surface); box-shadow: var(--shadow); }
+  .ref-wrap table{ margin:0; }
+  .ref-wrap th:first-child, .ref-wrap td:first-child{ padding-left:16px; }
+  .ref-wrap th:last-child, .ref-wrap td:last-child{ padding-right:16px; }
+
+  footer{
+    padding: 40px 0 70px; color: var(--ink-faint); font-size: 0.88rem;
+  }
+  footer .eyebrow{ margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Feldnotizen — Referenz</div>
+    <h1>Die Maxwellschen<br>Gleichungen</h1>
+    <p class="lede">
+      Vier Gleichungen verbinden elektrisches Feld <b>E</b> und magnetisches Feld <b>B</b>
+      zu einem gemeinsamen Objekt — dem elektromagnetischen Feld. Ihre Konsequenz:
+      Licht ist eine Welle aus genau diesem Feld, mit einer Geschwindigkeit, die allein
+      aus zwei Materialkonstanten folgt.
+    </p>
+
+    <div class="scope">
+      <div class="scope-head">
+        <span>Ebene Welle · z-Achse</span>
+        <span>E ⟂ B ⟂ Ausbreitungsrichtung</span>
+      </div>
+      <canvas id="wave" width="1600" height="520" role="img"
+        aria-label="Animation einer ebenen elektromagnetischen Welle: das elektrische Feld E schwingt vertikal in Cyan, das magnetische Feld B schwingt dazu senkrecht in Bernstein, phasengleich, beide senkrecht zur Ausbreitungsrichtung entlang der z-Achse."></canvas>
+      <div class="scope-legend">
+        <span><i class="swatch" style="background:var(--electric)"></i> Elektrisches Feld E — schwingt vertikal</span>
+        <span><i class="swatch" style="background:var(--magnetic)"></i> Magnetisches Feld B — schwingt horizontal, ⟂ zu E</span>
+        <span>Ausbreitung entlang z mit c = 1/√(μ₀ε₀)</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule-top">
+    <div class="eyebrow">Werkzeug</div>
+    <h2>Drei Operatoren, zwei Sätze</h2>
+    <p class="intro">
+      Alle vier Gleichungen benutzen nur den Nabla-Operator ∇ = (∂/∂x, ∂/∂y, ∂/∂z),
+      angewandt auf drei Arten. Das ist die gesamte Mathematik, die man aus der
+      Vektoranalysis mitbringen muss.
+    </p>
+
+    <div class="toolbox-grid">
+      <div class="tool-card">
+        <svg viewBox="0 0 220 130" role="img" aria-label="Diagramm des Gradienten: gekrümmte Höhenlinien eines Skalarfelds mit einem Pfeil, der senkrecht zu den Linien in Richtung des steilsten Anstiegs zeigt.">
+          <path d="M20,110 Q80,60 20,20" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55"/>
+          <path d="M55,115 Q110,60 55,10" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+          <path d="M90,118 Q140,60 90,4" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.85"/>
+          <path d="M125,120 Q170,60 125,0" fill="none" stroke="currentColor" stroke-width="1.4" opacity="1"/>
+          <defs>
+            <marker id="ga" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="var(--electric)"/>
+            </marker>
+          </defs>
+          <line x1="30" y1="64" x2="150" y2="64" stroke="var(--electric)" stroke-width="2" marker-end="url(#ga)"/>
+        </svg>
+        <h3>Gradient <span class="sym">∇φ</span></h3>
+        <p>Auf ein Skalarfeld angewandt: ein Vektor, der in Richtung des steilsten Anstiegs zeigt.</p>
+      </div>
+
+      <div class="tool-card">
+        <svg viewBox="0 0 220 130" role="img" aria-label="Diagramm der Divergenz: acht Pfeile strahlen radial von einem zentralen Punkt nach außen, als Sinnbild einer Quelle.">
+          <circle cx="110" cy="65" r="4" fill="currentColor"/>
+          <defs>
+            <marker id="da" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+              <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
+            </marker>
+          </defs>
+          <g stroke="var(--electric)" stroke-width="1.8" marker-end="url(#da)">
+            <line x1="110" y1="65" x2="110" y2="20"/>
+            <line x1="110" y1="65" x2="110" y2="110"/>
+            <line x1="110" y1="65" x2="65" y2="65"/>
+            <line x1="110" y1="65" x2="155" y2="65"/>
+            <line x1="110" y1="65" x2="78" y2="33"/>
+            <line x1="110" y1="65" x2="142" y2="33"/>
+            <line x1="110" y1="65" x2="78" y2="97"/>
+            <line x1="110" y1="65" x2="142" y2="97"/>
+          </g>
+        </svg>
+        <h3>Divergenz <span class="sym">∇·F</span></h3>
+        <p>Auf ein Vektorfeld angewandt: ein Skalar, der misst, wie stark ein Punkt Quelle oder Senke ist.</p>
+      </div>
+
+      <div class="tool-card">
+        <svg viewBox="0 0 220 130" role="img" aria-label="Diagramm der Rotation: vier gebogene Pfeile umkreisen einen zentralen Punkt, als Sinnbild eines Wirbels.">
+          <circle cx="110" cy="65" r="3" fill="currentColor"/>
+          <defs>
+            <marker id="ra" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+              <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--magnetic)"/>
+            </marker>
+          </defs>
+          <g fill="none" stroke="var(--magnetic)" stroke-width="1.8">
+            <path d="M110,25 A40,40 0 0,1 150,65" marker-end="url(#ra)"/>
+            <path d="M150,65 A40,40 0 0,1 110,105" marker-end="url(#ra)"/>
+            <path d="M110,105 A40,40 0 0,1 70,65" marker-end="url(#ra)"/>
+            <path d="M70,65 A40,40 0 0,1 110,25" marker-end="url(#ra)"/>
+          </g>
+        </svg>
+        <h3>Rotation <span class="sym">∇×F</span></h3>
+        <p>Ebenfalls ein Vektor: misst die Wirbelstärke — dreht sich das Feld um diesen Punkt?</p>
+      </div>
+    </div>
+
+    <div class="theorem-bridge">
+      <div class="bridge-card">
+        <div class="name">Gaußscher Integralsatz</div>
+        <div class="eq">∯<sub>S</sub> F·dA = ∭<sub>V</sub> (∇·F) dV</div>
+      </div>
+      <div class="bridge-card">
+        <div class="name">Stokesscher Integralsatz</div>
+        <div class="eq">∮<sub>C</sub> F·dl = ∬<sub>S</sub> (∇×F)·dA</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule-top">
+    <div class="eyebrow">Die Gleichungen</div>
+    <h2>Vier Gesetze des Feldes</h2>
+    <p class="intro">
+      Jede Gleichung existiert in einer lokalen (differentiellen) und einer globalen
+      (integralen) Form — verbunden genau durch die beiden Sätze oben.
+    </p>
+
+    <!-- I -->
+    <div class="eq-card">
+      <div class="eq-head">
+        <span class="eq-num">I</span>
+        <h3>Gaußsches Gesetz — Elektrizität</h3>
+        <span class="field-tag tag-electric">E-Feld</span>
+      </div>
+      <div class="eq-body">
+        <div class="eq-forms">
+          <div class="eq-form-label">Differentiell</div>
+          <div class="readout electric">∇·E = ρ/ε₀</div>
+          <div class="eq-form-label">Integral</div>
+          <div class="readout electric">∮∮ E·dA = Q<sub>encl</sub>/ε₀</div>
+        </div>
+        <div class="eq-meaning">
+          <strong>Ladungen sind Quellen.</strong> Elektrische Feldlinien entspringen an
+          positiven Ladungen und enden an negativen. Der Fluss durch jede geschlossene
+          Fläche ist proportional zur eingeschlossenen Ladung — unabhängig von der Form
+          der Fläche.
+        </div>
+      </div>
+      <div class="eq-diagram">
+        <figure>
+          <svg viewBox="0 0 220 160" role="img" aria-label="Eine positive Ladung im Zentrum einer gestrichelten Gauß-Fläche, von der acht Feldlinien radial nach außen durch die Fläche hindurch verlaufen.">
+            <circle cx="110" cy="80" r="55" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.6"/>
+            <circle cx="110" cy="80" r="7" fill="var(--electric)"/>
+            <text x="110" y="84" text-anchor="middle" font-size="9" fill="var(--surface)" font-family="var(--font-mono)">+</text>
+            <defs>
+              <marker id="ea1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
+              </marker>
+            </defs>
+            <g stroke="var(--electric)" stroke-width="1.6" marker-end="url(#ea1)">
+              <line x1="110" y1="80" x2="110" y2="15"/>
+              <line x1="110" y1="80" x2="110" y2="145"/>
+              <line x1="110" y1="80" x2="45" y2="80"/>
+              <line x1="110" y1="80" x2="175" y2="80"/>
+              <line x1="110" y1="80" x2="64" y2="34"/>
+              <line x1="110" y1="80" x2="156" y2="34"/>
+              <line x1="110" y1="80" x2="64" y2="126"/>
+              <line x1="110" y1="80" x2="156" y2="126"/>
+            </g>
+          </svg>
+          <figcaption>Fluss aus der Fläche ∝ eingeschlossene Ladung</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- II -->
+    <div class="eq-card">
+      <div class="eq-head">
+        <span class="eq-num">II</span>
+        <h3>Gaußsches Gesetz — Magnetismus</h3>
+        <span class="field-tag tag-magnetic">B-Feld</span>
+      </div>
+      <div class="eq-body">
+        <div class="eq-forms">
+          <div class="eq-form-label">Differentiell</div>
+          <div class="readout magnetic">∇·B = 0</div>
+          <div class="eq-form-label">Integral</div>
+          <div class="readout magnetic">∮∮ B·dA = 0</div>
+        </div>
+        <div class="eq-meaning">
+          <strong>Keine magnetischen Monopole.</strong> B-Feldlinien haben weder Anfang
+          noch Ende — sie sind stets geschlossen. Jede Linie, die in eine Gauß-Fläche
+          eintritt, verlässt sie an anderer Stelle wieder. Netto-Fluss immer null.
+        </div>
+      </div>
+      <div class="eq-diagram">
+        <figure>
+          <svg viewBox="0 0 220 160" role="img" aria-label="Dieselbe gestrichelte Gauß-Fläche, diesmal ohne zentrale Ladung: geschlossene magnetische Feldlinien treten in die Fläche ein und an anderer Stelle wieder aus, sodass kein Netto-Fluss entsteht.">
+            <circle cx="110" cy="80" r="55" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.6"/>
+            <defs>
+              <marker id="ma1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--magnetic)"/>
+              </marker>
+            </defs>
+            <g fill="none" stroke="var(--magnetic)" stroke-width="1.6">
+              <path d="M60,120 C40,80 60,40 110,32 C160,40 180,80 160,120" marker-end="url(#ma1)"/>
+              <path d="M80,138 C95,100 125,100 140,138"/>
+              <path d="M60,120 C50,130 55,140 80,138" marker-end="url(#ma1)"/>
+              <path d="M140,138 C165,140 170,130 160,120"/>
+            </g>
+          </svg>
+          <figcaption>Feldlinien treten ein und aus — Netto-Fluss = 0</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- III -->
+    <div class="eq-card">
+      <div class="eq-head">
+        <span class="eq-num">III</span>
+        <h3>Faradaysches Induktionsgesetz</h3>
+        <span class="field-tag tag-both">B → E</span>
+      </div>
+      <div class="eq-body">
+        <div class="eq-forms">
+          <div class="eq-form-label">Differentiell</div>
+          <div class="readout electric">∇×E = −∂B/∂t</div>
+          <div class="eq-form-label">Integral</div>
+          <div class="readout electric">∮ E·dl = −d/dt ∬ B·dA</div>
+        </div>
+        <div class="eq-meaning">
+          <strong>Ein sich änderndes B-Feld erzeugt ein wirbelndes E-Feld.</strong>
+          Das Prinzip hinter Generator und Transformator: Nimmt der eingeschlossene
+          magnetische Fluss ab, treibt das induzierte elektrische Feld einen Strom
+          im Gegensinn dazu — daher das Minuszeichen (Lenzsche Regel).
+        </div>
+      </div>
+      <div class="eq-diagram">
+        <figure>
+          <svg viewBox="0 0 220 160" role="img" aria-label="Eine Drahtschleife, im Inneren ein abnehmendes Magnetfeld in die Bildebene, dargestellt durch Kreuzsymbole und einen Pfeil für dB/dt; um die Schleife herum zirkuliert das induzierte elektrische Feld.">
+            <circle cx="110" cy="80" r="48" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <g fill="var(--magnetic)" font-family="var(--font-mono)" font-size="12">
+              <text x="90" y="65">×</text><text x="118" y="65">×</text>
+              <text x="90" y="90">×</text><text x="118" y="90">×</text>
+              <text x="104" y="77">×</text>
+            </g>
+            <text x="110" y="112" text-anchor="middle" fill="var(--magnetic)" font-family="var(--font-mono)" font-size="11">∂B/∂t ↓</text>
+            <defs>
+              <marker id="fa1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
+              </marker>
+            </defs>
+            <g fill="none" stroke="var(--electric)" stroke-width="1.8">
+              <path d="M110,32 A48,48 0 0,1 158,80" marker-end="url(#fa1)"/>
+              <path d="M158,80 A48,48 0 0,1 110,128" marker-end="url(#fa1)"/>
+              <path d="M110,128 A48,48 0 0,1 62,80" marker-end="url(#fa1)"/>
+              <path d="M62,80 A48,48 0 0,1 110,32" marker-end="url(#fa1)"/>
+            </g>
+          </svg>
+          <figcaption>Abnehmendes B im Inneren → zirkulierendes E am Rand</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- IV -->
+    <div class="eq-card">
+      <div class="eq-head">
+        <span class="eq-num">IV</span>
+        <h3>Ampère-Maxwell-Gesetz</h3>
+        <span class="field-tag tag-both">J, E → B</span>
+      </div>
+      <div class="eq-body">
+        <div class="eq-forms">
+          <div class="eq-form-label">Differentiell</div>
+          <div class="readout magnetic">∇×B = μ₀J + μ₀ε₀ ∂E/∂t</div>
+          <div class="eq-form-label">Integral</div>
+          <div class="readout magnetic">∮ B·dl = μ₀I<sub>encl</sub> + μ₀ε₀ d/dt ∬ E·dA</div>
+        </div>
+        <div class="eq-meaning">
+          <strong>Strom UND ein sich änderndes E-Feld erzeugen ein B-Feld.</strong>
+          Ampères ursprüngliches Gesetz kannte nur den Strom J. Maxwells Ergänzung —
+          der <em>Verschiebungsstrom</em> μ₀ε₀ ∂E/∂t — schließt die Lücke am
+          Kondensatorspalt, wo kein realer Strom fließt, aber das E-Feld sich ändert.
+          Genau dieser Term macht elektromagnetische Wellen erst möglich.
+        </div>
+      </div>
+      <div class="eq-diagram">
+        <figure>
+          <svg viewBox="0 0 220 160" role="img" aria-label="Ein stromdurchflossener Draht mit einer Kondensatorlücke: um beide Abschnitte zirkuliert dasselbe magnetische Feld, angetrieben links vom realen Strom I und rechts vom sich ändernden elektrischen Feld zwischen den Kondensatorplatten.">
+            <line x1="15" y1="80" x2="80" y2="80" stroke="currentColor" stroke-width="2.4"/>
+            <line x1="140" y1="80" x2="205" y2="80" stroke="currentColor" stroke-width="2.4"/>
+            <line x1="88" y1="55" x2="88" y2="105" stroke="currentColor" stroke-width="3"/>
+            <line x1="132" y1="55" x2="132" y2="105" stroke="currentColor" stroke-width="3"/>
+            <text x="45" y="70" text-anchor="middle" fill="currentColor" font-family="var(--font-mono)" font-size="11">I</text>
+            <defs>
+              <marker id="aa1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--magnetic)"/>
+              </marker>
+              <marker id="aa2" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
+              </marker>
+            </defs>
+            <g fill="none" stroke="var(--magnetic)" stroke-width="1.6">
+              <ellipse cx="45" cy="80" rx="26" ry="34"/>
+              <ellipse cx="163" cy="80" rx="26" ry="34"/>
+            </g>
+            <path d="M45,46 A26,34 0 0,1 71,80" fill="none" stroke="var(--magnetic)" stroke-width="1.8" marker-end="url(#aa1)"/>
+            <path d="M163,46 A26,34 0 0,1 189,80" fill="none" stroke="var(--magnetic)" stroke-width="1.8" marker-end="url(#aa1)"/>
+            <line x1="110" y1="65" x2="110" y2="95" stroke="var(--electric)" stroke-width="1.8" marker-end="url(#aa2)"/>
+            <text x="110" y="122" text-anchor="middle" fill="var(--electric)" font-family="var(--font-mono)" font-size="10">∂E/∂t</text>
+          </svg>
+          <figcaption>Gleiches zirkulierendes B — links von I, rechts vom Verschiebungsstrom</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule-top">
+    <div class="eyebrow">Die Konsequenz</div>
+    <h2>Licht ist eine Welle des Feldes</h2>
+    <p class="intro">
+      Kombiniert man III und IV im ladungsfreien Raum (ρ = 0, J = 0), verschwindet
+      die Kopplung an Materie — übrig bleibt eine reine Eigenschaft des Feldes selbst.
+    </p>
+
+    <div class="light-panel">
+      <div class="derivation">
+        <div class="step">
+          <span class="n">1</span>
+          <span class="readout" style="font-size:0.95rem">Rotation von (III) bilden: ∇×(∇×E) = −∂/∂t (∇×B)</span>
+        </div>
+        <div class="step">
+          <span class="n">2</span>
+          <span class="readout" style="font-size:0.95rem">∇×B aus (IV) einsetzen (J = 0): ∇×(∇×E) = −μ₀ε₀ ∂²E/∂t²</span>
+        </div>
+        <div class="step">
+          <span class="n">3</span>
+          <span class="readout" style="font-size:0.95rem">Vektoridentität ∇×(∇×E) = ∇(∇·E) − ∇²E, mit (I): ∇·E = 0</span>
+        </div>
+      </div>
+
+      <div class="eq-form-label">Ergebnis — die Wellengleichung</div>
+      <div class="readout electric" style="font-size:1.15rem; margin-bottom:18px;">∇²E = μ₀ε₀ ∂²E/∂t²</div>
+
+      <p style="color:var(--ink-muted); margin: 0 0 6px;">
+        Das ist die klassische Wellengleichung ∇²ψ = (1/v²) ∂²ψ/∂t² mit
+        Ausbreitungsgeschwindigkeit v = 1/√(μ₀ε₀). Setzt man die rein elektrisch
+        und magnetisch gemessenen Konstanten ein:
+      </p>
+
+      <div class="result">
+        <div class="readout" style="font-size:1.05rem">
+          c = <span class="frac"><span class="num">1</span><span class="den">√(μ₀ε₀)</span></span>
+        </div>
+        <div class="c-value">
+          <div><b>2,998 × 10⁸</b> <span class="unit">m/s</span></div>
+          <div class="unit" style="font-size:0.78rem">= Lichtgeschwindigkeit c</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule-top">
+    <div class="eyebrow">Nachschlagen</div>
+    <h2>Größen &amp; Einheiten</h2>
+    <div class="ref-wrap">
+      <table class="ref">
+        <thead>
+          <tr><th>Symbol</th><th>Bedeutung</th><th>SI-Einheit</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="sym">E</td><td>Elektrische Feldstärke</td><td class="unit">V/m</td></tr>
+          <tr><td class="sym">B</td><td>Magnetische Flussdichte</td><td class="unit">T (Vs/m²)</td></tr>
+          <tr><td class="sym">ρ</td><td>Ladungsdichte</td><td class="unit">C/m³</td></tr>
+          <tr><td class="sym">J</td><td>Stromdichte</td><td class="unit">A/m²</td></tr>
+          <tr><td class="sym">ε₀</td><td>Elektrische Feldkonstante</td><td class="unit">8,854 × 10⁻¹² F/m</td></tr>
+          <tr><td class="sym">μ₀</td><td>Magnetische Feldkonstante</td><td class="unit">1,257 × 10⁻⁶ H/m</td></tr>
+          <tr><td class="sym">c</td><td>Lichtgeschwindigkeit (Vakuum)</td><td class="unit">2,998 × 10⁸ m/s</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <div class="eyebrow">Feldnotizen</div>
+    <p>Zusammengestellt zum Auffrischen der Vektoranalysis hinter den Maxwellschen
+      Gleichungen — differentielle und integrale Form, ihre physikalische Bedeutung,
+      und die Ableitung, die Licht als elektromagnetische Welle erklärt.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var canvas = document.getElementById('wave');
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function colors(){
+    var cs = getComputedStyle(document.documentElement);
+    return {
+      electric: cs.getPropertyValue('--electric').trim() || '#0089ad',
+      magnetic: cs.getPropertyValue('--magnetic').trim() || '#b05e08',
+      rule: cs.getPropertyValue('--rule').trim() || '#ccc',
+      ink: cs.getPropertyValue('--ink').trim() || '#171b26',
+      inkFaint: cs.getPropertyValue('--ink-faint').trim() || '#888'
+    };
+  }
+  var C = colors();
+  new MutationObserver(function(){ C = colors(); }).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  if (window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ C = colors(); });
+  }
+
+  var midY = H/2;
+  var amp = H*0.30;
+  var cycles = 3;
+  var k = cycles * 2 * Math.PI / W;
+
+  function drawAxis(){
+    ctx.strokeStyle = C.rule;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(30, midY); ctx.lineTo(W-30, midY);
+    ctx.stroke();
+    // arrowhead
+    ctx.beginPath();
+    ctx.moveTo(W-30, midY);
+    ctx.lineTo(W-44, midY-7);
+    ctx.moveTo(W-30, midY);
+    ctx.lineTo(W-44, midY+7);
+    ctx.stroke();
+    ctx.fillStyle = C.inkFaint;
+    ctx.font = '22px ' + getComputedStyle(document.body).fontFamily;
+    ctx.textAlign = 'right';
+    ctx.fillText('z  (Ausbreitung, c)', W-50, midY-14);
+  }
+
+  function drawWave(phase){
+    // E field: vertical plane, cyan
+    ctx.beginPath();
+    ctx.strokeStyle = C.electric;
+    ctx.lineWidth = 3;
+    for (var x=30; x<=W-30; x+=2){
+      var y = midY - amp * Math.sin(k*(x-30) - phase);
+      if (x===30) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    // B field: horizontal "into page" plane, amber, perspective-skewed
+    var skew = 0.42; // vertical compression to fake depth
+    ctx.beginPath();
+    ctx.strokeStyle = C.magnetic;
+    ctx.lineWidth = 3;
+    for (var x2=30; x2<=W-30; x2+=2){
+      var v = amp * Math.sin(k*(x2-30) - phase);
+      var y2 = midY - v*skew;
+      if (x2===30) ctx.moveTo(x2,y2); else ctx.lineTo(x2,y2);
+    }
+    ctx.stroke();
+
+    // sample vectors
+    var step = W/16;
+    for (var i=2;i<16;i++){
+      var x3 = 30 + i*step*((W-60)/W);
+      if (x3 > W-40) continue;
+      var vE = amp * Math.sin(k*(x3-30) - phase);
+      var yE = midY - vE;
+      var vB = amp * Math.sin(k*(x3-30) - phase) * skew;
+      var yB = midY - vB;
+
+      ctx.strokeStyle = C.electric;
+      ctx.lineWidth = 1.6;
+      ctx.globalAlpha = 0.85;
+      ctx.beginPath(); ctx.moveTo(x3, midY); ctx.lineTo(x3, yE); ctx.stroke();
+
+      ctx.strokeStyle = C.magnetic;
+      ctx.beginPath(); ctx.moveTo(x3, midY); ctx.lineTo(x3, yB); ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function frame(t){
+    ctx.clearRect(0,0,W,H);
+    drawAxis();
+    drawWave(reduced ? 0.6 : t*0.0016);
+    if (!reduced) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
