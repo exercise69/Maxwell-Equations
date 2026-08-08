@@ -940,6 +940,101 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
         der Beschleunigung, komplett unterschiedliches Ergebnis.
       </p>
     </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Warum eine scharfe Frequenz?</h4>
+      <p class="tagline" style="margin-bottom:16px;">Ständige Beschleunigung heißt nicht automatisch breites Spektrum.</p>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Entscheidend ist nicht, dass sich die Beschleunigung dauernd ändert — sondern ob
+        sie das nach einem <strong>exakt sich wiederholenden</strong> Muster tut. Die
+        Fourier-Reihe zerlegt jede periodische Funktion mit Periode T in diskrete
+        Frequenzen, keine kontinuierliche Bandbreite:
+      </p>
+      <div class="readout electric" style="margin-bottom:18px;">f(t) = Σₙ cₙ · e^(inω₀t),  ω₀ = 2π/T</div>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>Periodisch</h4>
+          <div class="tagline">exakt wiederkehrendes Muster</div>
+          <p class="muted" style="font-size:0.9rem; margin:0;">
+            Fourier-<strong>Reihe</strong> → diskrete Linien bei ω₀, 2ω₀, 3ω₀, ...
+            Eine reine Sinusschwingung I(t)=I₀sin(ωt) hat sogar nur eine einzige Linie —
+            keine Oberschwingungen.
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>Einmalig</h4>
+          <div class="tagline">nicht wiederkehrendes Ereignis</div>
+          <p class="muted" style="font-size:0.9rem; margin:0;">
+            Fourier-<strong>Transformation</strong> eines einzelnen Pulses → generisch
+            eine glatte, kontinuierliche Funktion über viele Frequenzen. Daher das
+            Bremsstrahlungskontinuum.
+          </p>
+        </div>
+      </div>
+      <div class="result" style="margin-top:20px;">
+        <div class="readout" style="font-size:1.05rem">Δω · Δt ≈ 1</div>
+        <div class="c-value"><div class="unit">Dauer des Ereignisses ↔ Breite des Spektrums</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Δt ist die Zeitspanne, über die sich das Signal exakt gleich verhält. Bei
+        Bremsstrahlung: eine einzige, extrem kurze Kollisionsdauer → riesiges Δω → breites
+        Kontinuum. Bei einer Antenne: Millionen bis Milliarden Zyklen laufen exakt gleich
+        ab → winziges Δω → praktisch eine einzelne Linie. Dieselbe Δω·Δt-Beziehung wie die
+        quantenmechanische Energie-Zeit-Unschärfe — hier aber reine Fourier-Mathematik,
+        nichts Quantenmechanisches.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Wo die Bandbreite eines echten Signals herkommt</h4>
+      <p class="tagline" style="margin-bottom:16px;">Drei Spektren im Vergleich.</p>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>Reiner Träger</h4>
+          <div class="tagline">unmoduliert, endlos lang</div>
+          <svg viewBox="0 0 200 120" role="img" aria-label="Spektrum eines unmodulierten Trägers: eine einzelne, unendlich schmale Spitze bei der Trägerfrequenz." style="width:100%;height:auto;">
+            <line x1="10" y1="104" x2="190" y2="104" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <line x1="100" y1="104" x2="100" y2="16" stroke="var(--electric)" stroke-width="2.5"/>
+            <text x="100" y="116" text-anchor="middle" font-size="9" fill="var(--ink-faint)" font-family="var(--font-label)">ω₀</text>
+          </svg>
+          <p class="muted" style="font-size:0.88rem; margin:8px 0 0;">Eine einzelne scharfe Linie — ideale periodische Schwingung.</p>
+        </div>
+        <div class="calc-card">
+          <h4>Einmaliger Puls</h4>
+          <div class="tagline">Bremsstrahlung</div>
+          <svg viewBox="0 0 200 120" role="img" aria-label="Spektrum eines einmaligen Pulses: ein sehr breiter, flacher Höcker über weite Teile des Frequenzbereichs." style="width:100%;height:auto;">
+            <line x1="10" y1="104" x2="190" y2="104" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <polyline points="0,103.4 4,103.1 8,102.7 12,102.2 16,101.5 20,100.6 24,99.4 28,97.8 32,95.8 36,93.4 40,90.6 44,87.1 48,83.2 52,78.7 56,73.7 60,68.3 64,62.6 68,56.7 72,50.8 76,45.1 80,39.8 84,35.2 88,31.3 92,28.4 96,26.6 100,26.0 104,26.6 108,28.4 112,31.3 116,35.2 120,39.8 124,45.1 128,50.8 132,56.7 136,62.6 140,68.3 144,73.7 148,78.7 152,83.2 156,87.1 160,90.6 164,93.4 168,95.8 172,97.8 176,99.4 180,100.6 184,101.5 188,102.2 192,102.7 196,103.1 200,103.4"
+              fill="none" stroke="var(--magnetic)" stroke-width="2"/>
+            <text x="100" y="116" text-anchor="middle" font-size="9" fill="var(--ink-faint)" font-family="var(--font-label)">ω</text>
+          </svg>
+          <p class="muted" style="font-size:0.88rem; margin:8px 0 0;">Kontinuum über weite Frequenzbereiche — Δt extrem kurz.</p>
+        </div>
+        <div class="calc-card">
+          <h4>Modulierter Träger</h4>
+          <div class="tagline">echtes Radiosignal</div>
+          <svg viewBox="0 0 200 120" role="img" aria-label="Spektrum eines modulierten Trägers: ein schmaler Höcker um die Trägerfrequenz, deutlich schmaler als beim einmaligen Puls." style="width:100%;height:auto;">
+            <line x1="10" y1="104" x2="190" y2="104" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <polyline points="0,104.0 4,104.0 8,104.0 12,104.0 16,104.0 20,104.0 24,104.0 28,104.0 32,104.0 36,104.0 40,104.0 44,104.0 48,104.0 52,104.0 56,104.0 60,104.0 64,104.0 68,104.0 72,103.8 76,103.1 80,100.6 84,93.4 88,78.7 92,56.7 96,35.2 100,26.0 104,35.2 108,56.7 112,78.7 116,93.4 120,100.6 124,103.1 128,103.8 132,104.0 136,104.0 140,104.0 144,104.0 148,104.0 152,104.0 156,104.0 160,104.0 164,104.0 168,104.0 172,104.0 176,104.0 180,104.0 184,104.0 188,104.0 192,104.0 196,104.0 200,104.0"
+              fill="none" stroke="var(--electric)" stroke-width="2"/>
+            <text x="100" y="116" text-anchor="middle" font-size="9" fill="var(--ink-faint)" font-family="var(--font-label)">ω₀</text>
+          </svg>
+          <p class="muted" style="font-size:0.88rem; margin:8px 0 0;">Schmales Band um ω₀, Breite = Informationsrate (z. B. UKW ~200 kHz).</p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:18px;">
+        Ein reiner, endlos gleich schwingender Träger wäre eine einzelne Linie. Aber ein
+        echtes Signal soll Information tragen — Sprache, Musik, Daten. Dafür muss die
+        Schwingung <strong>moduliert</strong> werden (Amplitude, Frequenz oder Phase leicht
+        verändert, im Takt der Information). Genau diese Modulation zerstört die perfekte
+        Periodizität ein kleines Stück — und erzeugt dadurch das Band, dessen Breite direkt
+        der Bandbreite der übertragenen Information entspricht.
+      </p>
+    </div>
   </section>
 
   <section class="rule-top">
