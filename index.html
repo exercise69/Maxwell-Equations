@@ -1141,10 +1141,11 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
     <div class="eyebrow">Quantennatur</div>
     <h2>Wie viele Photonen sind das eigentlich?</h2>
     <p class="intro">
-      Maxwell beschreibt das Feld als kontinuierlich — aber jede Emission oder Absorption
-      von Energie geschieht in Paketen der Größe hf. Daraus lässt sich für eine Antenne
-      eine Photonenzahl pro Sekunde berechnen. Und die Frage, warum das Feld trotzdem
-      überall glatt aussieht statt "körnig", hat eine überraschend einfache Antwort.
+      Maxwell beschreibt das Feld als kontinuierlich — aber jede Emission oder
+      Absorption von Energie geschieht in Paketen der Größe hf. Daraus lässt sich für
+      eine Antenne eine Photonenzahl pro Sekunde berechnen. Und die Frage, warum das Feld
+      trotzdem überall glatt aussieht statt "körnig", hat eine überraschend einfache
+      Antwort.
     </p>
 
     <div class="calc-block">
@@ -1224,6 +1225,156 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
         perfekt kontinuierlich und deterministisch, obwohl "im Hintergrund" Energie in
         Paketen der Größe hf gequantelt bleibt. Das ist das Korrespondenzprinzip: bei großen
         Quantenzahlen wird Quantenmechanik von klassischer Physik ununterscheidbar.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Das elektromagnetische Spektrum</h4>
+      <p class="tagline" style="margin-bottom:16px;">Von Radiowellen bis Gammastrahlung — 15 Größenordnungen in der Frequenz.</p>
+      <svg viewBox="0 0 900 225" role="img" style="width:100%;height:auto;" aria-label="Elektromagnetisches Spektrum auf logarithmischer Frequenzachse von 10 hoch 5 bis 10 hoch 20 Hertz, mit zunehmend dunkler eingefärbten Bändern von Radio über Mikrowellen, Infrarot, das schmale sichtbare Band in Regenbogenfarben, UV, Röntgen bis Gammastrahlung. Eine gestrichelte Markierung im fernen Infrarot zeigt die Schwelle, an der die Photonenenergie gleich der thermischen Energie bei Raumtemperatur ist.">
+        <defs>
+          <linearGradient id="specRainbow" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#e0393e"/>
+            <stop offset="20%" stop-color="#f2a022"/>
+            <stop offset="40%" stop-color="#f5e642"/>
+            <stop offset="60%" stop-color="#4caf50"/>
+            <stop offset="80%" stop-color="#2f6fed"/>
+            <stop offset="100%" stop-color="#7b3fd4"/>
+          </linearGradient>
+        </defs>
+
+        <rect x="50.0" y="70" width="185.4" height="50" fill="var(--ink)" opacity="0.05"/>
+        <rect x="235.4" y="70" width="160.0" height="50" fill="var(--ink)" opacity="0.10"/>
+        <rect x="395.4" y="70" width="166.7" height="50" fill="var(--ink)" opacity="0.18"/>
+        <rect x="562.1" y="70" width="15.8" height="50" fill="url(#specRainbow)"/>
+        <rect x="577.9" y="70" width="84.2" height="50" fill="var(--ink)" opacity="0.30"/>
+        <rect x="662.1" y="70" width="160.0" height="50" fill="var(--ink)" opacity="0.42"/>
+        <rect x="822.1" y="70" width="27.9" height="50" fill="var(--ink)" opacity="0.55"/>
+
+        <line x1="50" y1="120" x2="850" y2="120" stroke="var(--rule-strong)" stroke-width="1"/>
+        <line x1="103.3" y1="120" x2="103.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
+        <line x1="263.3" y1="120" x2="263.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
+        <line x1="423.3" y1="120" x2="423.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
+        <line x1="583.3" y1="120" x2="583.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
+        <line x1="743.3" y1="120" x2="743.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
+
+        <text x="103.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10⁶ Hz</text>
+        <text x="263.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10⁹ Hz</text>
+        <text x="423.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10¹² Hz</text>
+        <text x="583.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10¹⁵ Hz</text>
+        <text x="743.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10¹⁸ Hz</text>
+
+        <text x="142.7" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">Radio</text>
+        <text x="315.4" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">Mikrowellen</text>
+        <text x="478.8" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">Infrarot</text>
+        <text x="620.0" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">UV</text>
+        <text x="742.1" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">Röntgen</text>
+        <text x="836.0" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">γ</text>
+
+        <line x1="570.0" y1="70" x2="570.0" y2="40" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="2 2"/>
+        <text x="570.0" y="30" text-anchor="middle" font-size="12" fill="var(--ink)" font-family="var(--font-label)" font-weight="600">Sichtbar</text>
+        <text x="558.0" y="196" text-anchor="end" font-size="9" fill="var(--ink-faint)" font-family="var(--font-mono)">750 nm</text>
+        <text x="582.0" y="196" text-anchor="start" font-size="9" fill="var(--ink-faint)" font-family="var(--font-mono)">380 nm</text>
+
+        <line x1="465.8" y1="70" x2="465.8" y2="128" stroke="var(--magnetic)" stroke-width="1.6" stroke-dasharray="4 3"/>
+        <text x="465.8" y="160" text-anchor="middle" font-size="10.5" fill="var(--magnetic)" font-family="var(--font-label)">hf = k_BT (300 K)</text>
+        <text x="465.8" y="174" text-anchor="middle" font-size="9.5" fill="var(--ink-faint)" font-family="var(--font-mono)">≈ 6 THz · 48 µm</text>
+
+        <text x="52" y="214" text-anchor="start" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">n̄ ≫ 1 — Feld wirkt klassisch</text>
+        <text x="848" y="214" text-anchor="end" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">n̄ ≈ 0 — einzelne Photonen zählbar</text>
+      </svg>
+      <p class="muted" style="font-size:0.9rem; margin-top:12px;">
+        Die zunehmende Einfärbung von links nach rechts symbolisiert den fließenden
+        Übergang: kein scharfer Schnitt, sondern eine stetig wachsende "Photonenhaftigkeit"
+        mit der Frequenz. Das schmale sichtbare Band liegt auffällig nah an der
+        thermischen Schwelle — kein Zufall, siehe unten.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Der Übergang zum Photonenbild</h4>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 16px;">
+        Es gibt keinen scharfen Frequenz-Schnitt, sondern zwei unabhängige Stellschrauben:
+        wie energiereich die einzelnen Photonen sind (hf), und wie viele davon pro Sekunde
+        ankommen. Der entscheidende Vergleich für die Energie-Achse ist hf gegen die
+        thermische Energie k_BT — denn selbst im "leeren" Raum bei Zimmertemperatur gibt
+        es durch Schwarzkörperstrahlung bereits thermische Photonen in jedem Frequenzmodus.
+      </p>
+      <div class="result">
+        <div class="readout electric" style="font-size:1.05rem">n̄(f,T) = 1 / (e^(hf/k_BT) − 1)</div>
+        <div class="c-value"><div class="unit">mittlere thermische Besetzungszahl pro Modus</div></div>
+      </div>
+      <div class="calc-grid" style="margin-top:20px;">
+        <div class="calc-card">
+          <h4>Radio, 100 MHz, 300 K</h4>
+          <div class="tagline">hf/k_BT ≈ 1,6 × 10⁻⁵</div>
+          <div class="result"><div class="readout electric">n̄ ≈ 6,3 × 10⁴</div></div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Zehntausende thermische Photonen pro Modus, allein aus der Zimmertemperatur.
+            Jedes Signal-Photon geht darin unter — Quantelung ist bei Radiofrequenzen
+            physikalisch unmessbar, nicht nur unpraktisch.
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>Sichtbares Licht, 500 THz, 300 K</h4>
+          <div class="tagline">hf/k_BT ≈ 80</div>
+          <div class="result"><div class="readout magnetic">n̄ ≈ 1,8 × 10⁻³⁵</div></div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Praktisch kein thermischer Hintergrund. Ein einzelnes Photon ist ein echtes,
+            seltenes, detektierbares Ereignis — nichts verschluckt es im Rauschen.
+          </p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:18px;">
+        Der Übergang liegt dort, wo hf ≈ k_BT: bei etwa 6,25 THz bzw. 48 µm Wellenlänge —
+        mitten im <strong>fernen Infrarot</strong>. Genau das beantwortet die Frage nach
+        dem Infrarot direkt: es liegt nicht auf einer Seite der Grenze, sondern spannt sie
+        auf. Fernes IR verhält sich noch radiohaft (thermisch dominiert), nahes IR bereits
+        photonenhaft. Passend dazu: Ein raumtemperiertes Objekt strahlt nach dem Wienschen
+        Gesetz am stärksten bei rund 10 µm — mittleres Infrarot, fast exakt dort, wo n̄ von
+        der Größenordnung 1 ist. Deshalb arbeiten Wärmebildkameras genau in diesem Band.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Die zweite Stellschraube ist die Intensität: Auch sichtbares Licht wirkt bei hoher
+        Helligkeit (Glühbirne, Laserpointer) makroskopisch glatt, weil N astronomisch groß
+        bleibt. Erst bei <strong>schwachen</strong> Quellen wird die Körnigkeit praktisch
+        sichtbar — Sternenlicht, Einzelphotonenquellen in der Quantenoptik. Die
+        Stäbchenzellen im menschlichen Auge sind nachweislich empfindlich genug, um
+        einzelne Photonen zu registrieren (Hecht/Shlaer/Pirenne, 1942). Umgekehrt geht
+        Einzelphotonen-Zählen auch bei Mikrowellenfrequenzen — mit supraleitenden
+        Schaltkreisen, wie sie auch in Quantencomputern stecken —, aber nur bei
+        Millikelvin-Temperaturen im Verdünnungskühlschrank: man kühlt das thermische
+        Photonenbad quasi weg, bis n̄ auch bei niedriger Frequenz gegen null geht.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Woher kommt die thermische Hintergrundstrahlung?</h4>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 16px;">
+        Von genau derselben Physik wie im Abschnitt "Abstrahlung" oben:
+        <strong>beschleunigte Ladungen</strong>, überwiegend Elektronen (sie sind rund
+        1800-mal leichter als Protonen, also bei gleicher thermischer Kraft entsprechend
+        stärker beschleunigt — a = F/m). Nur ist die Beschleunigung hier nicht kohärent
+        von einer Antenne angetrieben, sondern ungeordnet durch thermische Bewegung: in
+        Festkörpern Gitterschwingungen mit fluktuierenden Dipolmomenten, in Gasen Stöße
+        und Rotations-/Vibrationsübergänge. Jedes einzelne dieser Ereignisse ist ein
+        winziger, zufälliger Bremsstrahlungspuls; die Summe über unzählige Ladungen bei
+        einer gegebenen Temperatur ergibt das kontinuierliche Schwarzkörperspektrum.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin:0;">
+        <strong>Konvektion strahlt dagegen nicht direkt.</strong> Sie ist reiner
+        Wärmetransport durch Stoffbewegung — eine Flüssigkeit oder ein Gas trägt thermische
+        Energie von A nach B, ohne dass diese Bewegung selbst Photonen erzeugt. Von den
+        drei klassischen Wärmetransportarten (Leitung, Konvektion, Strahlung) ist Strahlung
+        die einzige, die kein Medium braucht — eben weil sie elektromagnetisch ist. Die
+        bewegte Materie strahlt natürlich trotzdem thermisch, aber das liegt an ihrer
+        Temperatur (beschleunigte Ladungen), nicht an der Konvektion selbst.
       </p>
     </div>
   </section>
