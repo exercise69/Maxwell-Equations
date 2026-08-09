@@ -1137,6 +1137,98 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
   </section>
 
   <section class="rule-top">
+    <div class="eyebrow">Quantennatur</div>
+    <h2>Wie viele Photonen sind das eigentlich?</h2>
+    <p class="intro">
+      Maxwell beschreibt das Feld als kontinuierlich — aber jede Emission oder
+      Absorption von Energie geschieht in Paketen der Größe hf. Daraus lässt sich für
+      eine Antenne eine Photonenzahl pro Sekunde berechnen. Und die Frage, warum das Feld
+      trotzdem überall glatt aussieht statt "körnig", hat eine überraschend einfache
+      Antwort.
+    </p>
+
+    <div class="calc-block">
+      <h4>Vom Feld zur Photonenzahl</h4>
+      <div class="tagline">Jedes Energiequant hat die Größe E = hf</div>
+      <div class="result">
+        <div class="readout electric" style="font-size:1.1rem">N = P / (h·f)</div>
+        <div class="c-value"><div class="unit">Photonen pro Sekunde</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        P ist die abgestrahlte Leistung (Energie pro Sekunde), h·f die Energie eines
+        einzelnen Photons bei Frequenz f. Die Rechnung ist reine Buchhaltung: Gesamtenergie
+        pro Sekunde, geteilt durch die Energie eines einzelnen Pakets.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Zwei Beispiele</h4>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>WLAN-Router</h4>
+          <div class="tagline">P ≈ 100 mW, f ≈ 2,4 GHz</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">E_ph</span><span class="readout">h·f = 6,626×10⁻³⁴ · 2,4×10⁹ ≈ 1,59×10⁻²⁴ J</span></div>
+            <div class="step"><span class="n">N</span><span class="readout">N = 0,1 / 1,59×10⁻²⁴</span></div>
+          </div>
+          <div class="result"><div class="readout electric">N ≈ 6,3 × 10²² Photonen/s</div></div>
+        </div>
+        <div class="calc-card">
+          <h4>UKW-Sender</h4>
+          <div class="tagline">P ≈ 10 kW, f ≈ 100 MHz</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">E_ph</span><span class="readout">h·f = 6,626×10⁻³⁴ · 1×10⁸ ≈ 6,63×10⁻²⁶ J</span></div>
+            <div class="step"><span class="n">N</span><span class="readout">N = 10⁴ / 6,63×10⁻²⁶</span></div>
+          </div>
+          <div class="result"><div class="readout magnetic">N ≈ 1,5 × 10²⁹ Photonen/s</div></div>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Je niedriger die Frequenz, desto energieärmer das einzelne Photon (E = hf) — und
+        desto mehr Photonen braucht dieselbe Sendeleistung. Genau das erklärt die Spanne
+        von 10²⁰ bis 10³⁰, je nach Sender und Frequenzband.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Verdünnt sich das nicht im unendlichen Raum?</h4>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Doch — genau das tut es, und das ist auch richtig so. Die Photonen<em>dichte</em>
+        pro Fläche fällt mit 1/r², exakt wie die Feldstärke im Quadrat (E² ∝ 1/r²) und aus
+        demselben Grund: Die Gesamtleistung durch jede Kugelfläche bleibt konstant, die
+        Kugelfläche selbst wächst mit r². Das ist keine neue Aussage, sondern dieselbe
+        Energieerhaltung wie im Abschnitt Nahfeld/Fernfeld oben — nur in Energiequanten
+        statt in Feldstärke ausgedrückt.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Der eigentliche Denkfehler liegt woanders: Photonen sind keine kleinen Kügelchen,
+        die mit wachsendem Abstand größere Lücken zueinander lassen und die Welle dadurch
+        "körnig" machen. Ein reales Radiosignal ist quantenmechanisch ein
+        <strong>kohärenter Zustand</strong> — eine Überlagerung vieler verschiedener
+        Photonenzahl-Zustände, deren Erwartungswert exakt das glatte, kontinuierliche
+        klassische Feld reproduziert, das Maxwell beschreibt. Die Zahl N ist eine
+        Energie-Buchhaltung (Gesamtenergie geteilt durch hf), keine Landkarte einzelner
+        Photonen-Positionen im Raum.
+      </p>
+      <div class="result">
+        <div class="readout" style="font-size:1.05rem">ΔN/N ≈ 1/√N</div>
+        <div class="c-value"><div class="unit">relative Quantenschwankung (Schrotrauschen)</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Bei N ≈ 10²⁹ liegt diese Schwankung um den Erwartungswert bei etwa 10⁻¹⁵ — für
+        jede erdenkliche Messung unmessbar klein. Deshalb verhält sich das Feld makroskopisch
+        perfekt kontinuierlich und deterministisch, obwohl "im Hintergrund" Energie in
+        Paketen der Größe hf gequantelt bleibt. Das ist das Korrespondenzprinzip: bei großen
+        Quantenzahlen wird Quantenmechanik von klassischer Physik ununterscheidbar.
+      </p>
+    </div>
+  </section>
+
+  <section class="rule-top">
     <div class="eyebrow">Nachschlagen</div>
     <h2>Größen &amp; Einheiten</h2>
     <div class="ref-wrap">
