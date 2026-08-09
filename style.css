@@ -133,6 +133,26 @@
   .scope-legend span{ display:flex; align-items:center; gap:7px; }
   .swatch{ width: 13px; height: 3px; border-radius: 2px; display:inline-block; }
 
+  /* ---------- lernpfad ---------- */
+  .pathway{ margin-top: 38px; border-top: 1px solid var(--rule); padding-top: 24px; }
+  .pathway .eyebrow{ margin-bottom: 12px; }
+  .pathway-note{ color: var(--ink-muted); font-size: 0.95rem; max-width: 64ch; margin: 0 0 22px; }
+  .pathway-groups{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 24px 30px; }
+  .pathway-group .g-name{
+    font-family: var(--font-label); font-size: 0.66rem; letter-spacing: .11em;
+    text-transform: uppercase; color: var(--ink-faint);
+    padding-bottom: 8px; margin-bottom: 10px; border-bottom: 1px solid var(--rule);
+  }
+  .pathway-group ol{ list-style:none; margin:0; padding:0; display:grid; gap: 10px; }
+  .pathway-group a{
+    display:grid; grid-template-columns: 24px 1fr; gap: 8px; align-items: baseline;
+    text-decoration:none; color: var(--ink);
+  }
+  .pathway-group a:hover .p-title{ text-decoration: underline; }
+  .p-num{ font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-faint); }
+  .p-title{ display:block; font-size: 0.96rem; line-height: 1.35; }
+  .p-sub{ display:block; color: var(--ink-faint); font-size: 0.8rem; line-height: 1.4; margin-top: 1px; }
+
   /* ---------- generic sections ---------- */
   section{ padding: 56px 0; }
   section.rule-top{ border-top: 1px solid var(--rule); }
@@ -259,6 +279,12 @@
   .calc-divider{ border: none; border-top: 1px dashed var(--rule-strong); margin: 26px 0; }
   .split-two{ display:grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   @media (max-width: 640px){ .split-two{ grid-template-columns: 1fr; } }
+
+  /* Grid- und Flex-Kinder duerfen schmaler werden als ihr Inhalt — sonst sprengen
+     die nicht umbrechenden Formelkaesten auf schmalen Displays die Seitenbreite,
+     statt in ihrem eigenen overflow-x zu scrollen. */
+  .eq-body > *, .split-two > *, .calc-grid > *, .step > *, .result > *,
+  .toolbox-grid > *, .theorem-bridge > *, .pathway-groups > *{ min-width: 0; }
 
   /* ---------- feld-explorer ---------- */
   .fx-controls{ display:flex; flex-wrap:wrap; gap:8px; margin: 4px 0 16px; }

@@ -24,6 +24,12 @@ Promise.all(
   var s = document.createElement('script');
   s.src = 'app.js';
   document.body.appendChild(s);
+
+  // Inhalt wird erst nachgeladen — ein #anker in der URL muss danach neu angesprungen werden.
+  if (location.hash){
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) target.scrollIntoView();
+  }
 }).catch(function(err){
   document.getElementById('wrap').innerHTML =
     '<p style="padding:60px 0">Fehler beim Laden der Seite: ' + err.message + '</p>';
