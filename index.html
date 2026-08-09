@@ -283,6 +283,7 @@
   canvas#donutcanvas{ display:block; width:100%; height:auto; }
   canvas#packetcanvas{ display:block; width:100%; height:auto; }
   canvas#dipolecanvas{ display:block; width:100%; height:auto; }
+  canvas#rxcanvas{ display:block; width:100%; height:auto; }
   .fx-tooltip{
     position:absolute; pointer-events:none; font-family: var(--font-mono); font-size:0.78rem;
     background: var(--eqn-bg); border:1px solid var(--rule-strong); border-radius:4px;
@@ -1140,11 +1141,10 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
     <div class="eyebrow">Quantennatur</div>
     <h2>Wie viele Photonen sind das eigentlich?</h2>
     <p class="intro">
-      Maxwell beschreibt das Feld als kontinuierlich — aber jede Emission oder
-      Absorption von Energie geschieht in Paketen der Größe hf. Daraus lässt sich für
-      eine Antenne eine Photonenzahl pro Sekunde berechnen. Und die Frage, warum das Feld
-      trotzdem überall glatt aussieht statt "körnig", hat eine überraschend einfache
-      Antwort.
+      Maxwell beschreibt das Feld als kontinuierlich — aber jede Emission oder Absorption
+      von Energie geschieht in Paketen der Größe hf. Daraus lässt sich für eine Antenne
+      eine Photonenzahl pro Sekunde berechnen. Und die Frage, warum das Feld trotzdem
+      überall glatt aussieht statt "körnig", hat eine überraschend einfache Antwort.
     </p>
 
     <div class="calc-block">
@@ -1224,6 +1224,106 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
         perfekt kontinuierlich und deterministisch, obwohl "im Hintergrund" Energie in
         Paketen der Größe hf gequantelt bleibt. Das ist das Korrespondenzprinzip: bei großen
         Quantenzahlen wird Quantenmechanik von klassischer Physik ununterscheidbar.
+      </p>
+    </div>
+  </section>
+
+  <section class="rule-top">
+    <div class="eyebrow">Empfänger</div>
+    <h2>Wie eine Antenne empfängt</h2>
+    <p class="intro">
+      Empfang ist fast die Umkehrung des Sendens — dieselbe Physik, dieselbe Antenne,
+      nur die Richtung des Kausalpfeils dreht sich um. Statt Elektronen zu beschleunigen,
+      um eine Welle zu erzeugen, beschleunigt hier die ankommende Welle die Elektronen.
+    </p>
+
+    <div class="calc-block">
+      <h4>Die Lorentzkraft treibt den Strom</h4>
+      <div class="result">
+        <div class="readout electric" style="font-size:1.1rem">F = qE</div>
+        <div class="c-value"><div class="unit">Kraft auf ein Leitungselektron</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Das oszillierende E-Feld der ankommenden Welle übt am Ort der Antenne eine Kraft
+        auf die freien Elektronen im Metall aus. Sie werden im exakten Takt der
+        Wellenfrequenz entlang des Stabs hin- und herbewegt — das ist bereits der
+        Empfangsstrom, noch bevor irgendeine Elektronik ihn verstärkt. Es ist exakt
+        dieselbe Gleichung, die eine Sendeantenne antreibt, nur umgekehrt angewandt.
+        Daraus folgt das <strong>Reziprozitätsprinzip</strong>: dieselbe Antenne sendet
+        und empfängt mit demselben Strahlungsdiagramm — die "Erdnuss" von oben ist auch
+        die Empfangscharakteristik, am empfindlichsten senkrecht zum Stab, taub entlang
+        der eigenen Achse.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Elektronen im Rhythmus des Feldes</h4>
+      <p class="tagline" style="margin-bottom:16px;">Die einfallende Welle schiebt die Ladungsträger im Stab synchron mit.</p>
+      <div class="scope">
+        <div class="scope-head">
+          <span>Empfangsantenne · einfallende Welle</span>
+          <span>Elektronenauslenkung ∝ E(t) am Ort der Antenne</span>
+        </div>
+        <canvas id="rxcanvas" width="900" height="420" role="img"
+          aria-label="Animation einer ebenen Welle, die von links auf einen senkrecht stehenden Antennenstab trifft. Punkte im Stab, die freie Elektronen darstellen, schwingen synchron mit der lokalen Feldstärke am Ort der Antenne auf und ab und erzeugen so einen Wechselstrom."></canvas>
+        <div class="scope-legend">
+          <span><i class="swatch" style="background:var(--electric)"></i> E-Feld der ankommenden Welle</span>
+          <span>Punkte im Stab = Elektronen, ausgelenkt durch die Lorentzkraft</span>
+          <span>Pfeil = momentane Stromrichtung im Stab</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Die effektive Apertur — mehr als der Draht hergibt</h4>
+      <div class="result">
+        <div class="readout electric" style="font-size:1.1rem">
+          A_eff = <span class="frac"><span class="num">Gλ²</span><span class="den">4π</span></span>
+        </div>
+        <div class="c-value"><div class="unit">P_empfangen = A_eff · S</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        G ist der Antennengewinn, S der Poynting-Fluss der ankommenden Welle (W/m²). Die
+        effektive Apertur hängt <strong>nicht</strong> von der physischen Drahtdicke ab,
+        sondern von der Wellenlänge — ein dünner Stab kann eine viel größere "Fangfläche"
+        haben, als sein Querschnitt vermuten lässt, weil das kohärente Feld über einen
+        räumlich ausgedehnten Bereich auf den Leiter einwirkt.
+      </p>
+      <div class="result" style="margin-top:14px;">
+        <div class="readout" style="font-size:0.98rem">Halbwellendipol bei 100 MHz: G≈1,64, λ=3 m</div>
+        <div class="c-value"><div class="unit">A_eff ≈ 1,17 m²</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Über einen Quadratmeter effektive Fangfläche — für einen Draht von wenigen
+        Millimetern Durchmesser. Das Feld "kennt" die geometrische Größe der Antenne
+        nicht; es koppelt an sie über die Wellenlänge.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Energie, Feld oder Photonen?</h4>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Im Kern wird <strong>Energie über das kontinuierliche Feld</strong> entzogen,
+        beschrieben durch denselben Poynting-Vektor S = E×B/μ₀, der schon beim Senden die
+        abgestrahlte Leistung beschrieben hat — Energieerhaltung, keine Detektion
+        einzelner Teilchen. Die Photonenbeschreibung ist quantenmechanisch ebenso korrekt,
+        aber bei N ≈ 10²²–10²⁹ Photonen pro Sekunde (siehe oben) spielt das für den
+        Empfangsvorgang keine Rolle — es gibt kein "Klicken" wie bei einem
+        Einzelphotonen-Detektor. Erst bei viel energiereicheren Photonen (sichtbares
+        Licht, Röntgenstrahlung) und sehr schwachen Quellen wird die Körnigkeit messbar.
+        Radioempfang bleibt praktisch immer im rein klassischen, kontinuierlichen Regime.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin:0;">
+        Der winzige Wechselstrom aus dem Antennenstab — oft im Mikrovolt-Bereich — geht
+        anschließend in einen auf die Trägerfrequenz abgestimmten Schwingkreis (daher
+        lassen sich Sender trennen), wird verstärkt und demoduliert, um das ursprüngliche
+        Signal zurückzugewinnen.
       </p>
     </div>
   </section>
@@ -1893,6 +1993,114 @@ B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
     }
     requestAnimationFrame(tick);
   }
+})();
+</script>
+
+<script>
+(function(){
+  var canvas = document.getElementById('rxcanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var midY = H*0.40;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function colors(){
+    var cs = getComputedStyle(document.documentElement);
+    return {
+      electric: cs.getPropertyValue('--electric').trim(),
+      ink: cs.getPropertyValue('--ink').trim(),
+      inkFaint: cs.getPropertyValue('--ink-faint').trim(),
+      rule: cs.getPropertyValue('--rule').trim()
+    };
+  }
+  var C = colors();
+  new MutationObserver(function(){ C = colors(); }).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  if (window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ C = colors(); });
+  }
+
+  var xStart = 40, xEnd = W-40;
+  var rodX = W*0.74;
+  var rodTop = midY - 80, rodBottom = midY + 80;
+  var amp = H*0.14;
+  var cycles = 4.5;
+  var k = cycles * 2 * Math.PI / (xEnd - xStart);
+
+  function drawAxis(){
+    ctx.strokeStyle = C.rule; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(xStart, midY); ctx.lineTo(xEnd, midY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(xEnd, midY); ctx.lineTo(xEnd-12, midY-6);
+    ctx.moveTo(xEnd, midY); ctx.lineTo(xEnd-12, midY+6);
+    ctx.stroke();
+    ctx.fillStyle = C.inkFaint;
+    ctx.font = '13px ' + getComputedStyle(document.body).fontFamily;
+    ctx.textAlign = 'left';
+    ctx.fillText('Ausbreitung, c', xStart, midY-52);
+  }
+
+  function localField(phase){
+    return amp * Math.sin(k*(rodX-xStart) - phase);
+  }
+
+  function drawWave(phase){
+    ctx.beginPath();
+    ctx.strokeStyle = C.electric;
+    ctx.lineWidth = 2.4;
+    for (var x=xStart; x<=rodX+30; x+=2){
+      var y = midY - amp * Math.sin(k*(x-xStart) - phase);
+      if (x===xStart) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+
+  function drawRod(phase){
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(rodX, rodTop); ctx.lineTo(rodX, rodBottom);
+    ctx.stroke();
+
+    var Elocal = localField(phase);
+    var shift = (Elocal/amp) * 20;
+
+    var n = 5;
+    ctx.fillStyle = C.electric;
+    for (var i=0;i<n;i++){
+      var restY = rodTop + (i+0.5)*(rodBottom-rodTop)/n;
+      var y = restY - shift;
+      ctx.beginPath();
+      ctx.arc(rodX, y, 4.5, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    var ah = shift;
+    ctx.strokeStyle = C.electric; ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(rodX+18, midY);
+    ctx.lineTo(rodX+18, midY-ah);
+    ctx.stroke();
+    var dir = ah >= 0 ? -1 : 1;
+    ctx.beginPath();
+    ctx.moveTo(rodX+18, midY-ah);
+    ctx.lineTo(rodX+13, midY-ah+dir*6);
+    ctx.lineTo(rodX+23, midY-ah+dir*6);
+    ctx.closePath();
+    ctx.fillStyle = C.electric;
+    ctx.fill();
+  }
+
+  function frame(t){
+    ctx.clearRect(0,0,W,H);
+    drawAxis();
+    var phase = reduced ? 0.6 : t*0.0016;
+    drawWave(phase);
+    drawRod(phase);
+    if (!reduced) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
