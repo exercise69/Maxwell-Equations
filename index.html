@@ -13,14 +13,20 @@
 
 <script>
 Promise.all(
-  ['part1.html','part2.html','part3.html'].map(function(u){
-    return fetch(u).then(function(r){ return r.text(); });
+  ['part1.html','part2.html','part3.html','part4.html','part5.html'].map(function(u){
+    return fetch(u).then(function(r){
+      if (!r.ok) throw new Error('Konnte ' + u + ' nicht laden (' + r.status + ')');
+      return r.text();
+    });
   })
 ).then(function(parts){
   document.getElementById('wrap').innerHTML = parts.join('');
   var s = document.createElement('script');
   s.src = 'app.js';
   document.body.appendChild(s);
+}).catch(function(err){
+  document.getElementById('wrap').innerHTML =
+    '<p style="padding:60px 0">Fehler beim Laden der Seite: ' + err.message + '</p>';
 });
 </script>
 </body>

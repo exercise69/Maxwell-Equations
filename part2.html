@@ -1,555 +1,320 @@
 <section class="rule-top">
-    <div class="eyebrow">Rechenbeispiele</div>
-    <h2>Vektoranalysis an konkreten Feldern</h2>
+    <div class="eyebrow">Die Gleichungen</div>
+    <h2>Vier Gesetze des Feldes</h2>
     <p class="intro">
-      Nabla bleibt abstrakt, bis er auf echte Felder trifft. Drei Aufwärmbeispiele für
-      Gradient, Divergenz und Rotation — und danach die Probe aufs Exempel: erfüllt die
-      ebene Welle von oben wirklich Faraday und Ampère-Maxwell?
+      Jetzt sind alle Werkzeuge da. Jede Gleichung existiert in einer lokalen
+      (differentiellen) und einer globalen (integralen) Form — verbunden genau durch die
+      beiden Integralsätze von oben. Zwei Gleichungen sind Divergenz-Aussagen (Quellen),
+      zwei sind Rotations-Aussagen (Wirbel).
     </p>
 
-    <div class="readout block">∇ = (∂/∂x, ∂/∂y, ∂/∂z)
+    <!-- I -->
+    <div class="eq-card">
+      <div class="eq-head">
+        <span class="eq-num">I</span>
+        <h3>Gaußsches Gesetz — Elektrizität</h3>
+        <span class="field-tag tag-electric">E-Feld</span>
+      </div>
+      <div class="eq-body">
+        <div class="eq-forms">
+          <div class="eq-form-label">Differentiell</div>
+          <div class="readout electric">∇·E = ρ/ε₀</div>
+          <div class="eq-form-label">Integral</div>
+          <div class="readout electric">∮∮ E·dA = Q<sub>encl</sub>/ε₀</div>
+        </div>
+        <div class="eq-meaning">
+          <strong>Ladungen sind Quellen.</strong> Elektrische Feldlinien entspringen an
+          positiven Ladungen und enden an negativen. Der Fluss durch jede geschlossene
+          Fläche ist proportional zur eingeschlossenen Ladung — unabhängig von der Form
+          der Fläche.
+        </div>
+      </div>
+      <div class="eq-diagram">
+        <figure>
+          <svg viewBox="0 0 220 160" role="img" aria-label="Eine positive Ladung im Zentrum einer gestrichelten Gauß-Fläche, von der acht Feldlinien radial nach außen durch die Fläche hindurch verlaufen.">
+            <circle cx="110" cy="80" r="55" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.6"/>
+            <circle cx="110" cy="80" r="7" fill="var(--electric)"/>
+            <text x="110" y="84" text-anchor="middle" font-size="9" fill="var(--surface)" font-family="var(--font-mono)">+</text>
+            <defs>
+              <marker id="ea1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
+              </marker>
+            </defs>
+            <g stroke="var(--electric)" stroke-width="1.6" marker-end="url(#ea1)">
+              <line x1="110" y1="80" x2="110" y2="15"/>
+              <line x1="110" y1="80" x2="110" y2="145"/>
+              <line x1="110" y1="80" x2="45" y2="80"/>
+              <line x1="110" y1="80" x2="175" y2="80"/>
+              <line x1="110" y1="80" x2="64" y2="34"/>
+              <line x1="110" y1="80" x2="156" y2="34"/>
+              <line x1="110" y1="80" x2="64" y2="126"/>
+              <line x1="110" y1="80" x2="156" y2="126"/>
+            </g>
+          </svg>
+          <figcaption>Fluss aus der Fläche ∝ eingeschlossene Ladung</figcaption>
+        </figure>
+      </div>
+    </div>
 
-Rotation als Determinante:
-        x̂    ŷ    ẑ
-∇×F  =  ∂/∂x ∂/∂y ∂/∂z
-        Fx   Fy   Fz</div>
+    <!-- II -->
+    <div class="eq-card">
+      <div class="eq-head">
+        <span class="eq-num">II</span>
+        <h3>Gaußsches Gesetz — Magnetismus</h3>
+        <span class="field-tag tag-magnetic">B-Feld</span>
+      </div>
+      <div class="eq-body">
+        <div class="eq-forms">
+          <div class="eq-form-label">Differentiell</div>
+          <div class="readout magnetic">∇·B = 0</div>
+          <div class="eq-form-label">Integral</div>
+          <div class="readout magnetic">∮∮ B·dA = 0</div>
+        </div>
+        <div class="eq-meaning">
+          <strong>Keine magnetischen Monopole.</strong> B-Feldlinien haben weder Anfang
+          noch Ende — sie sind stets geschlossen. Jede Linie, die in eine Gauß-Fläche
+          eintritt, verlässt sie an anderer Stelle wieder. Netto-Fluss immer null.
+        </div>
+      </div>
+      <div class="eq-diagram">
+        <figure>
+          <svg viewBox="0 0 220 160" role="img" aria-label="Dieselbe gestrichelte Gauß-Fläche, diesmal ohne zentrale Ladung: geschlossene magnetische Feldlinien treten in die Fläche ein und an anderer Stelle wieder aus, sodass kein Netto-Fluss entsteht.">
+            <circle cx="110" cy="80" r="55" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.6"/>
+            <defs>
+              <marker id="ma1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--magnetic)"/>
+              </marker>
+            </defs>
+            <g fill="none" stroke="var(--magnetic)" stroke-width="1.6">
+              <path d="M60,120 C40,80 60,40 110,32 C160,40 180,80 160,120" marker-end="url(#ma1)"/>
+              <path d="M80,138 C95,100 125,100 140,138"/>
+              <path d="M60,120 C50,130 55,140 80,138" marker-end="url(#ma1)"/>
+              <path d="M140,138 C165,140 170,130 160,120"/>
+            </g>
+          </svg>
+          <figcaption>Feldlinien treten ein und aus — Netto-Fluss = 0</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- III -->
+    <div class="eq-card">
+      <div class="eq-head">
+        <span class="eq-num">III</span>
+        <h3>Faradaysches Induktionsgesetz</h3>
+        <span class="field-tag tag-both">B → E</span>
+      </div>
+      <div class="eq-body">
+        <div class="eq-forms">
+          <div class="eq-form-label">Differentiell</div>
+          <div class="readout electric">∇×E = −∂B/∂t</div>
+          <div class="eq-form-label">Integral</div>
+          <div class="readout electric">∮ E·dl = −d/dt ∬ B·dA</div>
+        </div>
+        <div class="eq-meaning">
+          <strong>Ein sich änderndes B-Feld erzeugt ein wirbelndes E-Feld.</strong>
+          Das Prinzip hinter Generator und Transformator: Nimmt der eingeschlossene
+          magnetische Fluss ab, treibt das induzierte elektrische Feld einen Strom
+          im Gegensinn dazu — daher das Minuszeichen (Lenzsche Regel).
+        </div>
+      </div>
+      <div class="eq-diagram">
+        <figure>
+          <svg viewBox="0 0 220 160" role="img" aria-label="Eine Drahtschleife, im Inneren ein abnehmendes Magnetfeld in die Bildebene, dargestellt durch Kreuzsymbole und einen Pfeil für dB/dt; um die Schleife herum zirkuliert das induzierte elektrische Feld.">
+            <circle cx="110" cy="80" r="48" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <g fill="var(--magnetic)" font-family="var(--font-mono)" font-size="12">
+              <text x="90" y="65">×</text><text x="118" y="65">×</text>
+              <text x="90" y="90">×</text><text x="118" y="90">×</text>
+              <text x="104" y="77">×</text>
+            </g>
+            <text x="110" y="112" text-anchor="middle" fill="var(--magnetic)" font-family="var(--font-mono)" font-size="11">∂B/∂t ↓</text>
+            <defs>
+              <marker id="fa1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
+              </marker>
+            </defs>
+            <g fill="none" stroke="var(--electric)" stroke-width="1.8">
+              <path d="M110,32 A48,48 0 0,1 158,80" marker-end="url(#fa1)"/>
+              <path d="M158,80 A48,48 0 0,1 110,128" marker-end="url(#fa1)"/>
+              <path d="M110,128 A48,48 0 0,1 62,80" marker-end="url(#fa1)"/>
+              <path d="M62,80 A48,48 0 0,1 110,32" marker-end="url(#fa1)"/>
+            </g>
+          </svg>
+          <figcaption>Abnehmendes B im Inneren → zirkulierendes E am Rand</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- IV -->
+    <div class="eq-card">
+      <div class="eq-head">
+        <span class="eq-num">IV</span>
+        <h3>Ampère-Maxwell-Gesetz</h3>
+        <span class="field-tag tag-both">J, E → B</span>
+      </div>
+      <div class="eq-body">
+        <div class="eq-forms">
+          <div class="eq-form-label">Differentiell</div>
+          <div class="readout magnetic">∇×B = μ₀J + μ₀ε₀ ∂E/∂t</div>
+          <div class="eq-form-label">Integral</div>
+          <div class="readout magnetic">∮ B·dl = μ₀I<sub>encl</sub> + μ₀ε₀ d/dt ∬ E·dA</div>
+        </div>
+        <div class="eq-meaning">
+          <strong>Strom UND ein sich änderndes E-Feld erzeugen ein B-Feld.</strong>
+          Ampères ursprüngliches Gesetz kannte nur den Strom J. Maxwells Ergänzung —
+          der <em>Verschiebungsstrom</em> μ₀ε₀ ∂E/∂t — schließt die Lücke am
+          Kondensatorspalt, wo kein realer Strom fließt, aber das E-Feld sich ändert.
+          Genau dieser Term macht elektromagnetische Wellen erst möglich.
+        </div>
+      </div>
+      <div class="eq-diagram">
+        <figure>
+          <svg viewBox="0 0 220 160" role="img" aria-label="Ein stromdurchflossener Draht mit einer Kondensatorlücke: um beide Abschnitte zirkuliert dasselbe magnetische Feld, angetrieben links vom realen Strom I und rechts vom sich ändernden elektrischen Feld zwischen den Kondensatorplatten.">
+            <line x1="15" y1="80" x2="80" y2="80" stroke="currentColor" stroke-width="2.4"/>
+            <line x1="140" y1="80" x2="205" y2="80" stroke="currentColor" stroke-width="2.4"/>
+            <line x1="88" y1="55" x2="88" y2="105" stroke="currentColor" stroke-width="3"/>
+            <line x1="132" y1="55" x2="132" y2="105" stroke="currentColor" stroke-width="3"/>
+            <text x="45" y="70" text-anchor="middle" fill="currentColor" font-family="var(--font-mono)" font-size="11">I</text>
+            <defs>
+              <marker id="aa1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--magnetic)"/>
+              </marker>
+              <marker id="aa2" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
+              </marker>
+            </defs>
+            <g fill="none" stroke="var(--magnetic)" stroke-width="1.6">
+              <ellipse cx="45" cy="80" rx="26" ry="34"/>
+              <ellipse cx="163" cy="80" rx="26" ry="34"/>
+            </g>
+            <path d="M45,46 A26,34 0 0,1 71,80" fill="none" stroke="var(--magnetic)" stroke-width="1.8" marker-end="url(#aa1)"/>
+            <path d="M163,46 A26,34 0 0,1 189,80" fill="none" stroke="var(--magnetic)" stroke-width="1.8" marker-end="url(#aa1)"/>
+            <line x1="110" y1="65" x2="110" y2="95" stroke="var(--electric)" stroke-width="1.8" marker-end="url(#aa2)"/>
+            <text x="110" y="122" text-anchor="middle" fill="var(--electric)" font-family="var(--font-mono)" font-size="10">∂E/∂t</text>
+          </svg>
+          <figcaption>Gleiches zirkulierendes B — links von I, rechts vom Verschiebungsstrom</figcaption>
+        </figure>
+      </div>
+    </div>
 
     <div class="calc-block">
-      <h4>Gradient</h4>
-      <div class="tagline">Skalarfeld φ(x,y,z) = x²y + yz³</div>
-      <div class="calc-steps">
-        <div class="step"><span class="n">∂/∂x</span><span class="readout">∂φ/∂x = 2xy</span></div>
-        <div class="step"><span class="n">∂/∂y</span><span class="readout">∂φ/∂y = x² + z³</span></div>
-        <div class="step"><span class="n">∂/∂z</span><span class="readout">∂φ/∂z = 3yz²</span></div>
-      </div>
-      <div class="result">
-        <div class="readout electric">∇φ = (2xy, x² + z³, 3yz²)</div>
-        <div class="c-value"><div class="unit">bei (1, 2, 3): (4, 28, 18)</div></div>
-      </div>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Divergenz — Quelle oder quellenfrei?</h4>
-      <p class="tagline" style="margin-bottom:16px;">Zwei Felder mit sichtbar unterschiedlichem Verhalten.</p>
-      <div class="calc-grid">
-        <div class="calc-card">
-          <h4>Radialfeld</h4>
-          <div class="tagline">F = (x, y, z) — zeigt überall vom Ursprung weg</div>
-          <div class="readout field-def">∇·F = ∂x/∂x + ∂y/∂y + ∂z/∂z</div>
-          <div class="result"><div class="readout electric">∇·F = 1 + 1 + 1 = 3</div></div>
-          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
-            Konstant positiv — jeder Punkt wirkt wie eine Quelle. Strukturell das Verhalten,
-            das Gleichung I (∇·E = ρ/ε₀) bei verteilter Ladung beschreibt.
-          </p>
-        </div>
-        <div class="calc-card">
-          <h4>Rotationsfeld</h4>
-          <div class="tagline">F = (−y, x, 0) — zirkuliert um die z-Achse</div>
-          <div class="readout field-def">∇·F = ∂(−y)/∂x + ∂x/∂y + ∂0/∂z</div>
-          <div class="result"><div class="readout magnetic">∇·F = 0 + 0 + 0 = 0</div></div>
-          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
-            Keine Quellen, nur Wirbel — strukturell das Verhalten hinter ∇·B = 0
-            (Gleichung II): B-Feldlinien zirkulieren, sie entspringen nirgends.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Rotation — Wirbel oder wirbelfrei?</h4>
-      <p class="tagline" style="margin-bottom:16px;">Dieselben zwei Felder, jetzt mit ∇× statt ∇·.</p>
-      <div class="calc-grid">
-        <div class="calc-card">
-          <h4>Rotationsfeld</h4>
-          <div class="tagline">F = (−y, x, 0)</div>
-          <div class="calc-steps">
-            <div class="step"><span class="n">x</span><span class="readout">(∇×F)ₓ = ∂Fz/∂y − ∂Fy/∂z = 0 − 0 = 0</span></div>
-            <div class="step"><span class="n">y</span><span class="readout">(∇×F)ᵧ = ∂Fx/∂z − ∂Fz/∂x = 0 − 0 = 0</span></div>
-            <div class="step"><span class="n">z</span><span class="readout">(∇×F)_z = ∂Fy/∂x − ∂Fx/∂y = 1 − (−1) = 2</span></div>
-          </div>
-          <div class="result"><div class="readout magnetic">∇×F = (0, 0, 2)</div></div>
-          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
-            Konstanter Wirbel um z — das Geschwindigkeitsfeld einer starren Rotation mit
-            ω = 1 (allgemein: ∇×v = 2ω).
-          </p>
-        </div>
-        <div class="calc-card">
-          <h4>Radialfeld</h4>
-          <div class="tagline">F = (x, y, z)</div>
-          <div class="calc-steps">
-            <div class="step"><span class="n">x</span><span class="readout">(∇×F)ₓ = ∂z/∂y − ∂y/∂z = 0 − 0 = 0</span></div>
-            <div class="step"><span class="n">y</span><span class="readout">(∇×F)ᵧ = ∂x/∂z − ∂z/∂x = 0 − 0 = 0</span></div>
-            <div class="step"><span class="n">z</span><span class="readout">(∇×F)_z = ∂y/∂x − ∂x/∂y = 0 − 0 = 0</span></div>
-          </div>
-          <div class="result"><div class="readout electric">∇×F = (0, 0, 0)</div></div>
-          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
-            Wirbelfrei, wie es sein muss: F ist der Gradient von φ = ½(x²+y²+z²), und für
-            jeden Gradienten gilt ∇×(∇φ) ≡ 0.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Der Gaußsche Integralsatz am Beispiel</h4>
-      <p class="tagline" style="margin-bottom:16px;">Dasselbe Radialfeld wie oben, jetzt durch eine Kugel mit Radius R.</p>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 16px;">
-        Genau dieser Zusammenhang macht aus der differentiellen Form von Gleichung I
-        (∇·E = ρ/ε₀) ihre integrale Form (∮∮ E·dA = Q<sub>encl</sub>/ε₀) — kein separates
-        Postulat, sondern der Gaußsche Integralsatz von oben, hier an einem einfachen
-        Feld nachgerechnet.
-      </p>
-      <div class="split-two">
-        <div class="calc-card">
-          <h4>Volumenintegral</h4>
-          <div class="tagline">∇·F = 3 (siehe oben)</div>
-          <div class="calc-steps">
-            <div class="step"><span class="n">∫∫∫</span><span class="readout">∫∫∫ (∇·F) dV = 3 · Kugelvolumen</span></div>
-            <div class="step"><span class="n">V</span><span class="readout">V = (4/3)πR³</span></div>
-          </div>
-          <div class="result"><div class="readout electric">= 4πR³</div></div>
-        </div>
-        <div class="calc-card">
-          <h4>Oberflächenintegral</h4>
-          <div class="tagline">Auf der Kugel: |F| = R, radial = parallel zu n̂</div>
-          <div class="calc-steps">
-            <div class="step"><span class="n">F·n̂</span><span class="readout">F·n̂ = R (überall auf der Kugelfläche)</span></div>
-            <div class="step"><span class="n">A</span><span class="readout">A = 4πR²</span></div>
-          </div>
-          <div class="result"><div class="readout magnetic">= 4πR³</div></div>
-        </div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
-        Beide Seiten liefern exakt 4πR³ — unabhängig vom Radius. Der Satz gilt für jede
-        Kugel, tatsächlich für jede geschlossene Fläche überhaupt.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Der Satz von Stokes am Beispiel</h4>
-      <p class="tagline" style="margin-bottom:16px;">Das Rotationsfeld von oben, jetzt entlang eines Kreises mit Radius R.</p>
-      <div class="split-two">
-        <div class="calc-card">
-          <h4>Linienintegral</h4>
-          <div class="tagline">Kreis: (R cosθ, R sinθ, 0), θ ∈ [0, 2π]</div>
-          <div class="calc-steps">
-            <div class="step"><span class="n">F·dl</span><span class="readout">F·dl/dθ = R² sin²θ + R² cos²θ = R²</span></div>
-          </div>
-          <div class="result"><div class="readout electric">∮ F·dl = 2πR²</div></div>
-        </div>
-        <div class="calc-card">
-          <h4>Flächenintegral</h4>
-          <div class="tagline">∇×F = (0, 0, 2) (siehe oben)</div>
-          <div class="calc-steps">
-            <div class="step"><span class="n">A</span><span class="readout">Kreisfläche = πR²</span></div>
-          </div>
-          <div class="result"><div class="readout magnetic">∬(∇×F)·dA = 2πR²</div></div>
-        </div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
-        Wieder identisch, für jeden Radius. Das ist exakt der Schritt, der Gleichung III
-        (∇×E = −∂B/∂t) mit ihrer integralen Form (∮E·dl = −d/dt∬B·dA) verbindet.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Die Vektoridentität hinter der Wellengleichung</h4>
-      <p class="tagline" style="margin-bottom:16px;">∇×(∇×F) = ∇(∇·F) − ∇²F — verwendet weiter oben bei der Ableitung von c.</p>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 16px;">
-        Formal dieselbe Struktur wie das Entwicklungsgesetz a×(b×c) = b(a·c) − c(a·b),
-        nur mit ∇ statt einem gewöhnlichen Vektor. Probe an F = (y², z², x²):
-      </p>
-      <div class="calc-steps">
-        <div class="step"><span class="n">∇·F</span><span class="readout">∇·F = 0  →  ∇(∇·F) = 0</span></div>
-        <div class="step"><span class="n">∇×F</span><span class="readout">∇×F = (−2z, −2x, −2y)</span></div>
-        <div class="step"><span class="n">∇×(∇×F)</span><span class="readout">∇×(∇×F) = (−2, −2, −2)</span></div>
-        <div class="step"><span class="n">∇²F</span><span class="readout">∇²F = (2, 2, 2)</span></div>
-      </div>
-      <div class="result">
-        <div class="readout electric">∇×(∇×F) = 0 − (2,2,2) = (−2,−2,−2) ✓</div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        Genau dieser Schritt — mit ∇·E = 0 im ladungsfreien Raum — reduziert
-        ∇×(∇×E) auf −∇²E und liefert damit die Wellengleichung im Abschnitt
-        "Licht ist eine Welle des Feldes" oben.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Die Probe: erfüllt die ebene Welle Maxwell wirklich?</h4>
-      <p class="tagline" style="margin-bottom:16px;">Dasselbe Feld wie in der Animation oben.</p>
-      <div class="readout block" style="margin-bottom:20px;">E(z,t) = E₀ cos(kz − ωt) x̂
-B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
-
-      <div class="split-two">
-        <div class="calc-card">
-          <h4>Faraday: ∇×E = −∂B/∂t</h4>
-          <div class="calc-steps">
-            <div class="step"><span class="n">∇×E</span><span class="readout">(∇×E)ᵧ = ∂Ex/∂z = −E₀k sin(kz−ωt)</span></div>
-            <div class="step"><span class="n">−∂B/∂t</span><span class="readout">−∂B/∂t = −(E₀ω/c) sin(kz−ωt)</span></div>
-          </div>
-          <div class="result"><div class="readout electric">E₀k = E₀ω/c  →  k = ω/c</div></div>
-        </div>
-        <div class="calc-card">
-          <h4>Ampère-Maxwell: ∇×B = μ₀ε₀ ∂E/∂t</h4>
-          <div class="calc-steps">
-            <div class="step"><span class="n">∇×B</span><span class="readout">(∇×B)ₓ = −∂By/∂z = (E₀k/c) sin(kz−ωt)</span></div>
-            <div class="step"><span class="n">μ₀ε₀∂E/∂t</span><span class="readout">μ₀ε₀∂E/∂t = μ₀ε₀E₀ω sin(kz−ωt)</span></div>
-          </div>
-          <div class="result"><div class="readout magnetic">k = μ₀ε₀cω = ω/c  (mit c=1/√(μ₀ε₀))</div></div>
-        </div>
-      </div>
-
-      <div class="result" style="margin-top:20px;">
-        <div class="readout" style="font-size:1.1rem">k = ω/c</div>
-        <div class="c-value">
-          <div class="unit">Ausbreitungsgeschwindigkeit ω/k = c</div>
-        </div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        Beide Gleichungen — unabhängig voneinander ausgerechnet — verlangen exakt dieselbe
-        Bedingung. Das ist keine Fügung: Faraday und Ampère-Maxwell einigen sich rechnerisch
-        auf genau die Lichtgeschwindigkeit als einzig mögliche Geschwindigkeit dieser Welle.
-        Die Divergenz-Gleichungen sind hier trivial erfüllt: ∇·E = ∂Ex/∂x = 0 und
-        ∇·B = ∂By/∂y = 0, da beide Felder nicht von x oder y abhängen.
-      </p>
-    </div>
-  </section>
-
-  <section class="rule-top">
-    <div class="eyebrow">Interaktiv</div>
-    <h2>Der Feld-Explorer</h2>
-    <p class="intro">
-      Fünf einfache 2D-Felder zum Anfassen. Maus über das Gitter bewegen, um F(x,y),
-      Divergenz und Rotation an jedem Punkt live abzulesen — exakt berechnet, nicht
-      aus einer Tabelle.
-    </p>
-
-    <div class="fx-controls" role="group" aria-label="Feld auswählen">
-      <button type="button" class="fx-btn" data-field="quelle">Quelle</button>
-      <button type="button" class="fx-btn" data-field="wirbel">Wirbel</button>
-      <button type="button" class="fx-btn" data-field="sattel">Sattel</button>
-      <button type="button" class="fx-btn" data-field="scher">Scherung</button>
-      <button type="button" class="fx-btn" data-field="ladung">Punktladung</button>
-    </div>
-
-    <div class="scope fx-wrap">
-      <canvas id="fieldcanvas" width="900" height="600" role="img"
-        aria-label="Interaktives Vektorfeld-Diagramm. Pfeile zeigen die Richtung des gewählten Feldes auf einem Gitter; beim Bewegen der Maus über das Bild werden Feldvektor, Divergenz und Rotation am jeweiligen Punkt eingeblendet."></canvas>
-      <div class="fx-tooltip" id="fxTooltip"></div>
-    </div>
-
-    <p class="fx-desc" id="fxDesc"></p>
-  </section>
-
-  <section class="rule-top">
-    <div class="eyebrow">Abstrahlung</div>
-    <h2>Warum strahlt eine Antenne?</h2>
-    <p class="intro">
-      Eine Antenne ist nichts anderes als eine periodisch beschleunigte Ladung. Aus
-      dieser einen Tatsache folgt die komplette Theorie der Dipolstrahlung — Leistung,
-      Reichweite und sogar die Form, in die eine Antenne abstrahlt.
-    </p>
-
-    <div class="calc-block">
-      <h4>Die Larmor-Formel</h4>
-      <div class="tagline">Abgestrahlte Leistung einer beschleunigten Ladung</div>
-      <div class="result">
-        <div class="readout electric" style="font-size:1.1rem">
-          P = <span class="frac"><span class="num">q² a²</span><span class="den">6πε₀c³</span></span>
-        </div>
-        <div class="c-value"><div class="unit">P ∝ Beschleunigung²</div></div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        Ruhende Ladung: a = 0 → keine Strahlung. Gleichförmig bewegte Ladung: ebenfalls
-        a = 0 → ebenfalls keine Strahlung, ihr Feld ist nur ein mitgeführtes, gestauchtes
-        Coulombfeld. Erst eine <strong>beschleunigte</strong> Ladung erzeugt ein
-        Wellenfeld, das Energie bis ins Unendliche trägt.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Nahfeld und Fernfeld</h4>
-      <p class="tagline" style="margin-bottom:16px;">Nicht jede Feldänderung transportiert Energie nach außen.</p>
-      <div class="calc-grid">
-        <div class="calc-card">
-          <h4>Nahfeld — reaktiv</h4>
-          <div class="tagline">fällt wie 1/r² bzw. 1/r³</div>
-          <p class="muted" style="font-size:0.9rem; margin:0;">
-            Energie pendelt im Zeitmittel lokal zwischen E- und B-Feld hin und her, ohne
-            netto nach außen zu entkommen. So funktioniert ein Transformator oder
-            induktives Laden: Felder ändern sich, koppeln über Faraday — aber es wird
-            nichts abgestrahlt.
-          </p>
-        </div>
-        <div class="calc-card">
-          <h4>Fernfeld — strahlend</h4>
-          <div class="tagline">fällt wie 1/r</div>
-          <p class="muted" style="font-size:0.9rem; margin:0;">
-            Die Leistung durch eine Kugelfläche (∝ r²) bleibt konstant, egal wie weit man
-            weggeht. Das ist die tatsächlich abgestrahlte Welle — der Teil, der Energie
-            unwiderruflich forttransportiert.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Die Abstrahlcharakteristik</h4>
-      <div class="readout electric" style="margin-bottom:14px;">E_fern(θ) ∝ (q·a / r) · sinθ</div>
+      <h4>Warum Maxwells Zusatzterm zwingend ist — die Flächen-Paradoxie</h4>
+      <p class="tagline" style="margin-bottom:16px;">Derselbe Rand, zwei verschiedene Flächen, zwei verschiedene Antworten. Das darf nicht sein.</p>
       <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
-        θ ist der Winkel zur Dipolachse. Maximal senkrecht zur Antenne (θ=90°), null
-        entlang ihrer eigenen Achse — daraus folgt die charakteristische "Erdnuss"-Form,
-        in die ein Dipol abstrahlt.
+        Oben stand: Der Satz von Stokes erlaubt <em>jede beliebige</em> Fläche, die in einen
+        gegebenen Rand eingespannt ist. Genau diese Freiheit bringt Ampères
+        ursprüngliches Gesetz ∮B·dl = μ₀I<sub>encl</sub> zu Fall. Man legt einen kreisförmigen
+        Rand C um den Draht — und spannt zwei verschiedene Flächen hinein:
       </p>
-      <figure class="eq-diagram" style="padding:0;">
-        <svg viewBox="0 0 240 200" role="img" style="max-width:280px;" aria-label="Polardiagramm der Dipol-Abstrahlung: eine erdnussförmige Kurve mit zwei Lappen links und rechts der vertikalen Antennenachse, die bei den Polen oben und unten auf null zusammenläuft und seitlich maximal ist.">
-          <polyline points="120.0,100.0 120.3,95.8 121.1,91.6 122.5,87.6 124.4,83.8 126.7,80.2 129.5,77.0 132.7,74.2 136.2,71.9 140.1,70.0 144.1,68.6 148.3,67.8 152.5,67.5 156.7,67.8 160.9,68.6 164.9,70.0 168.8,71.9 172.3,74.2 175.5,77.0 178.3,80.2 180.6,83.8 182.5,87.6 183.9,91.6 184.7,95.8 185.0,100.0 184.7,104.2 183.9,108.4 182.5,112.4 180.6,116.2 178.3,119.8 175.5,123.0 172.3,125.8 168.8,128.1 164.9,130.0 160.9,131.4 156.7,132.2 152.5,132.5 148.3,132.2 144.1,131.4 140.1,130.0 136.2,128.1 132.7,125.8 129.5,123.0 126.7,119.8 124.4,116.3 122.5,112.4 121.1,108.4 120.3,104.2 120.0,100.0 119.7,104.2 118.9,108.4 117.5,112.4 115.6,116.2 113.3,119.8 110.5,123.0 107.3,125.8 103.8,128.1 99.9,130.0 95.9,131.4 91.7,132.2 87.5,132.5 83.3,132.2 79.1,131.4 75.1,130.0 71.3,128.1 67.7,125.8 64.5,123.0 61.7,119.8 59.4,116.2 57.5,112.4 56.1,108.4 55.3,104.2 55.0,100.0 55.3,95.8 56.1,91.6 57.5,87.6 59.4,83.8 61.7,80.2 64.5,77.0 67.7,74.2 71.2,71.9 75.1,70.0 79.1,68.6 83.3,67.8 87.5,67.5 91.7,67.8 95.9,68.6 99.9,70.0 103.7,71.9 107.3,74.2 110.5,77.0 113.3,80.2 115.6,83.8 117.5,87.6 118.9,91.6 119.7,95.8 120.0,100.0"
-            fill="none" stroke="var(--electric)" stroke-width="2"/>
-          <line x1="120" y1="35" x2="120" y2="165" stroke="currentColor" stroke-width="3"/>
-          <circle cx="120" cy="42" r="4" fill="currentColor"/>
-          <circle cx="120" cy="158" r="4" fill="currentColor"/>
-          <text x="120" y="22" text-anchor="middle" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">θ=0°: keine Abstrahlung</text>
-          <text x="120" y="184" text-anchor="middle" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">θ=180°: keine Abstrahlung</text>
-          <text x="236" y="103" text-anchor="end" font-size="10" fill="var(--electric)" font-family="var(--font-label)">θ=90°: max</text>
+      <figure class="eq-diagram" style="padding:0; margin-bottom:20px;">
+        <svg viewBox="0 0 380 225" role="img" style="max-width:520px;" aria-label="Ein Draht mit Kondensatorlücke. Um den Draht liegt ein kreisförmiger Rand C, dargestellt als schmale Ellipse. In diesen Rand sind zwei Flächen eingespannt: eine flache Scheibe, die der Draht durchstößt, und eine sackförmige Fläche, die um die linke Kondensatorplatte herum in den Spalt hineinreicht und von keinem Strom durchstoßen wird.">
+          <defs>
+            <marker id="apE" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+              <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
+            </marker>
+          </defs>
+          <line x1="8" y1="110" x2="140" y2="110" stroke="currentColor" stroke-width="2.4"/>
+          <line x1="180" y1="110" x2="372" y2="110" stroke="currentColor" stroke-width="2.4"/>
+          <line x1="140" y1="76" x2="140" y2="144" stroke="currentColor" stroke-width="3.4"/>
+          <line x1="180" y1="76" x2="180" y2="144" stroke="currentColor" stroke-width="3.4"/>
+          <text x="34" y="100" text-anchor="middle" font-size="12" fill="currentColor" font-family="var(--font-mono)">I</text>
+
+          <path d="M80,70 C100,40 150,38 160,72 L160,148 C150,182 100,180 80,150 Z"
+            fill="var(--magnetic)" fill-opacity="0.09" stroke="var(--magnetic)" stroke-width="1.8" stroke-dasharray="5 3"/>
+          <ellipse cx="80" cy="110" rx="9" ry="40" fill="var(--electric)" fill-opacity="0.45" stroke="var(--electric)" stroke-width="1.8"/>
+          <ellipse cx="80" cy="110" rx="9" ry="40" fill="none" stroke="currentColor" stroke-width="2"/>
+
+          <line x1="170" y1="94" x2="170" y2="126" stroke="var(--electric)" stroke-width="1.8" marker-end="url(#apE)"/>
+          <text x="170" y="170" text-anchor="middle" font-size="10" fill="var(--electric)" font-family="var(--font-mono)">∂E/∂t</text>
+
+          <line x1="96" y1="46" x2="82" y2="66" stroke="var(--electric)" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="100" y="44" font-size="10" fill="var(--electric)" font-family="var(--font-label)">Fläche 1 — flache Scheibe</text>
+          <text x="218" y="66" font-size="10" fill="var(--magnetic)" font-family="var(--font-label)">Fläche 2 — Sack um die Platte</text>
+          <text x="218" y="80" font-size="10" fill="var(--magnetic)" font-family="var(--font-label)">herum in den Spalt</text>
+          <line x1="80" y1="152" x2="80" y2="196" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="80" y="212" text-anchor="middle" font-size="10" fill="var(--ink-muted)" font-family="var(--font-label)">gemeinsamer Rand C</text>
         </svg>
-        <figcaption>Abstrahlcharakteristik eines Dipols — Querschnitt durch die Antennenachse</figcaption>
+        <figcaption>Beide Flächen sind in denselben Rand C eingespannt — Stokes lässt beide zu</figcaption>
       </figure>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Die Form im Raum: kein Zylinder, kein Rotor</h4>
-      <p class="tagline" style="margin-bottom:16px;">Rotiert man die Erdnusskurve einmal um die Antennenachse, entsteht die echte 3D-Form.</p>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
-        Die Wellenfronten selbst sind kugelförmig — sie expandieren gleichmäßig in alle
-        Richtungen, wie eine aufblasende Seifenblase. Was <em>nicht</em> gleichmäßig ist:
-        die Stärke der Welle auf dieser Kugel. Die folgt dem sinθ-Muster von oben — stark
-        am "Äquator" (senkrecht zur Antenne), null an den "Polen" (entlang der Antenne
-        selbst). Rotiert man die Erdnusskurve einmal um die Achse, ergibt das einen
-        <strong>Torus</strong> (Donut), zentriert auf die Antenne — kein Zylinder.
-      </p>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
-        Und diese Form <strong>dreht sich nicht</strong> mit dem Wechselstrom mit. Sie ist
-        rotationssymmetrisch um die Antennenachse — sieht aus jeder Blickrichtung um die
-        Antenne herum exakt gleich aus, es gibt kein "rechts rum" oder "links rum". Was der
-        Wechselstrom tatsächlich tut: er kehrt periodisch die <strong>Polung</strong> um —
-        E zeigt abwechselnd in die eine, dann die andere Richtung entlang der Antenne. Das
-        ist eine lineare Hin-und-her-Schwingung (<em>lineare Polarisation</em>), keine
-        Drehung. Eine echte Drehung des Feldvektors (zirkulare Polarisation) bräuchte zwei
-        um 90° versetzte Antennenelemente, nicht nur einen Stab.
-      </p>
-      <div class="scope">
-        <div class="scope-head">
-          <span>Donut-Strahlungskeule · 3D</span>
-          <span>fixe Ansicht — keine Rotation</span>
-        </div>
-        <canvas id="donutcanvas" width="900" height="620" role="img"
-          aria-label="Feste dreidimensionale Ansicht der Dipol-Abstrahlung als Torus (Donut) um die vertikale Antenne. Die Form ist rotationssymmetrisch um die Antennenachse und dreht sich nicht; nur die Helligkeit pulsiert leicht mit der Schwingung."></canvas>
-        <div class="scope-legend">
-          <span><i class="swatch" style="background:var(--electric)"></i> Torus-Hülle, Draht-Gitter zur Tiefenwirkung</span>
-          <span>Antenne (dunkel) steht senkrecht durch den Kern des Torus</span>
-        </div>
-      </div>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Der oszillierende Dipol</h4>
-      <p class="tagline" style="margin-bottom:16px;">Jeder Ring ist eine Wellenfront, ausgesendet bei einem Nulldurchgang des Stroms.</p>
-      <div class="scope">
-        <div class="scope-head">
-          <span>Hertzscher Dipol</span>
-          <span>Helligkeit ∝ sinθ</span>
-        </div>
-        <canvas id="dipolecanvas" width="900" height="560" role="img"
-          aria-label="Animation eines oszillierenden Dipols im Zentrum: konzentrische Wellenfronten laufen nach außen, hell an den Seiten senkrecht zur Antenne, dunkel oben und unten entlang der Antennenachse — die charakteristische Erdnussform der Dipolstrahlung in Bewegung."></canvas>
-        <div class="scope-legend">
-          <span><i class="swatch" style="background:var(--electric)"></i> Wellenfront, Helligkeit ∝ sinθ zur Antennenachse</span>
-          <span>Pfeil in der Antenne = momentane Stromrichtung</span>
-        </div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
-        Der Unterschied zur Röntgen-Bremsstrahlung: dort wird eine Ladung
-        <strong>einmalig</strong> abrupt abgebremst — ein kurzer Beschleunigungspuls,
-        dessen Fourierspektrum breitbandig ist. Eine Antenne beschleunigt
-        <strong>periodisch</strong> bei fester Frequenz ω — ihr Spektrum ist (näherungsweise)
-        eine einzelne scharfe Linie bei ω. Gleiche Physik, unterschiedlicher Zeitverlauf
-        der Beschleunigung, komplett unterschiedliches Ergebnis.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Warum eine scharfe Frequenz?</h4>
-      <p class="tagline" style="margin-bottom:16px;">Ständige Beschleunigung heißt nicht automatisch breites Spektrum.</p>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
-        Entscheidend ist nicht, dass sich die Beschleunigung dauernd ändert — sondern ob
-        sie das nach einem <strong>exakt sich wiederholenden</strong> Muster tut. Die
-        Fourier-Reihe zerlegt jede periodische Funktion mit Periode T in diskrete
-        Frequenzen, keine kontinuierliche Bandbreite:
-      </p>
-      <div class="readout electric" style="margin-bottom:18px;">f(t) = Σₙ cₙ · e^(inω₀t),  ω₀ = 2π/T</div>
-      <div class="calc-grid">
+      <div class="split-two">
         <div class="calc-card">
-          <h4>Periodisch</h4>
-          <div class="tagline">exakt wiederkehrendes Muster</div>
-          <p class="muted" style="font-size:0.9rem; margin:0;">
-            Fourier-<strong>Reihe</strong> → diskrete Linien bei ω₀, 2ω₀, 3ω₀, ...
-            Eine reine Sinusschwingung I(t)=I₀sin(ωt) hat sogar nur eine einzige Linie —
-            keine Oberschwingungen.
-          </p>
+          <h4>Fläche 1 — die flache Scheibe</h4>
+          <div class="tagline">Der Draht durchstößt sie</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">I<sub>encl</sub></span><span class="readout">I<sub>encl</sub> = I  (voller Leitungsstrom)</span></div>
+          </div>
+          <div class="result"><div class="readout electric">∮B·dl = μ₀I</div></div>
         </div>
         <div class="calc-card">
-          <h4>Einmalig</h4>
-          <div class="tagline">nicht wiederkehrendes Ereignis</div>
-          <p class="muted" style="font-size:0.9rem; margin:0;">
-            Fourier-<strong>Transformation</strong> eines einzelnen Pulses → generisch
-            eine glatte, kontinuierliche Funktion über viele Frequenzen. Daher das
-            Bremsstrahlungskontinuum.
-          </p>
-        </div>
-      </div>
-      <div class="result" style="margin-top:20px;">
-        <div class="readout" style="font-size:1.05rem">Δω · Δt ≈ 1</div>
-        <div class="c-value"><div class="unit">Dauer des Ereignisses ↔ Breite des Spektrums</div></div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        Δt ist die Zeitspanne, über die sich das Signal exakt gleich verhält. Bei
-        Bremsstrahlung: eine einzige, extrem kurze Kollisionsdauer → riesiges Δω → breites
-        Kontinuum. Bei einer Antenne: Millionen bis Milliarden Zyklen laufen exakt gleich
-        ab → winziges Δω → praktisch eine einzelne Linie. Dieselbe Δω·Δt-Beziehung wie die
-        quantenmechanische Energie-Zeit-Unschärfe — hier aber reine Fourier-Mathematik,
-        nichts Quantenmechanisches.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Wo die Bandbreite eines echten Signals herkommt</h4>
-      <p class="tagline" style="margin-bottom:16px;">Drei Spektren im Vergleich.</p>
-      <div class="calc-grid">
-        <div class="calc-card">
-          <h4>Reiner Träger</h4>
-          <div class="tagline">unmoduliert, endlos lang</div>
-          <svg viewBox="0 0 200 120" role="img" aria-label="Spektrum eines unmodulierten Trägers: eine einzelne, unendlich schmale Spitze bei der Trägerfrequenz." style="width:100%;height:auto;">
-            <line x1="10" y1="104" x2="190" y2="104" stroke="currentColor" stroke-width="1" opacity="0.5"/>
-            <line x1="100" y1="104" x2="100" y2="16" stroke="var(--electric)" stroke-width="2.5"/>
-            <text x="100" y="116" text-anchor="middle" font-size="9" fill="var(--ink-faint)" font-family="var(--font-label)">ω₀</text>
-          </svg>
-          <p class="muted" style="font-size:0.88rem; margin:8px 0 0;">Eine einzelne scharfe Linie — ideale periodische Schwingung.</p>
-        </div>
-        <div class="calc-card">
-          <h4>Einmaliger Puls</h4>
-          <div class="tagline">Bremsstrahlung</div>
-          <svg viewBox="0 0 200 120" role="img" aria-label="Spektrum eines einmaligen Pulses: ein sehr breiter, flacher Höcker über weite Teile des Frequenzbereichs." style="width:100%;height:auto;">
-            <line x1="10" y1="104" x2="190" y2="104" stroke="currentColor" stroke-width="1" opacity="0.5"/>
-            <polyline points="0,103.4 4,103.1 8,102.7 12,102.2 16,101.5 20,100.6 24,99.4 28,97.8 32,95.8 36,93.4 40,90.6 44,87.1 48,83.2 52,78.7 56,73.7 60,68.3 64,62.6 68,56.7 72,50.8 76,45.1 80,39.8 84,35.2 88,31.3 92,28.4 96,26.6 100,26.0 104,26.6 108,28.4 112,31.3 116,35.2 120,39.8 124,45.1 128,50.8 132,56.7 136,62.6 140,68.3 144,73.7 148,78.7 152,83.2 156,87.1 160,90.6 164,93.4 168,95.8 172,97.8 176,99.4 180,100.6 184,101.5 188,102.2 192,102.7 196,103.1 200,103.4"
-              fill="none" stroke="var(--magnetic)" stroke-width="2"/>
-            <text x="100" y="116" text-anchor="middle" font-size="9" fill="var(--ink-faint)" font-family="var(--font-label)">ω</text>
-          </svg>
-          <p class="muted" style="font-size:0.88rem; margin:8px 0 0;">Kontinuum über weite Frequenzbereiche — Δt extrem kurz.</p>
-        </div>
-        <div class="calc-card">
-          <h4>Modulierter Träger</h4>
-          <div class="tagline">echtes Radiosignal</div>
-          <svg viewBox="0 0 200 120" role="img" aria-label="Spektrum eines modulierten Trägers: ein schmaler Höcker um die Trägerfrequenz, deutlich schmaler als beim einmaligen Puls." style="width:100%;height:auto;">
-            <line x1="10" y1="104" x2="190" y2="104" stroke="currentColor" stroke-width="1" opacity="0.5"/>
-            <polyline points="0,104.0 4,104.0 8,104.0 12,104.0 16,104.0 20,104.0 24,104.0 28,104.0 32,104.0 36,104.0 40,104.0 44,104.0 48,104.0 52,104.0 56,104.0 60,104.0 64,104.0 68,104.0 72,103.8 76,103.1 80,100.6 84,93.4 88,78.7 92,56.7 96,35.2 100,26.0 104,35.2 108,56.7 112,78.7 116,93.4 120,100.6 124,103.1 128,103.8 132,104.0 136,104.0 140,104.0 144,104.0 148,104.0 152,104.0 156,104.0 160,104.0 164,104.0 168,104.0 172,104.0 176,104.0 180,104.0 184,104.0 188,104.0 192,104.0 196,104.0 200,104.0"
-              fill="none" stroke="var(--electric)" stroke-width="2"/>
-            <text x="100" y="116" text-anchor="middle" font-size="9" fill="var(--ink-faint)" font-family="var(--font-label)">ω₀</text>
-          </svg>
-          <p class="muted" style="font-size:0.88rem; margin:8px 0 0;">Schmales Band um ω₀, Breite = Informationsrate (z. B. UKW ~200 kHz).</p>
+          <h4>Fläche 2 — der Sack durch den Spalt</h4>
+          <div class="tagline">Zwischen den Platten fließt kein Strom</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">I<sub>encl</sub></span><span class="readout">I<sub>encl</sub> = 0  (kein Leiter durchstoßen)</span></div>
+          </div>
+          <div class="result"><div class="readout magnetic">∮B·dl = 0</div></div>
         </div>
       </div>
       <p class="muted" style="font-size:0.95rem; margin-top:18px;">
-        Ein reiner, endlos gleich schwingender Träger wäre eine einzelne Linie. Aber ein
-        echtes Signal soll Information tragen — Sprache, Musik, Daten. Dafür muss die
-        Schwingung <strong>moduliert</strong> werden (Amplitude, Frequenz oder Phase leicht
-        verändert, im Takt der Information). Genau diese Modulation zerstört die perfekte
-        Periodizität ein kleines Stück — und erzeugt dadurch das Band, dessen Breite direkt
-        der Bandbreite der übertragenen Information entspricht.
+        Die linke Seite ∮B·dl ist in beiden Fällen dieselbe — es ist derselbe Rand C. Die
+        rechte Seite liefert zwei verschiedene Werte. <strong>Ampères Gesetz ist in dieser
+        Form also schlicht widersprüchlich</strong>, sobald sich irgendwo Ladung ansammelt.
+        Das ist kein Schönheitsfehler, den man ignorieren könnte, sondern ein echter
+        logischer Defekt.
       </p>
-    </div>
-  </section>
-
-  <section class="rule-top">
-    <div class="eyebrow">Kausalität</div>
-    <h2>Retardierte Zeit</h2>
-    <p class="intro">
-      Das Feld an einem Punkt kennt nur die Vergangenheit der Quelle — nie ihre Gegenwart
-      oder Zukunft. Genau das verhindert, dass sich Information schneller als c ausbreitet,
-      und beantwortet, wie schnell ein abgeschalteter Sender wirklich "verschwindet".
-    </p>
-
-    <div class="calc-block">
-      <h4>Die retardierte Zeit</h4>
-      <div class="readout electric" style="margin-bottom:14px;">t_r = t − r/c</div>
-      <p class="muted" style="font-size:0.95rem; margin:0;">
-        Das Feld im Abstand r hängt nicht davon ab, was die Quelle <em>jetzt</em> tut,
-        sondern davon, was sie zur retardierten Zeit t_r getan hat — also vor genau der
-        Laufzeit r/c. Das folgt direkt aus den Lösungen der Wellengleichung von oben
-        (retardierte Potentiale), keine Zusatzannahme. Schalten Sie den Sender ab: ein
-        Beobachter 300.000&nbsp;km entfernt merkt es exakt eine Sekunde später — nicht
-        früher, nicht später. Bis dahin empfängt er ganz normal weiter, als wäre nichts
-        passiert.
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Maxwells Term repariert genau das. Im Plattenkondensator mit Plattenfläche A und
+        Ladung Q gilt:
+      </p>
+      <div class="calc-steps" style="margin-top:14px;">
+        <div class="step"><span class="n">E</span><span class="readout">E = σ/ε₀ = Q/(ε₀A)  im Spalt</span></div>
+        <div class="step"><span class="n">Φ_E</span><span class="readout">Φ_E = E·A = Q/ε₀  (Fluss durch Fläche 2)</span></div>
+        <div class="step"><span class="n">d/dt</span><span class="readout">ε₀ · dΦ_E/dt = dQ/dt = I</span></div>
+      </div>
+      <div class="result" style="margin-top:6px;">
+        <div class="readout electric">μ₀ε₀ dΦ_E/dt = μ₀I</div>
+        <div class="c-value"><div class="unit">Fläche 2 liefert jetzt dasselbe wie Fläche 1</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Der Verschiebungsstrom ist also nicht "noch ein Effekt", den man dazuerfunden hat.
+        Er ist der einzige Term, der die Gleichung mit der Freiheit der Flächenwahl
+        verträglich macht — und er hat exakt die Größe, die der fehlende Leitungsstrom
+        gehabt hätte.
       </p>
     </div>
 
     <hr class="calc-divider">
 
     <div class="calc-block">
-      <h4>Ein Wellenpaket mit fester Länge</h4>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
-        Die schon ausgesendete Welle hält sich über Faraday und Ampère-Maxwell selbst am
-        Leben — sie braucht die Antenne nicht mehr. Eine Übertragung (an → aus) ist im Raum
-        deshalb ein Wellenpaket mit einer Vorderkante (erste Wellenfront) und einer
-        Hinterkante (Abschaltmoment) — <strong>beide bewegen sich mit exakt derselben
-        Geschwindigkeit c</strong>. Die Paketlänge bleibt für immer gleich, weil das Vakuum
-        nicht-dispersiv ist: alle Frequenzen laufen exakt gleich schnell, das Paket zieht
-        sich nicht auseinander.
+      <h4>Der tiefere Grund: Ladungserhaltung</h4>
+      <p class="tagline" style="margin-bottom:16px;">Wendet man ∇· auf Gleichung IV an, fällt die Kontinuitätsgleichung heraus — von selbst.</p>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 16px;">
+        Hier zahlt sich die Identität ∇·(∇×F) ≡ 0 aus dem Werkzeugteil aus. Man bildet die
+        Divergenz beider Seiten von Gleichung IV:
       </p>
-      <div class="scope">
-        <div class="scope-head">
-          <span>Wellenpaket · Sender an/aus</span>
-          <span>Vorder- und Hinterkante bei c</span>
-        </div>
-        <canvas id="packetcanvas" width="900" height="380" role="img"
-          aria-label="Animation eines Wellenpakets: Der Sender links sendet für eine feste Dauer, danach läuft ein Wellenpaket fester Länge nach rechts, dessen Vorderkante und Hinterkante sich beide mit Lichtgeschwindigkeit bewegen. Ein Beobachter-Marker weiter rechts zeigt an, wann das Signal bei ihm ankommt und wann es endet."></canvas>
-        <div class="scope-legend">
-          <span><i class="swatch" style="background:var(--electric)"></i> Trägerwelle, nur im Paket sichtbar</span>
-          <span>Sender-Marker: farbig = an, grau = aus</span>
-          <span>Beobachter-Marker leuchtet, solange das Signal ihn erreicht</span>
-        </div>
+      <div class="calc-steps">
+        <div class="step"><span class="n">1</span><span class="readout">∇·(∇×B) = μ₀ ∇·J + μ₀ε₀ ∂(∇·E)/∂t</span></div>
+        <div class="step"><span class="n">2</span><span class="readout">links ≡ 0, denn ∇·(∇×F) ≡ 0 für jedes Feld</span></div>
+        <div class="step"><span class="n">3</span><span class="readout">∇·E = ρ/ε₀ aus Gleichung I einsetzen</span></div>
+        <div class="step"><span class="n">4</span><span class="readout">0 = μ₀ ∇·J + μ₀ε₀ · (1/ε₀) ∂ρ/∂t</span></div>
+      </div>
+      <div class="result">
+        <div class="readout electric" style="font-size:1.05rem">∇·J + ∂ρ/∂t = 0</div>
+        <div class="c-value"><div class="unit">Kontinuitätsgleichung — Ladungserhaltung</div></div>
       </div>
       <p class="muted" style="font-size:0.95rem; margin-top:16px;">
-        Und noch ein Detail: Abschalten heißt, den Strom in der Antenne abzubremsen — das
-        ist selbst eine Beschleunigung. Ein reales Abschalten ist deshalb kein scharfer
-        Schnitt, sondern strahlt am Ende noch einen kurzen, breitbandigen "Klick" ab
-        (dieselbe Bremsstrahlungs-Logik wie oben), der die letzte Schwingung abschließt und
-        ebenfalls mit c davonläuft.
+        In Worten: Ändert sich die Ladungsdichte an einem Ort, muss genau so viel Strom
+        hinein- oder herausfließen. Ladung entsteht und verschwindet nicht, sie fließt nur.
+        Diese Aussage ist unabhängig von Maxwell experimentell bestens gesichert — und sie
+        folgt hier <em>zwangsläufig</em> aus den Gleichungen.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Und jetzt die Probe aufs Gegenteil: Ohne Maxwells Zusatzterm stünde in Schritt 1 nur
+        ∇·(∇×B) = μ₀∇·J, also <strong>∇·J = 0</strong> — Strom dürfte sich nirgends stauen,
+        Ladung könnte sich nirgends ansammeln. Genau das tut aber eine Kondensatorplatte.
+        Ampères Gesetz ohne den Zusatzterm ist damit nicht nur unvollständig, sondern
+        unvereinbar mit der Ladungserhaltung. Der Verschiebungsstrom ist keine Option,
+        sondern eine Notwendigkeit.
       </p>
     </div>
   </section>
 
-  

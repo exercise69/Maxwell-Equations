@@ -1,0 +1,433 @@
+<section class="rule-top">
+    <div class="eyebrow">Interaktiv</div>
+    <h2>Der Feld-Explorer</h2>
+    <p class="intro">
+      Fünf einfache 2D-Felder zum Anfassen. Maus über das Gitter bewegen, um F(x,y),
+      Divergenz und Rotation an jedem Punkt live abzulesen — exakt berechnet, nicht
+      aus einer Tabelle. Der schnellste Weg, ein Gefühl für ∇· und ∇× zu bekommen:
+      Vergleichen Sie "Wirbel" und "Scherung" — beide haben dieselbe Rotation, sehen
+      aber völlig verschieden aus.
+    </p>
+
+    <div class="fx-controls" role="group" aria-label="Feld auswählen">
+      <button type="button" class="fx-btn" data-field="quelle">Quelle</button>
+      <button type="button" class="fx-btn" data-field="wirbel">Wirbel</button>
+      <button type="button" class="fx-btn" data-field="sattel">Sattel</button>
+      <button type="button" class="fx-btn" data-field="scher">Scherung</button>
+      <button type="button" class="fx-btn" data-field="ladung">Punktladung</button>
+    </div>
+
+    <div class="scope fx-wrap">
+      <canvas id="fieldcanvas" width="900" height="600" role="img"
+        aria-label="Interaktives Vektorfeld-Diagramm. Pfeile zeigen die Richtung des gewählten Feldes auf einem Gitter; beim Bewegen der Maus über das Bild werden Feldvektor, Divergenz und Rotation am jeweiligen Punkt eingeblendet."></canvas>
+      <div class="fx-tooltip" id="fxTooltip"></div>
+    </div>
+
+    <p class="fx-desc" id="fxDesc"></p>
+  </section>
+
+  <section class="rule-top">
+    <div class="eyebrow">Abstrahlung</div>
+    <h2>Warum strahlt eine Antenne?</h2>
+    <p class="intro">
+      Eine Antenne ist nichts anderes als eine periodisch beschleunigte Ladung. Aus
+      dieser einen Tatsache folgt die komplette Theorie der Dipolstrahlung — Leistung,
+      Reichweite und sogar die Form, in die eine Antenne abstrahlt. Zuvor aber die Frage,
+      die alles Weitere trägt: Wie viel Energie steckt überhaupt in einem Feld, und wie
+      bewegt sie sich?
+    </p>
+
+    <div class="calc-block">
+      <h4>Energiedichte und Poynting-Vektor</h4>
+      <p class="tagline" style="margin-bottom:16px;">Das Feld ist kein Buchhaltungstrick — es trägt Energie, und zwar messbar viel.</p>
+      <div class="split-two">
+        <div class="calc-card">
+          <h4>Wie viel Energie steckt drin?</h4>
+          <div class="tagline">Energiedichte, Joule pro Kubikmeter</div>
+          <div class="readout field-def" style="font-size:0.92rem;">u = ½ε₀E² + B²/(2μ₀)</div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Beide Felder speichern Energie, jeweils proportional zum Quadrat der Feldstärke.
+            Bei einer freien Welle mit B = E/c sind die beiden Anteile exakt gleich groß —
+            die Energie ist hälftig zwischen E und B aufgeteilt.
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>Wohin fließt sie?</h4>
+          <div class="tagline">Poynting-Vektor, Watt pro Quadratmeter</div>
+          <div class="readout field-def" style="font-size:0.92rem;">S = (1/μ₀) · E × B</div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Ein Vektor: Richtung = Richtung des Energieflusses, Betrag = Leistung pro
+            Fläche. Das Kreuzprodukt E×B zeigt genau in die Ausbreitungsrichtung — deshalb
+            ist die Reihenfolge E, B, Ausbreitung ein Rechtssystem.
+          </p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:18px;">
+        Zusammen erfüllen die beiden eine Bilanzgleichung, die exakt so gebaut ist wie die
+        Kontinuitätsgleichung für die Ladung — nur eben für Energie:
+      </p>
+      <div class="result" style="margin-top:14px;">
+        <div class="readout electric" style="font-size:1.02rem">∂u/∂t + ∇·S = −J·E</div>
+        <div class="c-value"><div class="unit">Poynting-Satz — Energieerhaltung des Feldes</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        In Worten: Nimmt die im Feld gespeicherte Energie an einem Ort ab, dann fließt sie
+        entweder als S weg oder wird über J·E an Ladungen abgegeben (Joulesche Wärme). Es
+        verschwindet nichts. Genau dieser Satz rechtfertigt, das Feld als etwas
+        Eigenständiges zu behandeln, das Energie besitzt und transportiert — nicht bloß als
+        Rechenhilfe für Kräfte zwischen Ladungen.
+      </p>
+
+      <hr class="calc-divider">
+
+      <p class="muted" style="font-size:0.95rem; margin:0 0 16px;">
+        Für eine ebene Welle wird das konkret. Mit B = E/c und E ⟂ B ist das Kreuzprodukt
+        einfach das Produkt der Beträge:
+      </p>
+      <div class="calc-steps">
+        <div class="step"><span class="n">|S|</span><span class="readout">|S| = E·B/μ₀ = E·(E/c)/μ₀ = E²/(μ₀c) = ε₀cE²</span></div>
+        <div class="step"><span class="n">Mittel</span><span class="readout">⟨cos²⟩ = ½ über eine Periode</span></div>
+      </div>
+      <div class="result">
+        <div class="readout electric" style="font-size:1.05rem">⟨S⟩ = ½ ε₀ c E₀²</div>
+        <div class="c-value"><div class="unit">mittlere Intensität in W/m²</div></div>
+      </div>
+      <div class="calc-grid" style="margin-top:22px;">
+        <div class="calc-card">
+          <h4>Sonnenlicht</h4>
+          <div class="tagline">⟨S⟩ ≈ 1361 W/m² (Solarkonstante)</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">E₀</span><span class="readout">E₀ = √(2⟨S⟩/(ε₀c)) = √(2722 / 2,654×10⁻³)</span></div>
+            <div class="step"><span class="n">B₀</span><span class="readout">B₀ = E₀/c</span></div>
+          </div>
+          <div class="result"><div class="readout electric">E₀ ≈ 1013 V/m,  B₀ ≈ 3,4 µT</div></div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Rund ein Kilovolt pro Meter — und trotzdem spürt man nichts davon, weil das Feld
+            5×10¹⁴-mal pro Sekunde die Richtung wechselt. Zum Vergleich: Das Erdmagnetfeld
+            ist mit etwa 50 µT rund 15-mal stärker als der B-Anteil des Sonnenlichts.
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>UKW-Sender, 10 kW, in 10 km Abstand</h4>
+          <div class="tagline">isotrop gerechnet: S = P/(4πr²)</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">S</span><span class="readout">S = 10⁴ / (4π · 10⁸) ≈ 7,96×10⁻⁶ W/m²</span></div>
+            <div class="step"><span class="n">E₀</span><span class="readout">E₀ = √(2S/(ε₀c))</span></div>
+          </div>
+          <div class="result"><div class="readout magnetic">E₀ ≈ 77 mV/m</div></div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Acht Größenordnungen unter dem Sonnenlicht — und ein Radio empfängt das
+            mühelos. Genau diese Feldstärke treibt später im Empfänger-Abschnitt die
+            Elektronen im Antennenstab an.
+          </p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:18px;">
+        Der Poynting-Vektor ist ab hier das Arbeitspferd: Integriert man ⟨S⟩ über eine
+        große Kugel um eine beschleunigte Ladung, ergibt das genau die abgestrahlte
+        Gesamtleistung — die Larmor-Formel gleich unten. Und im Empfänger-Abschnitt ist S
+        die Größe, aus der zusammen mit der effektiven Apertur die tatsächlich
+        aufgenommene Leistung folgt.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Die Larmor-Formel</h4>
+      <div class="tagline">Abgestrahlte Leistung einer beschleunigten Ladung</div>
+      <div class="result">
+        <div class="readout electric" style="font-size:1.1rem">
+          P = <span class="frac"><span class="num">q² a²</span><span class="den">6πε₀c³</span></span>
+        </div>
+        <div class="c-value"><div class="unit">P ∝ Beschleunigung²</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Das ist nichts anderes als ∮⟨S⟩·dA über eine Kugel um die Ladung — der Vorfaktor
+        6π statt 4π kommt aus der Winkelmittelung von sin²θ, also aus der Abstrahlform, die
+        gleich unten kommt. Ruhende Ladung: a = 0 → keine Strahlung. Gleichförmig bewegte
+        Ladung: ebenfalls a = 0 → ebenfalls keine Strahlung, ihr Feld ist nur ein
+        mitgeführtes, gestauchtes Coulombfeld. Erst eine <strong>beschleunigte</strong>
+        Ladung erzeugt ein Wellenfeld, das Energie bis ins Unendliche trägt.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Nahfeld und Fernfeld</h4>
+      <p class="tagline" style="margin-bottom:16px;">Nicht jede Feldänderung transportiert Energie nach außen.</p>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>Nahfeld — reaktiv</h4>
+          <div class="tagline">fällt wie 1/r² bzw. 1/r³</div>
+          <p class="muted" style="font-size:0.9rem; margin:0;">
+            Energie pendelt im Zeitmittel lokal zwischen E- und B-Feld hin und her, ohne
+            netto nach außen zu entkommen. So funktioniert ein Transformator oder
+            induktives Laden: Felder ändern sich, koppeln über Faraday — aber es wird
+            nichts abgestrahlt.
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>Fernfeld — strahlend</h4>
+          <div class="tagline">fällt wie 1/r</div>
+          <p class="muted" style="font-size:0.9rem; margin:0;">
+            Die Leistung durch eine Kugelfläche (∝ r²) bleibt konstant, egal wie weit man
+            weggeht. Das ist die tatsächlich abgestrahlte Welle — der Teil, der Energie
+            unwiderruflich forttransportiert.
+          </p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Der Grund für genau diese Potenzen steckt im Poynting-Vektor: S geht wie E·B, also
+        wie E². Damit die Gesamtleistung ∮S·dA durch eine Kugel (Fläche ∝ r²) endlich und
+        konstant bleibt, muss S wie 1/r² fallen — und E folglich wie 1/r. Jeder Feldanteil,
+        der schneller abfällt, liefert bei großem r nichts mehr: Das ist genau die Grenze
+        zwischen Nah- und Fernfeld.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Die Abstrahlcharakteristik</h4>
+      <div class="readout electric" style="margin-bottom:14px;">E_fern(θ) ∝ (q·a / r) · sinθ</div>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        θ ist der Winkel zur Dipolachse. Maximal senkrecht zur Antenne (θ=90°), null
+        entlang ihrer eigenen Achse — daraus folgt die charakteristische "Erdnuss"-Form,
+        in die ein Dipol abstrahlt.
+      </p>
+      <figure class="eq-diagram" style="padding:0;">
+        <svg viewBox="0 0 240 200" role="img" style="max-width:280px;" aria-label="Polardiagramm der Dipol-Abstrahlung: eine erdnussförmige Kurve mit zwei Lappen links und rechts der vertikalen Antennenachse, die bei den Polen oben und unten auf null zusammenläuft und seitlich maximal ist.">
+          <polyline points="120.0,100.0 120.3,95.8 121.1,91.6 122.5,87.6 124.4,83.8 126.7,80.2 129.5,77.0 132.7,74.2 136.2,71.9 140.1,70.0 144.1,68.6 148.3,67.8 152.5,67.5 156.7,67.8 160.9,68.6 164.9,70.0 168.8,71.9 172.3,74.2 175.5,77.0 178.3,80.2 180.6,83.8 182.5,87.6 183.9,91.6 184.7,95.8 185.0,100.0 184.7,104.2 183.9,108.4 182.5,112.4 180.6,116.2 178.3,119.8 175.5,123.0 172.3,125.8 168.8,128.1 164.9,130.0 160.9,131.4 156.7,132.2 152.5,132.5 148.3,132.2 144.1,131.4 140.1,130.0 136.2,128.1 132.7,125.8 129.5,123.0 126.7,119.8 124.4,116.3 122.5,112.4 121.1,108.4 120.3,104.2 120.0,100.0 119.7,104.2 118.9,108.4 117.5,112.4 115.6,116.2 113.3,119.8 110.5,123.0 107.3,125.8 103.8,128.1 99.9,130.0 95.9,131.4 91.7,132.2 87.5,132.5 83.3,132.2 79.1,131.4 75.1,130.0 71.3,128.1 67.7,125.8 64.5,123.0 61.7,119.8 59.4,116.2 57.5,112.4 56.1,108.4 55.3,104.2 55.0,100.0 55.3,95.8 56.1,91.6 57.5,87.6 59.4,83.8 61.7,80.2 64.5,77.0 67.7,74.2 71.2,71.9 75.1,70.0 79.1,68.6 83.3,67.8 87.5,67.5 91.7,67.8 95.9,68.6 99.9,70.0 103.7,71.9 107.3,74.2 110.5,77.0 113.3,80.2 115.6,83.8 117.5,87.6 118.9,91.6 119.7,95.8 120.0,100.0"
+            fill="none" stroke="var(--electric)" stroke-width="2"/>
+          <line x1="120" y1="35" x2="120" y2="165" stroke="currentColor" stroke-width="3"/>
+          <circle cx="120" cy="42" r="4" fill="currentColor"/>
+          <circle cx="120" cy="158" r="4" fill="currentColor"/>
+          <text x="120" y="22" text-anchor="middle" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">θ=0°: keine Abstrahlung</text>
+          <text x="120" y="184" text-anchor="middle" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">θ=180°: keine Abstrahlung</text>
+          <text x="236" y="103" text-anchor="end" font-size="10" fill="var(--electric)" font-family="var(--font-label)">θ=90°: max</text>
+        </svg>
+        <figcaption>Abstrahlcharakteristik eines Dipols — Querschnitt durch die Antennenachse</figcaption>
+      </figure>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Die Form im Raum: kein Zylinder, kein Rotor</h4>
+      <p class="tagline" style="margin-bottom:16px;">Rotiert man die Erdnusskurve einmal um die Antennenachse, entsteht die echte 3D-Form.</p>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Die Wellenfronten selbst sind kugelförmig — sie expandieren gleichmäßig in alle
+        Richtungen, wie eine aufblasende Seifenblase. Was <em>nicht</em> gleichmäßig ist:
+        die Stärke der Welle auf dieser Kugel. Die folgt dem sinθ-Muster von oben — stark
+        am "Äquator" (senkrecht zur Antenne), null an den "Polen" (entlang der Antenne
+        selbst). Rotiert man die Erdnusskurve einmal um die Achse, ergibt das einen
+        <strong>Torus</strong> (Donut), zentriert auf die Antenne — kein Zylinder.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Und diese Form <strong>dreht sich nicht</strong> mit dem Wechselstrom mit. Sie ist
+        rotationssymmetrisch um die Antennenachse — sieht aus jeder Blickrichtung um die
+        Antenne herum exakt gleich aus, es gibt kein "rechts rum" oder "links rum". Was der
+        Wechselstrom tatsächlich tut: er kehrt periodisch die <strong>Polung</strong> um —
+        E zeigt abwechselnd in die eine, dann die andere Richtung entlang der Antenne. Das
+        ist eine lineare Hin-und-her-Schwingung (<em>lineare Polarisation</em>), keine
+        Drehung. Eine echte Drehung des Feldvektors (zirkulare Polarisation) bräuchte zwei
+        um 90° versetzte Antennenelemente, nicht nur einen Stab.
+      </p>
+      <div class="scope">
+        <div class="scope-head">
+          <span>Donut-Strahlungskeule · 3D</span>
+          <span>fixe Ansicht — keine Rotation</span>
+        </div>
+        <canvas id="donutcanvas" width="900" height="620" role="img"
+          aria-label="Feste dreidimensionale Ansicht der Dipol-Abstrahlung als Torus (Donut) um die vertikale Antenne. Die Form ist rotationssymmetrisch um die Antennenachse und dreht sich nicht; nur die Helligkeit pulsiert leicht mit der Schwingung."></canvas>
+        <div class="scope-legend">
+          <span><i class="swatch" style="background:var(--electric)"></i> Torus-Hülle, Draht-Gitter zur Tiefenwirkung</span>
+          <span>Antenne (dunkel) steht senkrecht durch den Kern des Torus</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Der oszillierende Dipol</h4>
+      <p class="tagline" style="margin-bottom:16px;">Jeder Ring ist eine Wellenfront, ausgesendet bei einem Nulldurchgang des Stroms.</p>
+      <div class="scope">
+        <div class="scope-head">
+          <span>Hertzscher Dipol</span>
+          <span>Helligkeit ∝ sinθ</span>
+        </div>
+        <canvas id="dipolecanvas" width="900" height="560" role="img"
+          aria-label="Animation eines oszillierenden Dipols im Zentrum: konzentrische Wellenfronten laufen nach außen, hell an den Seiten senkrecht zur Antenne, dunkel oben und unten entlang der Antennenachse — die charakteristische Erdnussform der Dipolstrahlung in Bewegung."></canvas>
+        <div class="scope-legend">
+          <span><i class="swatch" style="background:var(--electric)"></i> Wellenfront, Helligkeit ∝ sinθ zur Antennenachse</span>
+          <span>Pfeil in der Antenne = momentane Stromrichtung</span>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Der Unterschied zur Röntgen-Bremsstrahlung: dort wird eine Ladung
+        <strong>einmalig</strong> abrupt abgebremst — ein kurzer Beschleunigungspuls,
+        dessen Fourierspektrum breitbandig ist. Eine Antenne beschleunigt
+        <strong>periodisch</strong> bei fester Frequenz ω — ihr Spektrum ist (näherungsweise)
+        eine einzelne scharfe Linie bei ω. Gleiche Physik, unterschiedlicher Zeitverlauf
+        der Beschleunigung, komplett unterschiedliches Ergebnis.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Warum eine scharfe Frequenz?</h4>
+      <p class="tagline" style="margin-bottom:16px;">Ständige Beschleunigung heißt nicht automatisch breites Spektrum.</p>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Entscheidend ist nicht, dass sich die Beschleunigung dauernd ändert — sondern ob
+        sie das nach einem <strong>exakt sich wiederholenden</strong> Muster tut. Die
+        Fourier-Reihe zerlegt jede periodische Funktion mit Periode T in diskrete
+        Frequenzen, keine kontinuierliche Bandbreite:
+      </p>
+      <div class="readout electric" style="margin-bottom:18px;">f(t) = Σₙ cₙ · e^(inω₀t),  ω₀ = 2π/T</div>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>Periodisch</h4>
+          <div class="tagline">exakt wiederkehrendes Muster</div>
+          <p class="muted" style="font-size:0.9rem; margin:0;">
+            Fourier-<strong>Reihe</strong> → diskrete Linien bei ω₀, 2ω₀, 3ω₀, ...
+            Eine reine Sinusschwingung I(t)=I₀sin(ωt) hat sogar nur eine einzige Linie —
+            keine Oberschwingungen.
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>Einmalig</h4>
+          <div class="tagline">nicht wiederkehrendes Ereignis</div>
+          <p class="muted" style="font-size:0.9rem; margin:0;">
+            Fourier-<strong>Transformation</strong> eines einzelnen Pulses → generisch
+            eine glatte, kontinuierliche Funktion über viele Frequenzen. Daher das
+            Bremsstrahlungskontinuum.
+          </p>
+        </div>
+      </div>
+      <div class="result" style="margin-top:20px;">
+        <div class="readout" style="font-size:1.05rem">Δω · Δt ≈ 1</div>
+        <div class="c-value"><div class="unit">Dauer des Ereignisses ↔ Breite des Spektrums</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Δt ist die Zeitspanne, über die sich das Signal exakt gleich verhält. Bei
+        Bremsstrahlung: eine einzige, extrem kurze Kollisionsdauer → riesiges Δω → breites
+        Kontinuum. Bei einer Antenne: Millionen bis Milliarden Zyklen laufen exakt gleich
+        ab → winziges Δω → praktisch eine einzelne Linie. Dieselbe Δω·Δt-Beziehung wie die
+        quantenmechanische Energie-Zeit-Unschärfe — hier aber reine Fourier-Mathematik,
+        nichts Quantenmechanisches.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Wo die Bandbreite eines echten Signals herkommt</h4>
+      <p class="tagline" style="margin-bottom:16px;">Drei Spektren im Vergleich.</p>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>Reiner Träger</h4>
+          <div class="tagline">unmoduliert, endlos lang</div>
+          <svg viewBox="0 0 200 120" role="img" aria-label="Spektrum eines unmodulierten Trägers: eine einzelne, unendlich schmale Spitze bei der Trägerfrequenz." style="width:100%;height:auto;">
+            <line x1="10" y1="104" x2="190" y2="104" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <line x1="100" y1="104" x2="100" y2="16" stroke="var(--electric)" stroke-width="2.5"/>
+            <text x="100" y="116" text-anchor="middle" font-size="9" fill="var(--ink-faint)" font-family="var(--font-label)">ω₀</text>
+          </svg>
+          <p class="muted" style="font-size:0.88rem; margin:8px 0 0;">Eine einzelne scharfe Linie — ideale periodische Schwingung.</p>
+        </div>
+        <div class="calc-card">
+          <h4>Einmaliger Puls</h4>
+          <div class="tagline">Bremsstrahlung</div>
+          <svg viewBox="0 0 200 120" role="img" aria-label="Spektrum eines einmaligen Pulses: ein sehr breiter, flacher Höcker über weite Teile des Frequenzbereichs." style="width:100%;height:auto;">
+            <line x1="10" y1="104" x2="190" y2="104" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <polyline points="0,103.4 4,103.1 8,102.7 12,102.2 16,101.5 20,100.6 24,99.4 28,97.8 32,95.8 36,93.4 40,90.6 44,87.1 48,83.2 52,78.7 56,73.7 60,68.3 64,62.6 68,56.7 72,50.8 76,45.1 80,39.8 84,35.2 88,31.3 92,28.4 96,26.6 100,26.0 104,26.6 108,28.4 112,31.3 116,35.2 120,39.8 124,45.1 128,50.8 132,56.7 136,62.6 140,68.3 144,73.7 148,78.7 152,83.2 156,87.1 160,90.6 164,93.4 168,95.8 172,97.8 176,99.4 180,100.6 184,101.5 188,102.2 192,102.7 196,103.1 200,103.4"
+              fill="none" stroke="var(--magnetic)" stroke-width="2"/>
+            <text x="100" y="116" text-anchor="middle" font-size="9" fill="var(--ink-faint)" font-family="var(--font-label)">ω</text>
+          </svg>
+          <p class="muted" style="font-size:0.88rem; margin:8px 0 0;">Kontinuum über weite Frequenzbereiche — Δt extrem kurz.</p>
+        </div>
+        <div class="calc-card">
+          <h4>Modulierter Träger</h4>
+          <div class="tagline">echtes Radiosignal</div>
+          <svg viewBox="0 0 200 120" role="img" aria-label="Spektrum eines modulierten Trägers: ein schmaler Höcker um die Trägerfrequenz, deutlich schmaler als beim einmaligen Puls." style="width:100%;height:auto;">
+            <line x1="10" y1="104" x2="190" y2="104" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <polyline points="0,104.0 4,104.0 8,104.0 12,104.0 16,104.0 20,104.0 24,104.0 28,104.0 32,104.0 36,104.0 40,104.0 44,104.0 48,104.0 52,104.0 56,104.0 60,104.0 64,104.0 68,104.0 72,103.8 76,103.1 80,100.6 84,93.4 88,78.7 92,56.7 96,35.2 100,26.0 104,35.2 108,56.7 112,78.7 116,93.4 120,100.6 124,103.1 128,103.8 132,104.0 136,104.0 140,104.0 144,104.0 148,104.0 152,104.0 156,104.0 160,104.0 164,104.0 168,104.0 172,104.0 176,104.0 180,104.0 184,104.0 188,104.0 192,104.0 196,104.0 200,104.0"
+              fill="none" stroke="var(--electric)" stroke-width="2"/>
+            <text x="100" y="116" text-anchor="middle" font-size="9" fill="var(--ink-faint)" font-family="var(--font-label)">ω₀</text>
+          </svg>
+          <p class="muted" style="font-size:0.88rem; margin:8px 0 0;">Schmales Band um ω₀, Breite = Informationsrate (z. B. UKW ~200 kHz).</p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:18px;">
+        Ein reiner, endlos gleich schwingender Träger wäre eine einzelne Linie. Aber ein
+        echtes Signal soll Information tragen — Sprache, Musik, Daten. Dafür muss die
+        Schwingung <strong>moduliert</strong> werden (Amplitude, Frequenz oder Phase leicht
+        verändert, im Takt der Information). Genau diese Modulation zerstört die perfekte
+        Periodizität ein kleines Stück — und erzeugt dadurch das Band, dessen Breite direkt
+        der Bandbreite der übertragenen Information entspricht.
+      </p>
+    </div>
+  </section>
+
+  <section class="rule-top">
+    <div class="eyebrow">Kausalität</div>
+    <h2>Retardierte Zeit</h2>
+    <p class="intro">
+      Das Feld an einem Punkt kennt nur die Vergangenheit der Quelle — nie ihre Gegenwart
+      oder Zukunft. Genau das verhindert, dass sich Information schneller als c ausbreitet,
+      und beantwortet, wie schnell ein abgeschalteter Sender wirklich "verschwindet".
+    </p>
+
+    <div class="calc-block">
+      <h4>Die retardierte Zeit</h4>
+      <div class="readout electric" style="margin-bottom:14px;">t_r = t − r/c</div>
+      <p class="muted" style="font-size:0.95rem; margin:0;">
+        Das Feld im Abstand r hängt nicht davon ab, was die Quelle <em>jetzt</em> tut,
+        sondern davon, was sie zur retardierten Zeit t_r getan hat — also vor genau der
+        Laufzeit r/c. Das folgt direkt aus den Lösungen der Wellengleichung von oben
+        (retardierte Potentiale), keine Zusatzannahme. Schalten Sie den Sender ab: ein
+        Beobachter 300.000&nbsp;km entfernt merkt es exakt eine Sekunde später — nicht
+        früher, nicht später. Bis dahin empfängt er ganz normal weiter, als wäre nichts
+        passiert.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Ein Wellenpaket mit fester Länge</h4>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
+        Die schon ausgesendete Welle hält sich über Faraday und Ampère-Maxwell selbst am
+        Leben — sie braucht die Antenne nicht mehr. Eine Übertragung (an → aus) ist im Raum
+        deshalb ein Wellenpaket mit einer Vorderkante (erste Wellenfront) und einer
+        Hinterkante (Abschaltmoment) — <strong>beide bewegen sich mit exakt derselben
+        Geschwindigkeit c</strong>. Die Paketlänge bleibt für immer gleich, weil das Vakuum
+        nicht-dispersiv ist: alle Frequenzen laufen exakt gleich schnell, das Paket zieht
+        sich nicht auseinander.
+      </p>
+      <div class="scope">
+        <div class="scope-head">
+          <span>Wellenpaket · Sender an/aus</span>
+          <span>Vorder- und Hinterkante bei c</span>
+        </div>
+        <canvas id="packetcanvas" width="900" height="380" role="img"
+          aria-label="Animation eines Wellenpakets: Der Sender links sendet für eine feste Dauer, danach läuft ein Wellenpaket fester Länge nach rechts, dessen Vorderkante und Hinterkante sich beide mit Lichtgeschwindigkeit bewegen. Ein Beobachter-Marker weiter rechts zeigt an, wann das Signal bei ihm ankommt und wann es endet."></canvas>
+        <div class="scope-legend">
+          <span><i class="swatch" style="background:var(--electric)"></i> Trägerwelle, nur im Paket sichtbar</span>
+          <span>Sender-Marker: farbig = an, grau = aus</span>
+          <span>Beobachter-Marker leuchtet, solange das Signal ihn erreicht</span>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Und noch ein Detail: Abschalten heißt, den Strom in der Antenne abzubremsen — das
+        ist selbst eine Beschleunigung. Ein reales Abschalten ist deshalb kein scharfer
+        Schnitt, sondern strahlt am Ende noch einen kurzen, breitbandigen "Klick" ab
+        (dieselbe Bremsstrahlungs-Logik wie oben), der die letzte Schwingung abschließt und
+        ebenfalls mit c davonläuft.
+      </p>
+    </div>
+  </section>
+

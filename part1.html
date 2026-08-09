@@ -26,12 +26,14 @@
   </section>
 
   <section class="rule-top">
-    <div class="eyebrow">Werkzeug</div>
-    <h2>Drei Operatoren, zwei Sätze</h2>
+    <div class="eyebrow">Werkzeug I</div>
+    <h2>Drei Operatoren — und was sie ausrechnen</h2>
     <p class="intro">
       Alle vier Gleichungen benutzen nur den Nabla-Operator ∇ = (∂/∂x, ∂/∂y, ∂/∂z),
       angewandt auf drei Arten. Das ist die gesamte Mathematik, die man aus der
-      Vektoranalysis mitbringen muss.
+      Vektoranalysis mitbringen muss. Jeder Operator kommt hier zuerst im Bild, dann als
+      Formel und dann an einem konkreten Feld durchgerechnet — bevor er in den Gleichungen
+      auftaucht.
     </p>
 
     <div class="toolbox-grid">
@@ -49,7 +51,8 @@
           <line x1="30" y1="64" x2="150" y2="64" stroke="var(--electric)" stroke-width="2" marker-end="url(#ga)"/>
         </svg>
         <h3>Gradient <span class="sym">∇φ</span></h3>
-        <p>Auf ein Skalarfeld angewandt: ein Vektor, der in Richtung des steilsten Anstiegs zeigt.</p>
+        <div class="readout field-def" style="font-size:0.8rem; margin:10px 0 10px;">∇φ = (∂φ/∂x, ∂φ/∂y, ∂φ/∂z)</div>
+        <p>Auf ein <em>Skalarfeld</em> angewandt, ergibt ein <em>Vektorfeld</em>: zeigt in Richtung des steilsten Anstiegs, senkrecht zu den Niveaulinien.</p>
       </div>
 
       <div class="tool-card">
@@ -72,7 +75,8 @@
           </g>
         </svg>
         <h3>Divergenz <span class="sym">∇·F</span></h3>
-        <p>Auf ein Vektorfeld angewandt: ein Skalar, der misst, wie stark ein Punkt Quelle oder Senke ist.</p>
+        <div class="readout field-def" style="font-size:0.8rem; margin:10px 0 10px;">∇·F = ∂Fx/∂x + ∂Fy/∂y + ∂Fz/∂z</div>
+        <p>Auf ein <em>Vektorfeld</em> angewandt, ergibt ein <em>Skalar</em>: misst, wie stark ein Punkt Quelle oder Senke ist.</p>
       </div>
 
       <div class="tool-card">
@@ -91,9 +95,190 @@
           </g>
         </svg>
         <h3>Rotation <span class="sym">∇×F</span></h3>
-        <p>Ebenfalls ein Vektor: misst die Wirbelstärke — dreht sich das Feld um diesen Punkt?</p>
+        <div class="readout field-def" style="font-size:0.8rem; margin:10px 0 10px;">(∇×F)_z = ∂Fy/∂x − ∂Fx/∂y</div>
+        <p>Ebenfalls ein <em>Vektor</em>: misst die Wirbelstärke. Die x- und y-Komponente folgen zyklisch (x→y→z→x).</p>
       </div>
     </div>
+
+    <div class="readout block" style="margin-top:24px;">∇ = (∂/∂x, ∂/∂y, ∂/∂z)
+
+  ∇φ    Skalarfeld  →  Vektorfeld     "steilster Anstieg"
+  ∇·F   Vektorfeld  →  Skalarfeld     "Quellstärke"
+  ∇×F   Vektorfeld  →  Vektorfeld     "Wirbelstärke"
+
+Rotation ausgeschrieben als Determinante:
+
+        x̂     ŷ     ẑ
+∇×F  =  ∂/∂x  ∂/∂y  ∂/∂z
+        Fx    Fy    Fz</div>
+
+    <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+      Die Determinantenschreibweise ist nur eine Merkhilfe — entwickelt man sie nach der
+      ersten Zeile, fallen genau die drei Komponenten heraus, die unten in den Beispielen
+      einzeln ausgerechnet werden.
+    </p>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Gradient</h4>
+      <div class="tagline">Skalarfeld φ(x,y,z) = x²y + yz³</div>
+      <div class="calc-steps">
+        <div class="step"><span class="n">∂/∂x</span><span class="readout">∂φ/∂x = 2xy&nbsp;&nbsp;(y und z sind dabei Konstanten)</span></div>
+        <div class="step"><span class="n">∂/∂y</span><span class="readout">∂φ/∂y = x² + z³</span></div>
+        <div class="step"><span class="n">∂/∂z</span><span class="readout">∂φ/∂z = 3yz²</span></div>
+      </div>
+      <div class="result">
+        <div class="readout electric">∇φ = (2xy, x² + z³, 3yz²)</div>
+        <div class="c-value"><div class="unit">bei (1, 2, 3): (4, 28, 18)</div></div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Der ganze Trick der partiellen Ableitung: Man leitet nach <em>einer</em> Variablen
+        ab und behandelt die anderen wie Zahlen. Bei ∂φ/∂x ist yz³ ein konstanter Summand
+        und fällt weg; x²y wird zu 2xy.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin-top:12px;">
+        Der Betrag |∇φ| ist die Steigung in der steilsten Richtung, die Richtung von ∇φ
+        steht senkrecht auf den Flächen φ = const. Will man die Steigung in einer
+        <em>beliebigen</em> Richtung û wissen, projiziert man: <span class="sym">dφ/ds = ∇φ·û</span>.
+        Bei (1,2,3) in Richtung û = (1,0,0) sind das 4, in Richtung û = (0,1,0) sind es 28 —
+        dort geht es also deutlich steiler bergauf.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Divergenz — Quelle oder quellenfrei?</h4>
+      <p class="tagline" style="margin-bottom:16px;">Zwei Felder mit sichtbar unterschiedlichem Verhalten.</p>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>Radialfeld</h4>
+          <div class="tagline">F = (x, y, z) — zeigt überall vom Ursprung weg</div>
+          <div class="readout field-def">∇·F = ∂x/∂x + ∂y/∂y + ∂z/∂z</div>
+          <div class="result"><div class="readout electric">∇·F = 1 + 1 + 1 = 3</div></div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Konstant positiv — jeder Punkt wirkt wie eine Quelle. Strukturell das Verhalten,
+            das Gleichung I (∇·E = ρ/ε₀) bei verteilter Ladung beschreibt.
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>Rotationsfeld</h4>
+          <div class="tagline">F = (−y, x, 0) — zirkuliert um die z-Achse</div>
+          <div class="readout field-def">∇·F = ∂(−y)/∂x + ∂x/∂y + ∂0/∂z</div>
+          <div class="result"><div class="readout magnetic">∇·F = 0 + 0 + 0 = 0</div></div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Keine Quellen, nur Wirbel — strukturell das Verhalten hinter ∇·B = 0
+            (Gleichung II): B-Feldlinien zirkulieren, sie entspringen nirgends.
+          </p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Beachten Sie, welche Ableitung jeweils gebraucht wird: Bei ∇·F immer die Ableitung
+        <em>jeder Komponente nach ihrer eigenen Richtung</em>. Beim Rotationsfeld hängt Fx
+        = −y gar nicht von x ab — also ist ∂Fx/∂x = 0, obwohl das Feld alles andere als
+        konstant ist. Genau daran scheitert die Intuition oft: Divergenz misst nicht, ob
+        sich ein Feld ändert, sondern ob es <em>auseinanderläuft</em>.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Rotation — Wirbel oder wirbelfrei?</h4>
+      <p class="tagline" style="margin-bottom:16px;">Dieselben zwei Felder, jetzt mit ∇× statt ∇·.</p>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>Rotationsfeld</h4>
+          <div class="tagline">F = (−y, x, 0)</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">x</span><span class="readout">(∇×F)ₓ = ∂Fz/∂y − ∂Fy/∂z = 0 − 0 = 0</span></div>
+            <div class="step"><span class="n">y</span><span class="readout">(∇×F)ᵧ = ∂Fx/∂z − ∂Fz/∂x = 0 − 0 = 0</span></div>
+            <div class="step"><span class="n">z</span><span class="readout">(∇×F)_z = ∂Fy/∂x − ∂Fx/∂y = 1 − (−1) = 2</span></div>
+          </div>
+          <div class="result"><div class="readout magnetic">∇×F = (0, 0, 2)</div></div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Konstanter Wirbel um z — das Geschwindigkeitsfeld einer starren Rotation mit
+            ω = 1 (allgemein: ∇×v = 2ω).
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>Radialfeld</h4>
+          <div class="tagline">F = (x, y, z)</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">x</span><span class="readout">(∇×F)ₓ = ∂z/∂y − ∂y/∂z = 0 − 0 = 0</span></div>
+            <div class="step"><span class="n">y</span><span class="readout">(∇×F)ᵧ = ∂x/∂z − ∂z/∂x = 0 − 0 = 0</span></div>
+            <div class="step"><span class="n">z</span><span class="readout">(∇×F)_z = ∂y/∂x − ∂x/∂y = 0 − 0 = 0</span></div>
+          </div>
+          <div class="result"><div class="readout electric">∇×F = (0, 0, 0)</div></div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            Wirbelfrei, wie es sein muss: F ist der Gradient von φ = ½(x²+y²+z²) — und für
+            jeden Gradienten gilt ∇×(∇φ) ≡ 0, siehe gleich unten.
+          </p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Die beiden Felder sind komplementär: Das eine hat nur Divergenz, das andere nur
+        Rotation. Das ist kein Zufall, sondern ein tiefer Satz (Helmholtz-Zerlegung): Jedes
+        hinreichend brave Vektorfeld lässt sich in einen quellenbehafteten und einen
+        wirbelbehafteten Anteil zerlegen. Genau deshalb reichen ∇· und ∇×, um ein Feld
+        vollständig festzulegen — und genau deshalb gibt es <strong>vier</strong>
+        Maxwell-Gleichungen: je eine Divergenz- und eine Rotationsgleichung für E und B.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Zwei Identitäten, die immer gelten</h4>
+      <p class="tagline" style="margin-bottom:16px;">Unabhängig vom Feld — beide folgen allein daraus, dass gemischte Ableitungen vertauschen (∂²/∂x∂y = ∂²/∂y∂x).</p>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h4>Ein Gradientenfeld ist wirbelfrei</h4>
+          <div class="readout field-def">∇×(∇φ) ≡ 0</div>
+          <div class="tagline">Probe mit φ = x²y, also ∇φ = (2xy, x², 0)</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">z</span><span class="readout">∂(x²)/∂x − ∂(2xy)/∂y = 2x − 2x = 0</span></div>
+            <div class="step"><span class="n">x, y</span><span class="readout">beide 0, da alle beteiligten Terme verschwinden</span></div>
+          </div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            <strong>Wozu:</strong> In der Elektrostatik ist ∂B/∂t = 0, also ∇×E = 0 nach
+            Gleichung III. Genau deshalb darf man dort E = −∇φ schreiben und mit einem
+            skalaren Potential (der Spannung) statt mit Vektoren rechnen.
+          </p>
+        </div>
+        <div class="calc-card">
+          <h4>Ein Rotationsfeld ist quellenfrei</h4>
+          <div class="readout field-def">∇·(∇×F) ≡ 0</div>
+          <div class="tagline">Probe mit F = (y², z², x²), also ∇×F = (−2z, −2x, −2y)</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">∇·</span><span class="readout">∂(−2z)/∂x + ∂(−2x)/∂y + ∂(−2y)/∂z</span></div>
+            <div class="step"><span class="n">=</span><span class="readout">0 + 0 + 0 = 0</span></div>
+          </div>
+          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
+            <strong>Wozu:</strong> Weil ∇·B = 0 <em>immer</em> gilt, darf B stets als
+            B = ∇×A geschrieben werden (Vektorpotential). Und: wendet man ∇· auf Gleichung
+            IV an, erzwingt genau diese Identität die Ladungserhaltung — siehe dort.
+          </p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Beide Identitäten sind keine physikalischen Aussagen, sondern reine Mathematik. Sie
+        gelten für jedes zweimal stetig differenzierbare Feld — und sind trotzdem der Grund
+        für zwei der wichtigsten Rechentricks der Elektrodynamik.
+      </p>
+    </div>
+  </section>
+
+  <section class="rule-top">
+    <div class="eyebrow">Werkzeug II</div>
+    <h2>Zwei Integralsätze</h2>
+    <p class="intro">
+      Die drei Operatoren beschreiben, was an <em>einem Punkt</em> passiert. Die beiden
+      Integralsätze übersetzen das in Aussagen über <em>ausgedehnte</em> Flächen und
+      Volumina — und sind damit genau die Brücke zwischen der differentiellen und der
+      integralen Form jeder Maxwell-Gleichung.
+    </p>
 
     <div class="theorem-bridge">
       <div class="bridge-card">
@@ -105,249 +290,215 @@
         <div class="eq">∮<sub>C</sub> F·dl = ∬<sub>S</sub> (∇×F)·dA</div>
       </div>
     </div>
-  </section>
 
-  <section class="rule-top">
-    <div class="eyebrow">Die Gleichungen</div>
-    <h2>Vier Gesetze des Feldes</h2>
-    <p class="intro">
-      Jede Gleichung existiert in einer lokalen (differentiellen) und einer globalen
-      (integralen) Form — verbunden genau durch die beiden Sätze oben.
+    <p class="muted" style="font-size:0.95rem; margin-top:18px;">
+      In Worten: Was aus einem Volumen <em>herausfließt</em>, ist die Summe aller Quellen
+      darin. Und: Was um einen Rand herum <em>zirkuliert</em>, ist die Summe aller Wirbel
+      auf der eingespannten Fläche.
     </p>
 
-    <!-- I -->
-    <div class="eq-card">
-      <div class="eq-head">
-        <span class="eq-num">I</span>
-        <h3>Gaußsches Gesetz — Elektrizität</h3>
-        <span class="field-tag tag-electric">E-Feld</span>
-      </div>
-      <div class="eq-body">
-        <div class="eq-forms">
-          <div class="eq-form-label">Differentiell</div>
-          <div class="readout electric">∇·E = ρ/ε₀</div>
-          <div class="eq-form-label">Integral</div>
-          <div class="readout electric">∮∮ E·dA = Q<sub>encl</sub>/ε₀</div>
-        </div>
-        <div class="eq-meaning">
-          <strong>Ladungen sind Quellen.</strong> Elektrische Feldlinien entspringen an
-          positiven Ladungen und enden an negativen. Der Fluss durch jede geschlossene
-          Fläche ist proportional zur eingeschlossenen Ladung — unabhängig von der Form
-          der Fläche.
-        </div>
-      </div>
-      <div class="eq-diagram">
-        <figure>
-          <svg viewBox="0 0 220 160" role="img" aria-label="Eine positive Ladung im Zentrum einer gestrichelten Gauß-Fläche, von der acht Feldlinien radial nach außen durch die Fläche hindurch verlaufen.">
-            <circle cx="110" cy="80" r="55" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.6"/>
-            <circle cx="110" cy="80" r="7" fill="var(--electric)"/>
-            <text x="110" y="84" text-anchor="middle" font-size="9" fill="var(--surface)" font-family="var(--font-mono)">+</text>
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Warum gilt das für jedes Volumen und jede Fläche?</h4>
+      <p class="tagline" style="margin-bottom:16px;">Die Beispiele unten prüfen die Sätze an je einem Feld nach. Der allgemeine Grund dahinter ist ein Auslöschungsargument.</p>
+      <div class="split-two">
+        <figure class="eq-diagram" style="padding:0;">
+          <svg viewBox="0 0 240 215" role="img" style="max-width:100%;" aria-label="Ein in neun kleine Zellen zerlegtes Gebiet. An inneren Trennflächen stehen jeweils zwei entgegengesetzte Flusspfeile, die sich gegenseitig aufheben. Nur an der äußeren Berandung bleiben Pfeile nach außen übrig.">
             <defs>
-              <marker id="ea1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+              <marker id="gsOut" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
                 <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
               </marker>
+              <marker id="gsIn" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="var(--ink-faint)"/>
+              </marker>
             </defs>
-            <g stroke="var(--electric)" stroke-width="1.6" marker-end="url(#ea1)">
-              <line x1="110" y1="80" x2="110" y2="15"/>
-              <line x1="110" y1="80" x2="110" y2="145"/>
-              <line x1="110" y1="80" x2="45" y2="80"/>
-              <line x1="110" y1="80" x2="175" y2="80"/>
-              <line x1="110" y1="80" x2="64" y2="34"/>
-              <line x1="110" y1="80" x2="156" y2="34"/>
-              <line x1="110" y1="80" x2="64" y2="126"/>
-              <line x1="110" y1="80" x2="156" y2="126"/>
-            </g>
-          </svg>
-          <figcaption>Fluss aus der Fläche ∝ eingeschlossene Ladung</figcaption>
-        </figure>
-      </div>
-    </div>
+            <text x="120" y="18" text-anchor="middle" font-size="10.5" fill="var(--ink-muted)" font-family="var(--font-label)">Volumen in kleine Zellen zerlegt</text>
 
-    <!-- II -->
-    <div class="eq-card">
-      <div class="eq-head">
-        <span class="eq-num">II</span>
-        <h3>Gaußsches Gesetz — Magnetismus</h3>
-        <span class="field-tag tag-magnetic">B-Feld</span>
-      </div>
-      <div class="eq-body">
-        <div class="eq-forms">
-          <div class="eq-form-label">Differentiell</div>
-          <div class="readout magnetic">∇·B = 0</div>
-          <div class="eq-form-label">Integral</div>
-          <div class="readout magnetic">∮∮ B·dA = 0</div>
-        </div>
-        <div class="eq-meaning">
-          <strong>Keine magnetischen Monopole.</strong> B-Feldlinien haben weder Anfang
-          noch Ende — sie sind stets geschlossen. Jede Linie, die in eine Gauß-Fläche
-          eintritt, verlässt sie an anderer Stelle wieder. Netto-Fluss immer null.
-        </div>
-      </div>
-      <div class="eq-diagram">
-        <figure>
-          <svg viewBox="0 0 220 160" role="img" aria-label="Dieselbe gestrichelte Gauß-Fläche, diesmal ohne zentrale Ladung: geschlossene magnetische Feldlinien treten in die Fläche ein und an anderer Stelle wieder aus, sodass kein Netto-Fluss entsteht.">
-            <circle cx="110" cy="80" r="55" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.6"/>
+            <g stroke="var(--rule-strong)" stroke-width="1">
+              <line x1="102" y1="52" x2="102" y2="154"/>
+              <line x1="136" y1="52" x2="136" y2="154"/>
+              <line x1="68" y1="86" x2="170" y2="86"/>
+              <line x1="68" y1="120" x2="170" y2="120"/>
+            </g>
+            <rect x="68" y="52" width="102" height="102" fill="none" stroke="currentColor" stroke-width="1.6"/>
+
+            <g stroke="var(--ink-faint)" stroke-width="1.4" marker-end="url(#gsIn)">
+              <line x1="102" y1="69" x2="91" y2="69"/>
+              <line x1="102" y1="69" x2="113" y2="69"/>
+              <line x1="119" y1="120" x2="119" y2="109"/>
+              <line x1="119" y1="120" x2="119" y2="131"/>
+            </g>
+
+            <g stroke="var(--electric)" stroke-width="1.6" marker-end="url(#gsOut)">
+              <line x1="85" y1="52" x2="85" y2="41"/>
+              <line x1="119" y1="52" x2="119" y2="41"/>
+              <line x1="153" y1="52" x2="153" y2="41"/>
+              <line x1="85" y1="154" x2="85" y2="165"/>
+              <line x1="119" y1="154" x2="119" y2="165"/>
+              <line x1="153" y1="154" x2="153" y2="165"/>
+              <line x1="68" y1="69" x2="57" y2="69"/>
+              <line x1="68" y1="103" x2="57" y2="103"/>
+              <line x1="68" y1="137" x2="57" y2="137"/>
+              <line x1="170" y1="69" x2="181" y2="69"/>
+              <line x1="170" y1="103" x2="181" y2="103"/>
+              <line x1="170" y1="137" x2="181" y2="137"/>
+            </g>
+
+            <text x="120" y="188" text-anchor="middle" font-size="9.5" fill="var(--ink-faint)" font-family="var(--font-label)">grau: innere Flächen, paarweise gegenläufig</text>
+            <text x="120" y="203" text-anchor="middle" font-size="9.5" fill="var(--electric)" font-family="var(--font-label)">farbig: nur die äußere Oberfläche bleibt</text>
+          </svg>
+          <figcaption>Gauß — innere Flächen heben sich weg</figcaption>
+        </figure>
+        <figure class="eq-diagram" style="padding:0;">
+          <svg viewBox="0 0 240 215" role="img" style="max-width:100%;" aria-label="Dasselbe Gebiet, zerlegt in neun kleine Wirbelschleifen mit gleichem Umlaufsinn. Innere Kanten werden von benachbarten Schleifen gegenläufig durchlaufen und heben sich auf; übrig bleibt die äußere Randkurve.">
             <defs>
-              <marker id="ma1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+              <marker id="stLoop" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="var(--ink-faint)"/>
+              </marker>
+              <marker id="stEdge" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
                 <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--magnetic)"/>
               </marker>
             </defs>
-            <g fill="none" stroke="var(--magnetic)" stroke-width="1.6">
-              <path d="M60,120 C40,80 60,40 110,32 C160,40 180,80 160,120" marker-end="url(#ma1)"/>
-              <path d="M80,138 C95,100 125,100 140,138"/>
-              <path d="M60,120 C50,130 55,140 80,138" marker-end="url(#ma1)"/>
-              <path d="M140,138 C165,140 170,130 160,120"/>
+            <text x="120" y="18" text-anchor="middle" font-size="10.5" fill="var(--ink-muted)" font-family="var(--font-label)">Fläche in kleine Schleifen zerlegt</text>
+
+            <g stroke="var(--rule-strong)" stroke-width="1">
+              <line x1="102" y1="52" x2="102" y2="154"/>
+              <line x1="136" y1="52" x2="136" y2="154"/>
+              <line x1="68" y1="86" x2="170" y2="86"/>
+              <line x1="68" y1="120" x2="170" y2="120"/>
             </g>
+
+            <g fill="none" stroke="var(--ink-faint)" stroke-width="1.3" marker-end="url(#stLoop)">
+              <path d="M85,58 A11,11 0 1,1 74,69"/>
+              <path d="M119,58 A11,11 0 1,1 108,69"/>
+              <path d="M153,58 A11,11 0 1,1 142,69"/>
+              <path d="M85,92 A11,11 0 1,1 74,103"/>
+              <path d="M119,92 A11,11 0 1,1 108,103"/>
+              <path d="M153,92 A11,11 0 1,1 142,103"/>
+              <path d="M85,126 A11,11 0 1,1 74,137"/>
+              <path d="M119,126 A11,11 0 1,1 108,137"/>
+              <path d="M153,126 A11,11 0 1,1 142,137"/>
+            </g>
+
+            <g fill="none" stroke="var(--magnetic)" stroke-width="2.2">
+              <path d="M68,154 L68,52" marker-end="url(#stEdge)"/>
+              <path d="M68,52 L170,52" marker-end="url(#stEdge)"/>
+              <path d="M170,52 L170,154" marker-end="url(#stEdge)"/>
+              <path d="M170,154 L68,154" marker-end="url(#stEdge)"/>
+            </g>
+
+            <text x="120" y="188" text-anchor="middle" font-size="9.5" fill="var(--ink-faint)" font-family="var(--font-label)">grau: jede innere Kante wird zweimal durchlaufen</text>
+            <text x="120" y="203" text-anchor="middle" font-size="9.5" fill="var(--magnetic)" font-family="var(--font-label)">farbig: nur die äußere Randkurve bleibt</text>
           </svg>
-          <figcaption>Feldlinien treten ein und aus — Netto-Fluss = 0</figcaption>
+          <figcaption>Stokes — innere Kanten heben sich weg</figcaption>
         </figure>
       </div>
-    </div>
-
-    <!-- III -->
-    <div class="eq-card">
-      <div class="eq-head">
-        <span class="eq-num">III</span>
-        <h3>Faradaysches Induktionsgesetz</h3>
-        <span class="field-tag tag-both">B → E</span>
-      </div>
-      <div class="eq-body">
-        <div class="eq-forms">
-          <div class="eq-form-label">Differentiell</div>
-          <div class="readout electric">∇×E = −∂B/∂t</div>
-          <div class="eq-form-label">Integral</div>
-          <div class="readout electric">∮ E·dl = −d/dt ∬ B·dA</div>
-        </div>
-        <div class="eq-meaning">
-          <strong>Ein sich änderndes B-Feld erzeugt ein wirbelndes E-Feld.</strong>
-          Das Prinzip hinter Generator und Transformator: Nimmt der eingeschlossene
-          magnetische Fluss ab, treibt das induzierte elektrische Feld einen Strom
-          im Gegensinn dazu — daher das Minuszeichen (Lenzsche Regel).
-        </div>
-      </div>
-      <div class="eq-diagram">
-        <figure>
-          <svg viewBox="0 0 220 160" role="img" aria-label="Eine Drahtschleife, im Inneren ein abnehmendes Magnetfeld in die Bildebene, dargestellt durch Kreuzsymbole und einen Pfeil für dB/dt; um die Schleife herum zirkuliert das induzierte elektrische Feld.">
-            <circle cx="110" cy="80" r="48" fill="none" stroke="currentColor" stroke-width="1.6"/>
-            <g fill="var(--magnetic)" font-family="var(--font-mono)" font-size="12">
-              <text x="90" y="65">×</text><text x="118" y="65">×</text>
-              <text x="90" y="90">×</text><text x="118" y="90">×</text>
-              <text x="104" y="77">×</text>
-            </g>
-            <text x="110" y="112" text-anchor="middle" fill="var(--magnetic)" font-family="var(--font-mono)" font-size="11">∂B/∂t ↓</text>
-            <defs>
-              <marker id="fa1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
-                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
-              </marker>
-            </defs>
-            <g fill="none" stroke="var(--electric)" stroke-width="1.8">
-              <path d="M110,32 A48,48 0 0,1 158,80" marker-end="url(#fa1)"/>
-              <path d="M158,80 A48,48 0 0,1 110,128" marker-end="url(#fa1)"/>
-              <path d="M110,128 A48,48 0 0,1 62,80" marker-end="url(#fa1)"/>
-              <path d="M62,80 A48,48 0 0,1 110,32" marker-end="url(#fa1)"/>
-            </g>
-          </svg>
-          <figcaption>Abnehmendes B im Inneren → zirkulierendes E am Rand</figcaption>
-        </figure>
-      </div>
-    </div>
-
-    <!-- IV -->
-    <div class="eq-card">
-      <div class="eq-head">
-        <span class="eq-num">IV</span>
-        <h3>Ampère-Maxwell-Gesetz</h3>
-        <span class="field-tag tag-both">J, E → B</span>
-      </div>
-      <div class="eq-body">
-        <div class="eq-forms">
-          <div class="eq-form-label">Differentiell</div>
-          <div class="readout magnetic">∇×B = μ₀J + μ₀ε₀ ∂E/∂t</div>
-          <div class="eq-form-label">Integral</div>
-          <div class="readout magnetic">∮ B·dl = μ₀I<sub>encl</sub> + μ₀ε₀ d/dt ∬ E·dA</div>
-        </div>
-        <div class="eq-meaning">
-          <strong>Strom UND ein sich änderndes E-Feld erzeugen ein B-Feld.</strong>
-          Ampères ursprüngliches Gesetz kannte nur den Strom J. Maxwells Ergänzung —
-          der <em>Verschiebungsstrom</em> μ₀ε₀ ∂E/∂t — schließt die Lücke am
-          Kondensatorspalt, wo kein realer Strom fließt, aber das E-Feld sich ändert.
-          Genau dieser Term macht elektromagnetische Wellen erst möglich.
-        </div>
-      </div>
-      <div class="eq-diagram">
-        <figure>
-          <svg viewBox="0 0 220 160" role="img" aria-label="Ein stromdurchflossener Draht mit einer Kondensatorlücke: um beide Abschnitte zirkuliert dasselbe magnetische Feld, angetrieben links vom realen Strom I und rechts vom sich ändernden elektrischen Feld zwischen den Kondensatorplatten.">
-            <line x1="15" y1="80" x2="80" y2="80" stroke="currentColor" stroke-width="2.4"/>
-            <line x1="140" y1="80" x2="205" y2="80" stroke="currentColor" stroke-width="2.4"/>
-            <line x1="88" y1="55" x2="88" y2="105" stroke="currentColor" stroke-width="3"/>
-            <line x1="132" y1="55" x2="132" y2="105" stroke="currentColor" stroke-width="3"/>
-            <text x="45" y="70" text-anchor="middle" fill="currentColor" font-family="var(--font-mono)" font-size="11">I</text>
-            <defs>
-              <marker id="aa1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
-                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--magnetic)"/>
-              </marker>
-              <marker id="aa2" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
-                <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--electric)"/>
-              </marker>
-            </defs>
-            <g fill="none" stroke="var(--magnetic)" stroke-width="1.6">
-              <ellipse cx="45" cy="80" rx="26" ry="34"/>
-              <ellipse cx="163" cy="80" rx="26" ry="34"/>
-            </g>
-            <path d="M45,46 A26,34 0 0,1 71,80" fill="none" stroke="var(--magnetic)" stroke-width="1.8" marker-end="url(#aa1)"/>
-            <path d="M163,46 A26,34 0 0,1 189,80" fill="none" stroke="var(--magnetic)" stroke-width="1.8" marker-end="url(#aa1)"/>
-            <line x1="110" y1="65" x2="110" y2="95" stroke="var(--electric)" stroke-width="1.8" marker-end="url(#aa2)"/>
-            <text x="110" y="122" text-anchor="middle" fill="var(--electric)" font-family="var(--font-mono)" font-size="10">∂E/∂t</text>
-          </svg>
-          <figcaption>Gleiches zirkulierendes B — links von I, rechts vom Verschiebungsstrom</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="rule-top">
-    <div class="eyebrow">Die Konsequenz</div>
-    <h2>Licht ist eine Welle des Feldes</h2>
-    <p class="intro">
-      Kombiniert man III und IV im ladungsfreien Raum (ρ = 0, J = 0), verschwindet
-      die Kopplung an Materie — übrig bleibt eine reine Eigenschaft des Feldes selbst.
-    </p>
-
-    <div class="light-panel">
-      <div class="derivation">
-        <div class="step">
-          <span class="n">1</span>
-          <span class="readout" style="font-size:0.95rem">Rotation von (III) bilden: ∇×(∇×E) = −∂/∂t (∇×B)</span>
-        </div>
-        <div class="step">
-          <span class="n">2</span>
-          <span class="readout" style="font-size:0.95rem">∇×B aus (IV) einsetzen (J = 0): ∇×(∇×E) = −μ₀ε₀ ∂²E/∂t²</span>
-        </div>
-        <div class="step">
-          <span class="n">3</span>
-          <span class="readout" style="font-size:0.95rem">Vektoridentität ∇×(∇×E) = ∇(∇·E) − ∇²E, mit (I): ∇·E = 0</span>
-        </div>
-      </div>
-
-      <div class="eq-form-label">Ergebnis — die Wellengleichung</div>
-      <div class="readout electric" style="font-size:1.15rem; margin-bottom:18px;">∇²E = μ₀ε₀ ∂²E/∂t²</div>
-
-      <p style="color:var(--ink-muted); margin: 0 0 6px;">
-        Das ist die klassische Wellengleichung ∇²ψ = (1/v²) ∂²ψ/∂t² mit
-        Ausbreitungsgeschwindigkeit v = 1/√(μ₀ε₀). Setzt man die rein elektrisch
-        und magnetisch gemessenen Konstanten ein:
+      <p class="muted" style="font-size:0.95rem; margin-top:18px;">
+        <strong>Gauß:</strong> Zerlegt man das Volumen in sehr viele winzige Würfel, ist die
+        Aussage für jeden einzelnen fast eine Definition — der Nettofluss aus seinen sechs
+        Flächen ist (∇·F)·ΔV, genau so ist die Divergenz konstruiert. Nun addiert man über
+        alle Würfel. Jede <em>innere</em> Fläche gehört zu genau zwei Nachbarwürfeln und
+        wird zweimal gezählt, mit entgegengesetzter Flächennormale, also mit
+        entgegengesetztem Vorzeichen. Alle inneren Beiträge löschen sich paarweise aus.
+        Übrig bleibt nur, was keinen Nachbarn hat: die äußere Oberfläche.
       </p>
+      <p class="muted" style="font-size:0.95rem; margin-top:12px;">
+        <strong>Stokes:</strong> Dasselbe Argument, nur über Kanten statt Flächen. Man
+        zerlegt die Fläche in winzige Schleifen mit gleichem Umlaufsinn; jede innere Kante
+        wird von zwei benachbarten Schleifen in <em>entgegengesetzter Richtung</em>
+        durchlaufen und hebt sich weg. Übrig bleibt die äußere Randkurve.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin-top:12px;">
+        Deshalb ist das Ergebnis unabhängig von der gewählten Form: Man darf in Gleichung I
+        <em>jede beliebige</em> geschlossene Fläche um eine Ladung legen, und in Gleichung
+        III und IV <em>jede beliebige</em> Fläche in einen gegebenen Rand einspannen. Genau
+        diese Freiheit wird bei Gleichung IV noch entscheidend — sie deckt dort eine Lücke
+        auf, die Maxwell schließen musste.
+      </p>
+    </div>
 
-      <div class="result">
-        <div class="readout" style="font-size:1.05rem">
-          c = <span class="frac"><span class="num">1</span><span class="den">√(μ₀ε₀)</span></span>
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Der Gaußsche Integralsatz am Beispiel</h4>
+      <p class="tagline" style="margin-bottom:16px;">Das Radialfeld von oben, jetzt durch eine Kugel mit Radius R.</p>
+      <div class="split-two">
+        <div class="calc-card">
+          <h4>Volumenintegral</h4>
+          <div class="tagline">∇·F = 3 (siehe oben)</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">∫∫∫</span><span class="readout">∫∫∫ (∇·F) dV = 3 · Kugelvolumen</span></div>
+            <div class="step"><span class="n">V</span><span class="readout">V = (4/3)πR³</span></div>
+            <div class="step"><span class="n">=</span><span class="readout">3 · (4/3)πR³</span></div>
+          </div>
+          <div class="result"><div class="readout electric">= 4πR³</div></div>
         </div>
-        <div class="c-value">
-          <div><b>2,998 × 10⁸</b> <span class="unit">m/s</span></div>
-          <div class="unit" style="font-size:0.78rem">= Lichtgeschwindigkeit c</div>
+        <div class="calc-card">
+          <h4>Oberflächenintegral</h4>
+          <div class="tagline">Auf der Kugel: |F| = R, radial = parallel zu n̂</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">F·n̂</span><span class="readout">F·n̂ = R (überall auf der Kugelfläche)</span></div>
+            <div class="step"><span class="n">A</span><span class="readout">A = 4πR²</span></div>
+            <div class="step"><span class="n">=</span><span class="readout">R · 4πR²</span></div>
+          </div>
+          <div class="result"><div class="readout magnetic">= 4πR³</div></div>
         </div>
       </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Beide Seiten liefern exakt 4πR³ — für jeden Radius. Das Oberflächenintegral war hier
+        besonders einfach, weil F auf der Kugel überall gleich lang und überall parallel zur
+        Normalen ist: Dann wird aus dem Integral schlicht "Wert mal Fläche". Genau diese
+        Symmetrie-Abkürzung ist der Grund, warum man in der Elektrostatik so gerne
+        Kugelflächen wählt.
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin-top:12px;">
+        Und genau dieser Zusammenhang macht aus der differentiellen Form von Gleichung I
+        (∇·E = ρ/ε₀) ihre integrale Form (∮∮ E·dA = Q<sub>encl</sub>/ε₀) — kein separates
+        Postulat, sondern derselbe Satz, hier an einem einfachen Feld nachgerechnet.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="calc-block">
+      <h4>Der Satz von Stokes am Beispiel</h4>
+      <p class="tagline" style="margin-bottom:16px;">Das Rotationsfeld von oben, jetzt entlang eines Kreises mit Radius R.</p>
+      <div class="split-two">
+        <div class="calc-card">
+          <h4>Linienintegral</h4>
+          <div class="tagline">Kreis: r(θ) = (R cosθ, R sinθ, 0), θ ∈ [0, 2π]</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">F</span><span class="readout">F(r(θ)) = (−R sinθ, R cosθ, 0)</span></div>
+            <div class="step"><span class="n">dr/dθ</span><span class="readout">dr/dθ = (−R sinθ, R cosθ, 0)</span></div>
+            <div class="step"><span class="n">F·dr/dθ</span><span class="readout">R² sin²θ + R² cos²θ = R²</span></div>
+            <div class="step"><span class="n">∮</span><span class="readout">∫₀²ᵖ R² dθ = R² · 2π</span></div>
+          </div>
+          <div class="result"><div class="readout electric">∮ F·dl = 2πR²</div></div>
+        </div>
+        <div class="calc-card">
+          <h4>Flächenintegral</h4>
+          <div class="tagline">∇×F = (0, 0, 2) (siehe oben)</div>
+          <div class="calc-steps">
+            <div class="step"><span class="n">(∇×F)·n̂</span><span class="readout">n̂ = ẑ, also (∇×F)·n̂ = 2 (konstant)</span></div>
+            <div class="step"><span class="n">A</span><span class="readout">Kreisfläche = πR²</span></div>
+            <div class="step"><span class="n">=</span><span class="readout">2 · πR²</span></div>
+          </div>
+          <div class="result"><div class="readout magnetic">∬(∇×F)·dA = 2πR²</div></div>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:16px;">
+        Wieder identisch, für jeden Radius. Der Rechenweg links ist die Standard-Mechanik
+        eines Kurvenintegrals: Kurve parametrisieren, F entlang der Kurve auswerten,
+        skalar mit dem Tangentenvektor multiplizieren, über den Parameter integrieren. Hier
+        wird das Skalarprodukt dank sin²+cos² = 1 konstant — deshalb bleibt am Ende nur
+        "Wert mal Umfang·R".
+      </p>
+      <p class="muted" style="font-size:0.95rem; margin-top:12px;">
+        Das ist exakt der Schritt, der Gleichung III (∇×E = −∂B/∂t) mit ihrer integralen
+        Form (∮E·dl = −d/dt∬B·dA) verbindet — und damit die abstrakte Punktaussage in
+        etwas übersetzt, das man an einer realen Drahtschleife messen kann.
+      </p>
     </div>
   </section>
 
-  

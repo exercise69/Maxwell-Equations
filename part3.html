@@ -1,369 +1,167 @@
 <section class="rule-top">
-    <div class="eyebrow">Quantennatur</div>
-    <h2>Wie viele Photonen sind das eigentlich?</h2>
+    <div class="eyebrow">Die Konsequenz</div>
+    <h2>Licht ist eine Welle des Feldes</h2>
     <p class="intro">
-      Maxwell beschreibt das Feld als kontinuierlich — aber jede Emission oder
-      Absorption von Energie geschieht in Paketen der Größe hf. Daraus lässt sich für
-      eine Antenne eine Photonenzahl pro Sekunde berechnen. Und die Frage, warum das Feld
-      trotzdem überall glatt aussieht statt "körnig", hat eine überraschend einfache
-      Antwort.
+      Kombiniert man III und IV im ladungsfreien Raum (ρ = 0, J = 0), verschwindet
+      die Kopplung an Materie — übrig bleibt eine reine Eigenschaft des Feldes selbst.
+      Der Weg dorthin braucht genau eine weitere Vektoridentität, die hier zuerst
+      an einem Beispiel nachgerechnet wird.
     </p>
 
     <div class="calc-block">
-      <h4>Vom Feld zur Photonenzahl</h4>
-      <div class="tagline">Jedes Energiequant hat die Größe E = hf</div>
+      <h4>Die Vektoridentität hinter der Wellengleichung</h4>
+      <p class="tagline" style="margin-bottom:16px;">∇×(∇×F) = ∇(∇·F) − ∇²F</p>
+      <p class="muted" style="font-size:0.95rem; margin:0 0 16px;">
+        Formal dieselbe Struktur wie das Entwicklungsgesetz a×(b×c) = b(a·c) − c(a·b) aus
+        der Vektoralgebra, nur mit ∇ statt einem gewöhnlichen Vektor. Der Laplace-Operator
+        ∇² = ∇·∇ = ∂²/∂x² + ∂²/∂y² + ∂²/∂z² wirkt dabei komponentenweise. Probe an
+        F = (y², z², x²):
+      </p>
+      <div class="calc-steps">
+        <div class="step"><span class="n">∇·F</span><span class="readout">∂(y²)/∂x + ∂(z²)/∂y + ∂(x²)/∂z = 0  →  ∇(∇·F) = 0</span></div>
+        <div class="step"><span class="n">∇×F</span><span class="readout">∇×F = (∂F₃/∂y−∂F₂/∂z, ∂F₁/∂z−∂F₃/∂x, ∂F₂/∂x−∂F₁/∂y) = (−2z, −2x, −2y)</span></div>
+        <div class="step"><span class="n">∇×(∇×F)</span><span class="readout">nochmal Rotation auf (−2z, −2x, −2y): = (−2, −2, −2)</span></div>
+        <div class="step"><span class="n">∇²F</span><span class="readout">komponentenweise: ∇²(y²) = 2, ∇²(z²) = 2, ∇²(x²) = 2  →  (2, 2, 2)</span></div>
+      </div>
       <div class="result">
-        <div class="readout electric" style="font-size:1.1rem">N = P / (h·f)</div>
-        <div class="c-value"><div class="unit">Photonen pro Sekunde</div></div>
+        <div class="readout electric">∇(∇·F) − ∇²F = 0 − (2,2,2) = (−2,−2,−2) ✓</div>
       </div>
       <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        P ist die abgestrahlte Leistung (Energie pro Sekunde), h·f die Energie eines
-        einzelnen Photons bei Frequenz f. Die Rechnung ist reine Buchhaltung: Gesamtenergie
-        pro Sekunde, geteilt durch die Energie eines einzelnen Pakets.
+        Beide Seiten stimmen überein. Der entscheidende Punkt für gleich: Ist das Feld
+        <em>quellenfrei</em> (∇·F = 0), fällt der erste Term komplett weg und es bleibt
+        schlicht ∇×(∇×F) = −∇²F. Genau dieser Fall liegt im ladungsfreien Raum vor.
+      </p>
+    </div>
+
+    <hr class="calc-divider">
+
+    <div class="light-panel">
+      <div class="eq-form-label">Herleitung</div>
+      <div class="derivation">
+        <div class="step">
+          <span class="n">1</span>
+          <span class="readout" style="font-size:0.95rem">Rotation von (III) bilden: ∇×(∇×E) = −∂/∂t (∇×B)</span>
+        </div>
+        <div class="step">
+          <span class="n">2</span>
+          <span class="readout" style="font-size:0.95rem">∇×B aus (IV) einsetzen (J = 0): ∇×(∇×E) = −μ₀ε₀ ∂²E/∂t²</span>
+        </div>
+        <div class="step">
+          <span class="n">3</span>
+          <span class="readout" style="font-size:0.95rem">Vektoridentität anwenden, mit (I) und ρ = 0: ∇·E = 0, also ∇×(∇×E) = −∇²E</span>
+        </div>
+        <div class="step">
+          <span class="n">4</span>
+          <span class="readout" style="font-size:0.95rem">Minuszeichen auf beiden Seiten kürzen</span>
+        </div>
+      </div>
+
+      <div class="eq-form-label">Ergebnis — die Wellengleichung</div>
+      <div class="readout electric" style="font-size:1.15rem; margin-bottom:18px;">∇²E = μ₀ε₀ ∂²E/∂t²</div>
+
+      <p style="color:var(--ink-muted); margin: 0 0 6px;">
+        Das ist die klassische Wellengleichung ∇²ψ = (1/v²) ∂²ψ/∂t² mit
+        Ausbreitungsgeschwindigkeit v = 1/√(μ₀ε₀). Dieselbe Rechnung mit vertauschten
+        Rollen (Rotation von IV statt III) liefert die identische Gleichung für B — E und B
+        gehorchen derselben Wellengleichung mit derselben Geschwindigkeit.
       </p>
     </div>
 
     <hr class="calc-divider">
 
     <div class="calc-block">
-      <h4>Zwei Beispiele</h4>
-      <div class="calc-grid">
-        <div class="calc-card">
-          <h4>WLAN-Router</h4>
-          <div class="tagline">P ≈ 100 mW, f ≈ 2,4 GHz</div>
-          <div class="calc-steps">
-            <div class="step"><span class="n">E_ph</span><span class="readout">h·f = 6,626×10⁻³⁴ · 2,4×10⁹ ≈ 1,59×10⁻²⁴ J</span></div>
-            <div class="step"><span class="n">N</span><span class="readout">N = 0,1 / 1,59×10⁻²⁴</span></div>
-          </div>
-          <div class="result"><div class="readout electric">N ≈ 6,3 × 10²² Photonen/s</div></div>
+      <h4>c ausgerechnet — Zahl für Zahl</h4>
+      <p class="tagline" style="margin-bottom:16px;">Zwei im Labor gemessene Konstanten, kein einziger optischer Messwert.</p>
+      <div class="calc-steps">
+        <div class="step"><span class="n">μ₀</span><span class="readout">μ₀ = 4π × 10⁻⁷ = 1,25664 × 10⁻⁶ H/m</span></div>
+        <div class="step"><span class="n">ε₀</span><span class="readout">ε₀ = 8,85419 × 10⁻¹² F/m</span></div>
+        <div class="step"><span class="n">Produkt</span><span class="readout">μ₀ε₀ = 1,25664 × 8,85419 × 10⁻¹⁸ = 1,11265 × 10⁻¹⁷</span></div>
+        <div class="step"><span class="n">Wurzel</span><span class="readout">√(1,11265 × 10⁻¹⁷) = 3,33564 × 10⁻⁹</span></div>
+        <div class="step"><span class="n">Kehrwert</span><span class="readout">1 / 3,33564 × 10⁻⁹ = 2,99792 × 10⁸</span></div>
+      </div>
+      <div class="result">
+        <div class="readout" style="font-size:1.05rem">
+          c = <span class="frac"><span class="num">1</span><span class="den">√(μ₀ε₀)</span></span>
         </div>
-        <div class="calc-card">
-          <h4>UKW-Sender</h4>
-          <div class="tagline">P ≈ 10 kW, f ≈ 100 MHz</div>
-          <div class="calc-steps">
-            <div class="step"><span class="n">E_ph</span><span class="readout">h·f = 6,626×10⁻³⁴ · 1×10⁸ ≈ 6,63×10⁻²⁶ J</span></div>
-            <div class="step"><span class="n">N</span><span class="readout">N = 10⁴ / 6,63×10⁻²⁶</span></div>
-          </div>
-          <div class="result"><div class="readout magnetic">N ≈ 1,5 × 10²⁹ Photonen/s</div></div>
+        <div class="c-value">
+          <div><b>2,998 × 10⁸</b> <span class="unit">m/s</span></div>
+          <div class="unit" style="font-size:0.78rem">= Lichtgeschwindigkeit c</div>
         </div>
       </div>
       <p class="muted" style="font-size:0.95rem; margin-top:16px;">
-        Je niedriger die Frequenz, desto energieärmer das einzelne Photon (E = hf) — und
-        desto mehr Photonen braucht dieselbe Sendeleistung. Genau das erklärt die Spanne
-        von 10²⁰ bis 10³⁰, je nach Sender und Frequenzband.
+        <strong>Einheitenprobe.</strong> Henry ist V·s/A, Farad ist A·s/V — das Produkt
+        H·F ist also s². Damit hat μ₀ε₀ die Einheit s²/m², die Wurzel s/m, der Kehrwert
+        m/s. Die Geschwindigkeit fällt aus den Einheiten heraus, bevor man auch nur eine
+        Zahl einsetzt. Das ist ein guter Schnelltest für jede solche Rechnung: Stimmen die
+        Einheiten nicht, stimmt die Formel nicht.
       </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Verdünnt sich das nicht im unendlichen Raum?</h4>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
-        Doch — genau das tut es, und das ist auch richtig so. Die Photonen<em>dichte</em>
-        pro Fläche fällt mit 1/r², exakt wie die Feldstärke im Quadrat (E² ∝ 1/r²) und aus
-        demselben Grund: Die Gesamtleistung durch jede Kugelfläche bleibt konstant, die
-        Kugelfläche selbst wächst mit r². Das ist keine neue Aussage, sondern dieselbe
-        Energieerhaltung wie im Abschnitt Nahfeld/Fernfeld oben — nur in Energiequanten
-        statt in Feldstärke ausgedrückt.
-      </p>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
-        Der eigentliche Denkfehler liegt woanders: Photonen sind keine kleinen Kügelchen,
-        die mit wachsendem Abstand größere Lücken zueinander lassen und die Welle dadurch
-        "körnig" machen. Ein reales Radiosignal ist quantenmechanisch ein
-        <strong>kohärenter Zustand</strong> — eine Überlagerung vieler verschiedener
-        Photonenzahl-Zustände, deren Erwartungswert exakt das glatte, kontinuierliche
-        klassische Feld reproduziert, das Maxwell beschreibt. Die Zahl N ist eine
-        Energie-Buchhaltung (Gesamtenergie geteilt durch hf), keine Landkarte einzelner
-        Photonen-Positionen im Raum.
-      </p>
-      <div class="result">
-        <div class="readout" style="font-size:1.05rem">ΔN/N ≈ 1/√N</div>
-        <div class="c-value"><div class="unit">relative Quantenschwankung (Schrotrauschen)</div></div>
-      </div>
       <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        Bei N ≈ 10²⁹ liegt diese Schwankung um den Erwartungswert bei etwa 10⁻¹⁵ — für
-        jede erdenkliche Messung unmessbar klein. Deshalb verhält sich das Feld makroskopisch
-        perfekt kontinuierlich und deterministisch, obwohl "im Hintergrund" Energie in
-        Paketen der Größe hf gequantelt bleibt. Das ist das Korrespondenzprinzip: bei großen
-        Quantenzahlen wird Quantenmechanik von klassischer Physik ununterscheidbar.
+        <strong>Warum das damals eine Sensation war.</strong> μ₀ und ε₀ stammen aus rein
+        elektrischen und magnetischen Messungen — Kräfte zwischen Ladungen, Kräfte zwischen
+        stromdurchflossenen Drähten. Mit Licht hat davon nichts zu tun. Weber und Kohlrausch
+        bestimmten diese Kombination 1856 aus der Entladung eines Kondensators und erhielten
+        rund 3,1 × 10⁸ m/s; Fizeau hatte kurz zuvor die Lichtgeschwindigkeit zu etwa
+        3,15 × 10⁸ m/s gemessen. Maxwell zog daraus den Schluss, den man kaum vermeiden
+        kann: Licht <em>ist</em> eine elektromagnetische Welle. Zwei Messungen an
+        Drahtspulen und Kondensatoren sagen voraus, wie schnell ein Sonnenstrahl ist.
       </p>
     </div>
 
     <hr class="calc-divider">
 
     <div class="calc-block">
-      <h4>Das elektromagnetische Spektrum</h4>
-      <p class="tagline" style="margin-bottom:16px;">Von Radiowellen bis Gammastrahlung — 15 Größenordnungen in der Frequenz.</p>
-      <svg viewBox="0 0 900 225" role="img" style="width:100%;height:auto;" aria-label="Elektromagnetisches Spektrum auf logarithmischer Frequenzachse von 10 hoch 5 bis 10 hoch 20 Hertz, mit zunehmend dunkler eingefärbten Bändern von Radio über Mikrowellen, Infrarot, das schmale sichtbare Band in Regenbogenfarben, UV, Röntgen bis Gammastrahlung. Eine gestrichelte Markierung im fernen Infrarot zeigt die Schwelle, an der die Photonenenergie gleich der thermischen Energie bei Raumtemperatur ist.">
-        <defs>
-          <linearGradient id="specRainbow" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#e0393e"/>
-            <stop offset="20%" stop-color="#f2a022"/>
-            <stop offset="40%" stop-color="#f5e642"/>
-            <stop offset="60%" stop-color="#4caf50"/>
-            <stop offset="80%" stop-color="#2f6fed"/>
-            <stop offset="100%" stop-color="#7b3fd4"/>
-          </linearGradient>
-        </defs>
-
-        <rect x="50.0" y="70" width="185.4" height="50" fill="var(--ink)" opacity="0.05"/>
-        <rect x="235.4" y="70" width="160.0" height="50" fill="var(--ink)" opacity="0.10"/>
-        <rect x="395.4" y="70" width="166.7" height="50" fill="var(--ink)" opacity="0.18"/>
-        <rect x="562.1" y="70" width="15.8" height="50" fill="url(#specRainbow)"/>
-        <rect x="577.9" y="70" width="84.2" height="50" fill="var(--ink)" opacity="0.30"/>
-        <rect x="662.1" y="70" width="160.0" height="50" fill="var(--ink)" opacity="0.42"/>
-        <rect x="822.1" y="70" width="27.9" height="50" fill="var(--ink)" opacity="0.55"/>
-
-        <line x1="50" y1="120" x2="850" y2="120" stroke="var(--rule-strong)" stroke-width="1"/>
-        <line x1="103.3" y1="120" x2="103.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
-        <line x1="263.3" y1="120" x2="263.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
-        <line x1="423.3" y1="120" x2="423.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
-        <line x1="583.3" y1="120" x2="583.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
-        <line x1="743.3" y1="120" x2="743.3" y2="128" stroke="var(--ink-faint)" stroke-width="1"/>
-
-        <text x="103.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10⁶ Hz</text>
-        <text x="263.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10⁹ Hz</text>
-        <text x="423.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10¹² Hz</text>
-        <text x="583.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10¹⁵ Hz</text>
-        <text x="743.3" y="142" text-anchor="middle" font-size="11" fill="var(--ink-faint)" font-family="var(--font-mono)">10¹⁸ Hz</text>
-
-        <text x="142.7" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">Radio</text>
-        <text x="315.4" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">Mikrowellen</text>
-        <text x="478.8" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">Infrarot</text>
-        <text x="620.0" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">UV</text>
-        <text x="742.1" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">Röntgen</text>
-        <text x="836.0" y="58" text-anchor="middle" font-size="12" fill="var(--ink-muted)" font-family="var(--font-label)">γ</text>
-
-        <line x1="570.0" y1="70" x2="570.0" y2="40" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="2 2"/>
-        <text x="570.0" y="30" text-anchor="middle" font-size="12" fill="var(--ink)" font-family="var(--font-label)" font-weight="600">Sichtbar</text>
-        <text x="558.0" y="196" text-anchor="end" font-size="9" fill="var(--ink-faint)" font-family="var(--font-mono)">750 nm</text>
-        <text x="582.0" y="196" text-anchor="start" font-size="9" fill="var(--ink-faint)" font-family="var(--font-mono)">380 nm</text>
-
-        <line x1="465.8" y1="70" x2="465.8" y2="128" stroke="var(--magnetic)" stroke-width="1.6" stroke-dasharray="4 3"/>
-        <text x="465.8" y="160" text-anchor="middle" font-size="10.5" fill="var(--magnetic)" font-family="var(--font-label)">hf = k_BT (300 K)</text>
-        <text x="465.8" y="174" text-anchor="middle" font-size="9.5" fill="var(--ink-faint)" font-family="var(--font-mono)">≈ 6 THz · 48 µm</text>
-
-        <text x="52" y="214" text-anchor="start" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">n̄ ≫ 1 — Feld wirkt klassisch</text>
-        <text x="848" y="214" text-anchor="end" font-size="10" fill="var(--ink-faint)" font-family="var(--font-label)">n̄ ≈ 0 — einzelne Photonen zählbar</text>
-      </svg>
-      <p class="muted" style="font-size:0.9rem; margin-top:12px;">
-        Die zunehmende Einfärbung von links nach rechts symbolisiert den fließenden
-        Übergang: kein scharfer Schnitt, sondern eine stetig wachsende "Photonenhaftigkeit"
-        mit der Frequenz. Das schmale sichtbare Band liegt auffällig nah an der
-        thermischen Schwelle — kein Zufall, siehe unten.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Der Übergang zum Photonenbild</h4>
+      <h4>Die Probe: erfüllt die ebene Welle Maxwell wirklich?</h4>
+      <p class="tagline" style="margin-bottom:16px;">Dasselbe Feld wie in der Animation ganz oben.</p>
       <p class="muted" style="font-size:0.95rem; margin:0 0 16px;">
-        Es gibt keinen scharfen Frequenz-Schnitt, sondern zwei unabhängige Stellschrauben:
-        wie energiereich die einzelnen Photonen sind (hf), und wie viele davon pro Sekunde
-        ankommen. Der entscheidende Vergleich für die Energie-Achse ist hf gegen die
-        thermische Energie k_BT — denn selbst im "leeren" Raum bei Zimmertemperatur gibt
-        es durch Schwarzkörperstrahlung bereits thermische Photonen in jedem Frequenzmodus.
+        Die Wellengleichung sagt, dass Wellen möglich sind. Sie sagt noch nicht, dass eine
+        <em>bestimmte</em> Welle auch alle vier Gleichungen einzeln erfüllt. Also einsetzen
+        und nachrechnen. Gebraucht wird nur die Kettenregel: ∂/∂z cos(kz−ωt) = −k·sin(kz−ωt)
+        und ∂/∂t cos(kz−ωt) = +ω·sin(kz−ωt).
       </p>
-      <div class="result">
-        <div class="readout electric" style="font-size:1.05rem">n̄(f,T) = 1 / (e^(hf/k_BT) − 1)</div>
-        <div class="c-value"><div class="unit">mittlere thermische Besetzungszahl pro Modus</div></div>
-      </div>
-      <div class="calc-grid" style="margin-top:20px;">
+      <div class="readout block" style="margin-bottom:20px;">E(z,t) = E₀ cos(kz − ωt) x̂
+B(z,t) = (E₀/c) cos(kz − ωt) ŷ</div>
+
+      <div class="split-two">
         <div class="calc-card">
-          <h4>Radio, 100 MHz, 300 K</h4>
-          <div class="tagline">hf/k_BT ≈ 1,6 × 10⁻⁵</div>
-          <div class="result"><div class="readout electric">n̄ ≈ 6,3 × 10⁴</div></div>
-          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
-            Zehntausende thermische Photonen pro Modus, allein aus der Zimmertemperatur.
-            Jedes Signal-Photon geht darin unter — Quantelung ist bei Radiofrequenzen
-            physikalisch unmessbar, nicht nur unpraktisch.
-          </p>
+          <h4>Faraday: ∇×E = −∂B/∂t</h4>
+          <div class="calc-steps">
+            <div class="step"><span class="n">∇×E</span><span class="readout">nur die y-Komponente überlebt: (∇×E)ᵧ = ∂Ex/∂z</span></div>
+            <div class="step"><span class="n">=</span><span class="readout">−E₀k sin(kz−ωt)</span></div>
+            <div class="step"><span class="n">−∂B/∂t</span><span class="readout">−(E₀/c)·ω sin(kz−ωt)</span></div>
+          </div>
+          <div class="result"><div class="readout electric">E₀k = E₀ω/c  →  k = ω/c</div></div>
         </div>
         <div class="calc-card">
-          <h4>Sichtbares Licht, 500 THz, 300 K</h4>
-          <div class="tagline">hf/k_BT ≈ 80</div>
-          <div class="result"><div class="readout magnetic">n̄ ≈ 1,8 × 10⁻³⁵</div></div>
-          <p class="muted" style="font-size:0.9rem; margin:12px 0 0;">
-            Praktisch kein thermischer Hintergrund. Ein einzelnes Photon ist ein echtes,
-            seltenes, detektierbares Ereignis — nichts verschluckt es im Rauschen.
-          </p>
+          <h4>Ampère-Maxwell: ∇×B = μ₀ε₀ ∂E/∂t</h4>
+          <div class="calc-steps">
+            <div class="step"><span class="n">∇×B</span><span class="readout">nur die x-Komponente überlebt: (∇×B)ₓ = −∂By/∂z</span></div>
+            <div class="step"><span class="n">=</span><span class="readout">(E₀k/c) sin(kz−ωt)</span></div>
+            <div class="step"><span class="n">μ₀ε₀∂E/∂t</span><span class="readout">μ₀ε₀ E₀ω sin(kz−ωt)</span></div>
+          </div>
+          <div class="result"><div class="readout magnetic">k = μ₀ε₀cω = ω/c  (mit c=1/√(μ₀ε₀))</div></div>
         </div>
       </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:18px;">
-        Der Übergang liegt dort, wo hf ≈ k_BT: bei etwa 6,25 THz bzw. 48 µm Wellenlänge —
-        mitten im <strong>fernen Infrarot</strong>. Genau das beantwortet die Frage nach
-        dem Infrarot direkt: es liegt nicht auf einer Seite der Grenze, sondern spannt sie
-        auf. Fernes IR verhält sich noch radiohaft (thermisch dominiert), nahes IR bereits
-        photonenhaft. Passend dazu: Ein raumtemperiertes Objekt strahlt nach dem Wienschen
-        Gesetz am stärksten bei rund 10 µm — mittleres Infrarot, fast exakt dort, wo n̄ von
-        der Größenordnung 1 ist. Deshalb arbeiten Wärmebildkameras genau in diesem Band.
+
+      <div class="result" style="margin-top:20px;">
+        <div class="readout" style="font-size:1.1rem">k = ω/c</div>
+        <div class="c-value">
+          <div class="unit">Ausbreitungsgeschwindigkeit ω/k = c</div>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
+        Beide Gleichungen — unabhängig voneinander ausgerechnet — verlangen exakt dieselbe
+        Bedingung. Das ist keine Fügung: Faraday und Ampère-Maxwell einigen sich rechnerisch
+        auf genau die Lichtgeschwindigkeit als einzig mögliche Geschwindigkeit dieser Welle.
+        Die Divergenz-Gleichungen sind hier trivial erfüllt: ∇·E = ∂Ex/∂x = 0 und
+        ∇·B = ∂By/∂y = 0, da beide Felder nicht von x oder y abhängen.
       </p>
       <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        Die zweite Stellschraube ist die Intensität: Auch sichtbares Licht wirkt bei hoher
-        Helligkeit (Glühbirne, Laserpointer) makroskopisch glatt, weil N astronomisch groß
-        bleibt. Erst bei <strong>schwachen</strong> Quellen wird die Körnigkeit praktisch
-        sichtbar — Sternenlicht, Einzelphotonenquellen in der Quantenoptik. Die
-        Stäbchenzellen im menschlichen Auge sind nachweislich empfindlich genug, um
-        einzelne Photonen zu registrieren (Hecht/Shlaer/Pirenne, 1942). Umgekehrt geht
-        Einzelphotonen-Zählen auch bei Mikrowellenfrequenzen — mit supraleitenden
-        Schaltkreisen, wie sie auch in Quantencomputern stecken —, aber nur bei
-        Millikelvin-Temperaturen im Verdünnungskühlschrank: man kühlt das thermische
-        Photonenbad quasi weg, bis n̄ auch bei niedriger Frequenz gegen null geht.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Woher kommt die thermische Hintergrundstrahlung?</h4>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 16px;">
-        Von genau derselben Physik wie im Abschnitt "Abstrahlung" oben:
-        <strong>beschleunigte Ladungen</strong>, überwiegend Elektronen (sie sind rund
-        1800-mal leichter als Protonen, also bei gleicher thermischer Kraft entsprechend
-        stärker beschleunigt — a = F/m). Nur ist die Beschleunigung hier nicht kohärent
-        von einer Antenne angetrieben, sondern ungeordnet durch thermische Bewegung: in
-        Festkörpern Gitterschwingungen mit fluktuierenden Dipolmomenten, in Gasen Stöße
-        und Rotations-/Vibrationsübergänge. Jedes einzelne dieser Ereignisse ist ein
-        winziger, zufälliger Bremsstrahlungspuls; die Summe über unzählige Ladungen bei
-        einer gegebenen Temperatur ergibt das kontinuierliche Schwarzkörperspektrum.
-      </p>
-      <p class="muted" style="font-size:0.95rem; margin:0;">
-        <strong>Konvektion strahlt dagegen nicht direkt.</strong> Sie ist reiner
-        Wärmetransport durch Stoffbewegung — eine Flüssigkeit oder ein Gas trägt thermische
-        Energie von A nach B, ohne dass diese Bewegung selbst Photonen erzeugt. Von den
-        drei klassischen Wärmetransportarten (Leitung, Konvektion, Strahlung) ist Strahlung
-        die einzige, die kein Medium braucht — eben weil sie elektromagnetisch ist. Die
-        bewegte Materie strahlt natürlich trotzdem thermisch, aber das liegt an ihrer
-        Temperatur (beschleunigte Ladungen), nicht an der Konvektion selbst.
+        Nebenbei fällt noch etwas heraus, das man leicht übersieht: Die Rechnung erzwingt
+        <strong>B₀ = E₀/c</strong> — das Größenverhältnis der beiden Felder ist nicht frei
+        wählbar. Und weil E in x-, B in y-Richtung zeigt und die Welle nach z läuft, stehen
+        E, B und die Ausbreitungsrichtung paarweise senkrecht aufeinander und bilden in
+        dieser Reihenfolge ein Rechtssystem. Beides sieht man in der Animation ganz oben.
       </p>
     </div>
   </section>
 
-  <section class="rule-top">
-    <div class="eyebrow">Empfänger</div>
-    <h2>Wie eine Antenne empfängt</h2>
-    <p class="intro">
-      Empfang ist fast die Umkehrung des Sendens — dieselbe Physik, dieselbe Antenne,
-      nur die Richtung des Kausalpfeils dreht sich um. Statt Elektronen zu beschleunigen,
-      um eine Welle zu erzeugen, beschleunigt hier die ankommende Welle die Elektronen.
-    </p>
-
-    <div class="calc-block">
-      <h4>Die Lorentzkraft treibt den Strom</h4>
-      <div class="result">
-        <div class="readout electric" style="font-size:1.1rem">F = qE</div>
-        <div class="c-value"><div class="unit">Kraft auf ein Leitungselektron</div></div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        Das oszillierende E-Feld der ankommenden Welle übt am Ort der Antenne eine Kraft
-        auf die freien Elektronen im Metall aus. Sie werden im exakten Takt der
-        Wellenfrequenz entlang des Stabs hin- und herbewegt — das ist bereits der
-        Empfangsstrom, noch bevor irgendeine Elektronik ihn verstärkt. Es ist exakt
-        dieselbe Gleichung, die eine Sendeantenne antreibt, nur umgekehrt angewandt.
-        Daraus folgt das <strong>Reziprozitätsprinzip</strong>: dieselbe Antenne sendet
-        und empfängt mit demselben Strahlungsdiagramm — die "Erdnuss" von oben ist auch
-        die Empfangscharakteristik, am empfindlichsten senkrecht zum Stab, taub entlang
-        der eigenen Achse.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Elektronen im Rhythmus des Feldes</h4>
-      <p class="tagline" style="margin-bottom:16px;">Die einfallende Welle schiebt die Ladungsträger im Stab synchron mit.</p>
-      <div class="scope">
-        <div class="scope-head">
-          <span>Empfangsantenne · einfallende Welle</span>
-          <span>Elektronenauslenkung ∝ E(t) am Ort der Antenne</span>
-        </div>
-        <canvas id="rxcanvas" width="900" height="420" role="img"
-          aria-label="Animation einer ebenen Welle, die von links auf einen senkrecht stehenden Antennenstab trifft. Punkte im Stab, die freie Elektronen darstellen, schwingen synchron mit der lokalen Feldstärke am Ort der Antenne auf und ab und erzeugen so einen Wechselstrom."></canvas>
-        <div class="scope-legend">
-          <span><i class="swatch" style="background:var(--electric)"></i> E-Feld der ankommenden Welle</span>
-          <span>Punkte im Stab = Elektronen, ausgelenkt durch die Lorentzkraft</span>
-          <span>Pfeil = momentane Stromrichtung im Stab</span>
-        </div>
-      </div>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Die effektive Apertur — mehr als der Draht hergibt</h4>
-      <div class="result">
-        <div class="readout electric" style="font-size:1.1rem">
-          A_eff = <span class="frac"><span class="num">Gλ²</span><span class="den">4π</span></span>
-        </div>
-        <div class="c-value"><div class="unit">P_empfangen = A_eff · S</div></div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        G ist der Antennengewinn, S der Poynting-Fluss der ankommenden Welle (W/m²). Die
-        effektive Apertur hängt <strong>nicht</strong> von der physischen Drahtdicke ab,
-        sondern von der Wellenlänge — ein dünner Stab kann eine viel größere "Fangfläche"
-        haben, als sein Querschnitt vermuten lässt, weil das kohärente Feld über einen
-        räumlich ausgedehnten Bereich auf den Leiter einwirkt.
-      </p>
-      <div class="result" style="margin-top:14px;">
-        <div class="readout" style="font-size:0.98rem">Halbwellendipol bei 100 MHz: G≈1,64, λ=3 m</div>
-        <div class="c-value"><div class="unit">A_eff ≈ 1,17 m²</div></div>
-      </div>
-      <p class="muted" style="font-size:0.95rem; margin-top:14px;">
-        Über einen Quadratmeter effektive Fangfläche — für einen Draht von wenigen
-        Millimetern Durchmesser. Das Feld "kennt" die geometrische Größe der Antenne
-        nicht; es koppelt an sie über die Wellenlänge.
-      </p>
-    </div>
-
-    <hr class="calc-divider">
-
-    <div class="calc-block">
-      <h4>Energie, Feld oder Photonen?</h4>
-      <p class="muted" style="font-size:0.95rem; margin:0 0 18px;">
-        Im Kern wird <strong>Energie über das kontinuierliche Feld</strong> entzogen,
-        beschrieben durch denselben Poynting-Vektor S = E×B/μ₀, der schon beim Senden die
-        abgestrahlte Leistung beschrieben hat — Energieerhaltung, keine Detektion
-        einzelner Teilchen. Die Photonenbeschreibung ist quantenmechanisch ebenso korrekt,
-        aber bei N ≈ 10²²–10²⁹ Photonen pro Sekunde (siehe oben) spielt das für den
-        Empfangsvorgang keine Rolle — es gibt kein "Klicken" wie bei einem
-        Einzelphotonen-Detektor. Erst bei viel energiereicheren Photonen (sichtbares
-        Licht, Röntgenstrahlung) und sehr schwachen Quellen wird die Körnigkeit messbar.
-        Radioempfang bleibt praktisch immer im rein klassischen, kontinuierlichen Regime.
-      </p>
-      <p class="muted" style="font-size:0.95rem; margin:0;">
-        Der winzige Wechselstrom aus dem Antennenstab — oft im Mikrovolt-Bereich — geht
-        anschließend in einen auf die Trägerfrequenz abgestimmten Schwingkreis (daher
-        lassen sich Sender trennen), wird verstärkt und demoduliert, um das ursprüngliche
-        Signal zurückzugewinnen.
-      </p>
-    </div>
-  </section>
-
-  <section class="rule-top">
-    <div class="eyebrow">Nachschlagen</div>
-    <h2>Größen &amp; Einheiten</h2>
-    <div class="ref-wrap">
-      <table class="ref">
-        <thead>
-          <tr><th>Symbol</th><th>Bedeutung</th><th>SI-Einheit</th></tr>
-        </thead>
-        <tbody>
-          <tr><td class="sym">E</td><td>Elektrische Feldstärke</td><td class="unit">V/m</td></tr>
-          <tr><td class="sym">B</td><td>Magnetische Flussdichte</td><td class="unit">T (Vs/m²)</td></tr>
-          <tr><td class="sym">ρ</td><td>Ladungsdichte</td><td class="unit">C/m³</td></tr>
-          <tr><td class="sym">J</td><td>Stromdichte</td><td class="unit">A/m²</td></tr>
-          <tr><td class="sym">ε₀</td><td>Elektrische Feldkonstante</td><td class="unit">8,854 × 10⁻¹² F/m</td></tr>
-          <tr><td class="sym">μ₀</td><td>Magnetische Feldkonstante</td><td class="unit">1,257 × 10⁻⁶ H/m</td></tr>
-          <tr><td class="sym">c</td><td>Lichtgeschwindigkeit (Vakuum)</td><td class="unit">2,998 × 10⁸ m/s</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <footer>
-    <div class="eyebrow">Feldnotizen</div>
-    <p>Zusammengestellt zum Auffrischen der Vektoranalysis hinter den Maxwellschen
-      Gleichungen — differentielle und integrale Form, ihre physikalische Bedeutung,
-      und die Ableitung, die Licht als elektromagnetische Welle erklärt.</p>
-  </footer>
